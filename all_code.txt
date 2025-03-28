@@ -1,0 +1,2863 @@
+================================================================================
+FILE: /workspaces/pa-home-search/build_structure.py
+================================================================================
+
+import os
+
+# Define the project structure with file paths and optional initial content
+structure = {
+    'run.py': """\
+# run.py
+from app import create_app
+
+app = create_app()
+
+if __name__ == '__main__':
+    app.run(debug=True)
+""",
+    'requirements.txt': "# Add your Python dependencies here\nflask\n",
+    'config.py': """\
+# config.py
+import os
+
+class Config:
+    SECRET_KEY = os.environ.get('SECRET_KEY', 'your_secret_key')
+    # Add your configuration variables (e.g., database URIs, API keys) here
+""",
+    '.env': "# Environment variables go here\nSECRET_KEY=your_secret_key\n",
+    'instance/': None,  # Directory only, no file content
+    'app/__init__.py': """\
+# app/__init__.py
+from flask import Flask
+from .extensions import init_extensions
+
+def create_app():
+    app = Flask(__name__)
+    app.config.from_object('config.Config')
+    
+    # Initialize extensions
+    init_extensions(app)
+    
+    # Import and register blueprints
+    from .main import main as main_blueprint
+    from .property_search import property_search as property_blueprint
+    from .services import services as services_blueprint
+    from .reviews import reviews as reviews_blueprint
+    from .about import about as about_blueprint
+    from .resources import resources as resources_blueprint
+    from .contact import contact as contact_blueprint
+    
+    app.register_blueprint(main_blueprint)
+    app.register_blueprint(property_blueprint)
+    app.register_blueprint(services_blueprint)
+    app.register_blueprint(reviews_blueprint)
+    app.register_blueprint(about_blueprint)
+    app.register_blueprint(resources_blueprint)
+    app.register_blueprint(contact_blueprint)
+    
+    return app
+""",
+    'app/extensions.py': """\
+# app/extensions.py
+# Initialize and configure Flask extensions here
+
+def init_extensions(app):
+    # Example: Initialize SQLAlchemy, Migrate, LoginManager, etc.
+    pass
+""",
+    'app/models.py': """\
+# app/models.py
+# Define your data models here (e.g., User, Property, etc.)
+""",
+    # Blueprints directories and files
+    'app/main/__init__.py': """\
+# app/main/__init__.py
+from flask import Blueprint
+
+main = Blueprint('main', __name__)
+
+from . import routes
+""",
+    'app/main/routes.py': """\
+# app/main/routes.py
+from flask import render_template
+from . import main
+
+@main.route('/')
+def index():
+    return render_template('main/index.html')
+""",
+    'app/main/forms.py': "# app/main/forms.py (Optional forms for main blueprint)\n",
+    'app/main/templates/main/index.html': """\
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Home</title>
+</head>
+<body>
+    <h1>Welcome to My Real Estate Site</h1>
+</body>
+</html>
+""",
+    'app/property_search/__init__.py': """\
+# app/property_search/__init__.py
+from flask import Blueprint
+
+property_search = Blueprint('property_search', __name__)
+
+from . import routes
+""",
+    'app/property_search/routes.py': """\
+# app/property_search/routes.py
+from flask import render_template
+from . import property_search
+
+def get_listings_for_city(city):
+    # Placeholder function - integrate MLS data here
+    return []
+
+@property_search.route('/property_search/<city>')
+def city_page(city):
+    listings = get_listings_for_city(city)
+    return render_template('property_search/city_page.html', city=city, listings=listings)
+""",
+    'app/property_search/forms.py': "# app/property_search/forms.py (Optional search/filter forms)\n",
+    'app/property_search/templates/property_search/city_page.html': """\
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>{{ city }} Listings</title>
+</head>
+<body>
+    <h1>Listings for {{ city }}</h1>
+    <!-- Display listings here -->
+</body>
+</html>
+""",
+    'app/property_search/templates/property_search/search.html': """\
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Property Search</title>
+</head>
+<body>
+    <h1>Search Properties</h1>
+    <!-- Search form and filters here -->
+</body>
+</html>
+""",
+    'app/services/__init__.py': """\
+# app/services/__init__.py
+from flask import Blueprint
+
+services = Blueprint('services', __name__)
+
+from . import routes
+""",
+    'app/services/routes.py': """\
+# app/services/routes.py
+from flask import render_template
+from . import services
+
+@services.route('/services/buying')
+def buying():
+    return render_template('services/buying.html')
+
+@services.route('/services/selling')
+def selling():
+    return render_template('services/selling.html')
+
+@services.route('/services/consultation')
+def consultation():
+    return render_template('services/consultation.html')
+""",
+    'app/services/templates/services/buying.html': """\
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Buying</title>
+</head>
+<body>
+    <h1>Buying Services</h1>
+</body>
+</html>
+""",
+    'app/services/templates/services/selling.html': """\
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Selling</title>
+</head>
+<body>
+    <h1>Selling Services</h1>
+</body>
+</html>
+""",
+    'app/services/templates/services/consultation.html': """\
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Consultation</title>
+</head>
+<body>
+    <h1>Consultation/Market Analysis</h1>
+</body>
+</html>
+""",
+    'app/reviews/__init__.py': """\
+# app/reviews/__init__.py
+from flask import Blueprint
+
+reviews = Blueprint('reviews', __name__)
+
+from . import routes
+""",
+    'app/reviews/routes.py': """\
+# app/reviews/routes.py
+from flask import render_template
+from . import reviews
+
+@reviews.route('/reviews/video')
+def video_testimonials():
+    return render_template('reviews/video_testimonials.html')
+
+@reviews.route('/reviews/written')
+def written_reviews():
+    return render_template('reviews/written_reviews.html')
+""",
+    'app/reviews/templates/reviews/video_testimonials.html': """\
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Video Testimonials</title>
+</head>
+<body>
+    <h1>Video Testimonials</h1>
+</body>
+</html>
+""",
+    'app/reviews/templates/reviews/written_reviews.html': """\
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Written Reviews</title>
+</head>
+<body>
+    <h1>Written Reviews</h1>
+</body>
+</html>
+""",
+    'app/about/__init__.py': """\
+# app/about/__init__.py
+from flask import Blueprint
+
+about = Blueprint('about', __name__)
+
+from . import routes
+""",
+    'app/about/routes.py': """\
+# app/about/routes.py
+from flask import render_template
+from . import about
+
+@about.route('/about/our_story')
+def our_story():
+    return render_template('about/our_story.html')
+
+@about.route('/about/meet_the_team')
+def meet_the_team():
+    return render_template('about/meet_the_team.html')
+""",
+    'app/about/templates/about/our_story.html': """\
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Our Story</title>
+</head>
+<body>
+    <h1>Our Story</h1>
+</body>
+</html>
+""",
+    'app/about/templates/about/meet_the_team.html': """\
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Meet the Team</title>
+</head>
+<body>
+    <h1>Meet the Team</h1>
+</body>
+</html>
+""",
+    'app/resources/__init__.py': """\
+# app/resources/__init__.py
+from flask import Blueprint
+
+resources = Blueprint('resources', __name__)
+
+from . import routes
+""",
+    'app/resources/routes.py': """\
+# app/resources/routes.py
+from flask import render_template
+from . import resources
+
+@resources.route('/resources/market_trends')
+def market_trends():
+    return render_template('resources/market_trends.html')
+
+@resources.route('/resources/neighborhood_guides')
+def neighborhood_guides():
+    return render_template('resources/neighborhood_guides.html')
+
+@resources.route('/resources/buying_selling_tips')
+def buying_selling_tips():
+    return render_template('resources/buying_selling_tips.html')
+
+@resources.route('/resources/faq')
+def faq():
+    return render_template('resources/faq.html')
+""",
+    'app/resources/templates/resources/market_trends.html': """\
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Market Trends</title>
+</head>
+<body>
+    <h1>Market Trends</h1>
+</body>
+</html>
+""",
+    'app/resources/templates/resources/neighborhood_guides.html': """\
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Neighborhood Guides</title>
+</head>
+<body>
+    <h1>Neighborhood Guides</h1>
+</body>
+</html>
+""",
+    'app/resources/templates/resources/buying_selling_tips.html': """\
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Buying & Selling Tips</title>
+</head>
+<body>
+    <h1>Buying & Selling Tips</h1>
+</body>
+</html>
+""",
+    'app/resources/templates/resources/faq.html': """\
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>FAQ</title>
+</head>
+<body>
+    <h1>Frequently Asked Questions</h1>
+</body>
+</html>
+""",
+    'app/contact/__init__.py': """\
+# app/contact/__init__.py
+from flask import Blueprint
+
+contact = Blueprint('contact', __name__)
+
+from . import routes
+""",
+    'app/contact/routes.py': """\
+# app/contact/routes.py
+from flask import render_template
+from . import contact
+
+@contact.route('/contact')
+def contact_form():
+    return render_template('contact/contact_form.html')
+
+@contact.route('/contact/scheduling')
+def scheduling():
+    return render_template('contact/scheduling.html')
+""",
+    'app/contact/forms.py': "# app/contact/forms.py (Contact and appointment scheduling forms)\n",
+    'app/contact/templates/contact/contact_form.html': """\
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Contact Us</title>
+</head>
+<body>
+    <h1>Contact Form</h1>
+</body>
+</html>
+""",
+    'app/contact/templates/contact/scheduling.html': """\
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Schedule an Appointment</title>
+</head>
+<body>
+    <h1>Appointment Scheduling</h1>
+</body>
+</html>
+""",
+    'app/static/css/': None,
+    'app/static/js/': None,
+    'app/static/images/': None,
+    'tests/': None,
+}
+
+def create_structure(base_path, structure):
+    for path, content in structure.items():
+        full_path = os.path.join(base_path, path)
+        if content is None:
+            # Create a directory
+            os.makedirs(full_path, exist_ok=True)
+            print(f"Created directory: {full_path}")
+        else:
+            # Ensure the directory exists
+            dir_name = os.path.dirname(full_path)
+            if dir_name and not os.path.exists(dir_name):
+                os.makedirs(dir_name, exist_ok=True)
+                print(f"Created directory: {dir_name}")
+            # Write the file with the given content
+            with open(full_path, 'w', encoding='utf-8') as f:
+                f.write(content)
+            print(f"Created file: {full_path}")
+
+if __name__ == "__main__":
+    base_dir = os.getcwd()  # assuming you are already in the my_app directory
+    create_structure(base_dir, structure)
+    print("Project structure created successfully!")
+
+
+================================================================================
+FILE: /workspaces/pa-home-search/run.py
+================================================================================
+
+# run.py
+from app import create_app
+
+app = create_app()
+
+if __name__ == '__main__':
+    app.run(debug=True)
+
+
+================================================================================
+FILE: /workspaces/pa-home-search/code-to-text.py
+================================================================================
+
+import os
+
+# Files to exclude (exact filenames)
+EXCLUDED_FILES = {
+    '.env',
+    'requirements.txt',
+    'readme.MD',
+    'README.md',
+    '.gitignore',
+    'LICENSE'
+}
+
+# Directory names to exclude (these names will be skipped anywhere in the path)
+EXCLUDED_DIRS = {
+    'myEnv',        # Virtual environment directory
+    '__pycache__',  # Python cache files
+    '.pytest_cache' # Pytest cache, if present
+}
+
+# Specific directory paths to exclude relative to the base directory
+SPECIFIC_EXCLUDED_DIRS = {
+    os.path.join('app', 'instance')
+}
+
+OUTPUT_FILE = 'all_code.txt'
+
+def should_exclude_file(filepath):
+    """Return True if the file should be excluded based on its name."""
+    filename = os.path.basename(filepath)
+    return filename in EXCLUDED_FILES
+
+def should_exclude_dir(dirpath):
+    """Return True if the directory should be excluded based on its name or specific paths."""
+    # Check if directory name is in the generic exclusion list
+    if os.path.basename(dirpath) in EXCLUDED_DIRS:
+        return True
+
+    # Check if the directory matches any specific path exclusion (e.g., app/instance)
+    for specific_dir in SPECIFIC_EXCLUDED_DIRS:
+        # Normalize the paths to handle differences across operating systems
+        if os.path.normpath(dirpath).endswith(os.path.normpath(specific_dir)):
+            return True
+
+    return False
+
+def main():
+    base_dir = os.getcwd()  # run the script from the project root
+    with open(OUTPUT_FILE, 'w', encoding='utf-8') as out_file:
+        for root, dirs, files in os.walk(base_dir):
+            # Filter out excluded directories in-place so they aren't recursed into
+            dirs[:] = [d for d in dirs if not should_exclude_dir(os.path.join(root, d))]
+            
+            for file in files:
+                file_path = os.path.join(root, file)
+                # Skip the output file to avoid including it
+                if os.path.abspath(file_path) == os.path.abspath(OUTPUT_FILE):
+                    continue
+                if should_exclude_file(file_path):
+                    continue
+                try:
+                    with open(file_path, 'r', encoding='utf-8') as f:
+                        content = f.read()
+                except Exception as e:
+                    # If there is an error reading a file, log the error in the output
+                    content = f"ERROR reading file: {e}"
+                
+                # Write a header and the file's content to the output file
+                out_file.write("=" * 80 + "\n")
+                out_file.write(f"FILE: {file_path}\n")
+                out_file.write("=" * 80 + "\n\n")
+                out_file.write(content)
+                out_file.write("\n\n")
+    print(f"All code has been written to {OUTPUT_FILE}")
+
+if __name__ == '__main__':
+    main()
+
+
+================================================================================
+FILE: /workspaces/pa-home-search/config.py
+================================================================================
+
+# config.py
+import os
+
+class Config:
+    SECRET_KEY = os.environ.get('SECRET_KEY', 'your_secret_key')
+    # Add your configuration variables (e.g., database URIs, API keys) here
+
+
+================================================================================
+FILE: /workspaces/pa-home-search/.git/HEAD
+================================================================================
+
+ref: refs/heads/main
+
+
+================================================================================
+FILE: /workspaces/pa-home-search/.git/packed-refs
+================================================================================
+
+# pack-refs with: peeled fully-peeled sorted 
+cedadebf59910bb83ef7f57e3beac97e626e3105 refs/remotes/origin/main
+
+
+================================================================================
+FILE: /workspaces/pa-home-search/.git/FETCH_HEAD
+================================================================================
+
+cedadebf59910bb83ef7f57e3beac97e626e3105		branch 'main' of https://github.com/AndrewGuadi/pa-home-search
+
+
+================================================================================
+FILE: /workspaces/pa-home-search/.git/index
+================================================================================
+
+ERROR reading file: 'utf-8' codec can't decode byte 0xe6 in position 13: invalid continuation byte
+
+================================================================================
+FILE: /workspaces/pa-home-search/.git/description
+================================================================================
+
+Unnamed repository; edit this file 'description' to name the repository.
+
+
+================================================================================
+FILE: /workspaces/pa-home-search/.git/config
+================================================================================
+
+[core]
+	repositoryformatversion = 0
+	filemode = true
+	bare = false
+	logallrefupdates = true
+[remote "origin"]
+	url = https://github.com/AndrewGuadi/pa-home-search
+	fetch = +refs/heads/*:refs/remotes/origin/*
+[branch "main"]
+	remote = origin
+	merge = refs/heads/main
+	vscode-merge-base = origin/main
+[lfs]
+	repositoryformatversion = 0
+
+
+================================================================================
+FILE: /workspaces/pa-home-search/.git/objects/pack/pack-6607256dfe2abb7627fc80a95e27dc119f5fa124.idx
+================================================================================
+
+ERROR reading file: 'utf-8' codec can't decode byte 0xff in position 0: invalid start byte
+
+================================================================================
+FILE: /workspaces/pa-home-search/.git/objects/pack/pack-6607256dfe2abb7627fc80a95e27dc119f5fa124.pack
+================================================================================
+
+ERROR reading file: 'utf-8' codec can't decode byte 0x93 in position 12: invalid start byte
+
+================================================================================
+FILE: /workspaces/pa-home-search/.git/objects/pack/pack-6607256dfe2abb7627fc80a95e27dc119f5fa124.rev
+================================================================================
+
+ERROR reading file: 'utf-8' codec can't decode byte 0xfe in position 36: invalid start byte
+
+================================================================================
+FILE: /workspaces/pa-home-search/.git/refs/heads/main
+================================================================================
+
+cedadebf59910bb83ef7f57e3beac97e626e3105
+
+
+================================================================================
+FILE: /workspaces/pa-home-search/.git/refs/remotes/origin/HEAD
+================================================================================
+
+ref: refs/remotes/origin/main
+
+
+================================================================================
+FILE: /workspaces/pa-home-search/.git/logs/HEAD
+================================================================================
+
+0000000000000000000000000000000000000000 cedadebf59910bb83ef7f57e3beac97e626e3105 root <root@844fb3cf-fd35-478b-b018-b15aa6a8b67b.djjsigw1zv5efcnjbyj2jpa2we.bx.internal.cloudapp.net> 1743133504 +0000	clone: from https://github.com/AndrewGuadi/pa-home-search
+
+
+================================================================================
+FILE: /workspaces/pa-home-search/.git/logs/refs/heads/main
+================================================================================
+
+0000000000000000000000000000000000000000 cedadebf59910bb83ef7f57e3beac97e626e3105 root <root@844fb3cf-fd35-478b-b018-b15aa6a8b67b.djjsigw1zv5efcnjbyj2jpa2we.bx.internal.cloudapp.net> 1743133504 +0000	clone: from https://github.com/AndrewGuadi/pa-home-search
+
+
+================================================================================
+FILE: /workspaces/pa-home-search/.git/logs/refs/remotes/origin/HEAD
+================================================================================
+
+0000000000000000000000000000000000000000 cedadebf59910bb83ef7f57e3beac97e626e3105 root <root@844fb3cf-fd35-478b-b018-b15aa6a8b67b.djjsigw1zv5efcnjbyj2jpa2we.bx.internal.cloudapp.net> 1743133504 +0000	clone: from https://github.com/AndrewGuadi/pa-home-search
+
+
+================================================================================
+FILE: /workspaces/pa-home-search/.git/hooks/post-update.sample
+================================================================================
+
+#!/bin/sh
+#
+# An example hook script to prepare a packed repository for use over
+# dumb transports.
+#
+# To enable this hook, rename this file to "post-update".
+
+exec git update-server-info
+
+
+================================================================================
+FILE: /workspaces/pa-home-search/.git/hooks/pre-applypatch.sample
+================================================================================
+
+#!/bin/sh
+#
+# An example hook script to verify what is about to be committed
+# by applypatch from an e-mail message.
+#
+# The hook should exit with non-zero status after issuing an
+# appropriate message if it wants to stop the commit.
+#
+# To enable this hook, rename this file to "pre-applypatch".
+
+. git-sh-setup
+precommit="$(git rev-parse --git-path hooks/pre-commit)"
+test -x "$precommit" && exec "$precommit" ${1+"$@"}
+:
+
+
+================================================================================
+FILE: /workspaces/pa-home-search/.git/hooks/pre-push.sample
+================================================================================
+
+#!/bin/sh
+
+# An example hook script to verify what is about to be pushed.  Called by "git
+# push" after it has checked the remote status, but before anything has been
+# pushed.  If this script exits with a non-zero status nothing will be pushed.
+#
+# This hook is called with the following parameters:
+#
+# $1 -- Name of the remote to which the push is being done
+# $2 -- URL to which the push is being done
+#
+# If pushing without using a named remote those arguments will be equal.
+#
+# Information about the commits which are being pushed is supplied as lines to
+# the standard input in the form:
+#
+#   <local ref> <local oid> <remote ref> <remote oid>
+#
+# This sample shows how to prevent push of commits where the log message starts
+# with "WIP" (work in progress).
+
+remote="$1"
+url="$2"
+
+zero=$(git hash-object --stdin </dev/null | tr '[0-9a-f]' '0')
+
+while read local_ref local_oid remote_ref remote_oid
+do
+	if test "$local_oid" = "$zero"
+	then
+		# Handle delete
+		:
+	else
+		if test "$remote_oid" = "$zero"
+		then
+			# New branch, examine all commits
+			range="$local_oid"
+		else
+			# Update to existing branch, examine new commits
+			range="$remote_oid..$local_oid"
+		fi
+
+		# Check for WIP commit
+		commit=$(git rev-list -n 1 --grep '^WIP' "$range")
+		if test -n "$commit"
+		then
+			echo >&2 "Found WIP commit in $local_ref, not pushing"
+			exit 1
+		fi
+	fi
+done
+
+exit 0
+
+
+================================================================================
+FILE: /workspaces/pa-home-search/.git/hooks/pre-merge-commit.sample
+================================================================================
+
+#!/bin/sh
+#
+# An example hook script to verify what is about to be committed.
+# Called by "git merge" with no arguments.  The hook should
+# exit with non-zero status after issuing an appropriate message to
+# stderr if it wants to stop the merge commit.
+#
+# To enable this hook, rename this file to "pre-merge-commit".
+
+. git-sh-setup
+test -x "$GIT_DIR/hooks/pre-commit" &&
+        exec "$GIT_DIR/hooks/pre-commit"
+:
+
+
+================================================================================
+FILE: /workspaces/pa-home-search/.git/hooks/commit-msg.sample
+================================================================================
+
+#!/bin/sh
+#
+# An example hook script to check the commit log message.
+# Called by "git commit" with one argument, the name of the file
+# that has the commit message.  The hook should exit with non-zero
+# status after issuing an appropriate message if it wants to stop the
+# commit.  The hook is allowed to edit the commit message file.
+#
+# To enable this hook, rename this file to "commit-msg".
+
+# Uncomment the below to add a Signed-off-by line to the message.
+# Doing this in a hook is a bad idea in general, but the prepare-commit-msg
+# hook is more suited to it.
+#
+# SOB=$(git var GIT_AUTHOR_IDENT | sed -n 's/^\(.*>\).*$/Signed-off-by: \1/p')
+# grep -qs "^$SOB" "$1" || echo "$SOB" >> "$1"
+
+# This example catches duplicate Signed-off-by lines.
+
+test "" = "$(grep '^Signed-off-by: ' "$1" |
+	 sort | uniq -c | sed -e '/^[ 	]*1[ 	]/d')" || {
+	echo >&2 Duplicate Signed-off-by lines.
+	exit 1
+}
+
+
+================================================================================
+FILE: /workspaces/pa-home-search/.git/hooks/pre-rebase.sample
+================================================================================
+
+#!/bin/sh
+#
+# Copyright (c) 2006, 2008 Junio C Hamano
+#
+# The "pre-rebase" hook is run just before "git rebase" starts doing
+# its job, and can prevent the command from running by exiting with
+# non-zero status.
+#
+# The hook is called with the following parameters:
+#
+# $1 -- the upstream the series was forked from.
+# $2 -- the branch being rebased (or empty when rebasing the current branch).
+#
+# This sample shows how to prevent topic branches that are already
+# merged to 'next' branch from getting rebased, because allowing it
+# would result in rebasing already published history.
+
+publish=next
+basebranch="$1"
+if test "$#" = 2
+then
+	topic="refs/heads/$2"
+else
+	topic=`git symbolic-ref HEAD` ||
+	exit 0 ;# we do not interrupt rebasing detached HEAD
+fi
+
+case "$topic" in
+refs/heads/??/*)
+	;;
+*)
+	exit 0 ;# we do not interrupt others.
+	;;
+esac
+
+# Now we are dealing with a topic branch being rebased
+# on top of master.  Is it OK to rebase it?
+
+# Does the topic really exist?
+git show-ref -q "$topic" || {
+	echo >&2 "No such branch $topic"
+	exit 1
+}
+
+# Is topic fully merged to master?
+not_in_master=`git rev-list --pretty=oneline ^master "$topic"`
+if test -z "$not_in_master"
+then
+	echo >&2 "$topic is fully merged to master; better remove it."
+	exit 1 ;# we could allow it, but there is no point.
+fi
+
+# Is topic ever merged to next?  If so you should not be rebasing it.
+only_next_1=`git rev-list ^master "^$topic" ${publish} | sort`
+only_next_2=`git rev-list ^master           ${publish} | sort`
+if test "$only_next_1" = "$only_next_2"
+then
+	not_in_topic=`git rev-list "^$topic" master`
+	if test -z "$not_in_topic"
+	then
+		echo >&2 "$topic is already up to date with master"
+		exit 1 ;# we could allow it, but there is no point.
+	else
+		exit 0
+	fi
+else
+	not_in_next=`git rev-list --pretty=oneline ^${publish} "$topic"`
+	/usr/bin/perl -e '
+		my $topic = $ARGV[0];
+		my $msg = "* $topic has commits already merged to public branch:\n";
+		my (%not_in_next) = map {
+			/^([0-9a-f]+) /;
+			($1 => 1);
+		} split(/\n/, $ARGV[1]);
+		for my $elem (map {
+				/^([0-9a-f]+) (.*)$/;
+				[$1 => $2];
+			} split(/\n/, $ARGV[2])) {
+			if (!exists $not_in_next{$elem->[0]}) {
+				if ($msg) {
+					print STDERR $msg;
+					undef $msg;
+				}
+				print STDERR " $elem->[1]\n";
+			}
+		}
+	' "$topic" "$not_in_next" "$not_in_master"
+	exit 1
+fi
+
+<<\DOC_END
+
+This sample hook safeguards topic branches that have been
+published from being rewound.
+
+The workflow assumed here is:
+
+ * Once a topic branch forks from "master", "master" is never
+   merged into it again (either directly or indirectly).
+
+ * Once a topic branch is fully cooked and merged into "master",
+   it is deleted.  If you need to build on top of it to correct
+   earlier mistakes, a new topic branch is created by forking at
+   the tip of the "master".  This is not strictly necessary, but
+   it makes it easier to keep your history simple.
+
+ * Whenever you need to test or publish your changes to topic
+   branches, merge them into "next" branch.
+
+The script, being an example, hardcodes the publish branch name
+to be "next", but it is trivial to make it configurable via
+$GIT_DIR/config mechanism.
+
+With this workflow, you would want to know:
+
+(1) ... if a topic branch has ever been merged to "next".  Young
+    topic branches can have stupid mistakes you would rather
+    clean up before publishing, and things that have not been
+    merged into other branches can be easily rebased without
+    affecting other people.  But once it is published, you would
+    not want to rewind it.
+
+(2) ... if a topic branch has been fully merged to "master".
+    Then you can delete it.  More importantly, you should not
+    build on top of it -- other people may already want to
+    change things related to the topic as patches against your
+    "master", so if you need further changes, it is better to
+    fork the topic (perhaps with the same name) afresh from the
+    tip of "master".
+
+Let's look at this example:
+
+		   o---o---o---o---o---o---o---o---o---o "next"
+		  /       /           /           /
+		 /   a---a---b A     /           /
+		/   /               /           /
+	       /   /   c---c---c---c B         /
+	      /   /   /             \         /
+	     /   /   /   b---b C     \       /
+	    /   /   /   /             \     /
+    ---o---o---o---o---o---o---o---o---o---o---o "master"
+
+
+A, B and C are topic branches.
+
+ * A has one fix since it was merged up to "next".
+
+ * B has finished.  It has been fully merged up to "master" and "next",
+   and is ready to be deleted.
+
+ * C has not merged to "next" at all.
+
+We would want to allow C to be rebased, refuse A, and encourage
+B to be deleted.
+
+To compute (1):
+
+	git rev-list ^master ^topic next
+	git rev-list ^master        next
+
+	if these match, topic has not merged in next at all.
+
+To compute (2):
+
+	git rev-list master..topic
+
+	if this is empty, it is fully merged to "master".
+
+DOC_END
+
+
+================================================================================
+FILE: /workspaces/pa-home-search/.git/hooks/sendemail-validate.sample
+================================================================================
+
+#!/bin/sh
+
+# An example hook script to validate a patch (and/or patch series) before
+# sending it via email.
+#
+# The hook should exit with non-zero status after issuing an appropriate
+# message if it wants to prevent the email(s) from being sent.
+#
+# To enable this hook, rename this file to "sendemail-validate".
+#
+# By default, it will only check that the patch(es) can be applied on top of
+# the default upstream branch without conflicts in a secondary worktree. After
+# validation (successful or not) of the last patch of a series, the worktree
+# will be deleted.
+#
+# The following config variables can be set to change the default remote and
+# remote ref that are used to apply the patches against:
+#
+#   sendemail.validateRemote (default: origin)
+#   sendemail.validateRemoteRef (default: HEAD)
+#
+# Replace the TODO placeholders with appropriate checks according to your
+# needs.
+
+validate_cover_letter () {
+	file="$1"
+	# TODO: Replace with appropriate checks (e.g. spell checking).
+	true
+}
+
+validate_patch () {
+	file="$1"
+	# Ensure that the patch applies without conflicts.
+	git am -3 "$file" || return
+	# TODO: Replace with appropriate checks for this patch
+	# (e.g. checkpatch.pl).
+	true
+}
+
+validate_series () {
+	# TODO: Replace with appropriate checks for the whole series
+	# (e.g. quick build, coding style checks, etc.).
+	true
+}
+
+# main -------------------------------------------------------------------------
+
+if test "$GIT_SENDEMAIL_FILE_COUNTER" = 1
+then
+	remote=$(git config --default origin --get sendemail.validateRemote) &&
+	ref=$(git config --default HEAD --get sendemail.validateRemoteRef) &&
+	worktree=$(mktemp --tmpdir -d sendemail-validate.XXXXXXX) &&
+	git worktree add -fd --checkout "$worktree" "refs/remotes/$remote/$ref" &&
+	git config --replace-all sendemail.validateWorktree "$worktree"
+else
+	worktree=$(git config --get sendemail.validateWorktree)
+fi || {
+	echo "sendemail-validate: error: failed to prepare worktree" >&2
+	exit 1
+}
+
+unset GIT_DIR GIT_WORK_TREE
+cd "$worktree" &&
+
+if grep -q "^diff --git " "$1"
+then
+	validate_patch "$1"
+else
+	validate_cover_letter "$1"
+fi &&
+
+if test "$GIT_SENDEMAIL_FILE_COUNTER" = "$GIT_SENDEMAIL_FILE_TOTAL"
+then
+	git config --unset-all sendemail.validateWorktree &&
+	trap 'git worktree remove -ff "$worktree"' EXIT &&
+	validate_series
+fi
+
+
+================================================================================
+FILE: /workspaces/pa-home-search/.git/hooks/fsmonitor-watchman.sample
+================================================================================
+
+#!/usr/bin/perl
+
+use strict;
+use warnings;
+use IPC::Open2;
+
+# An example hook script to integrate Watchman
+# (https://facebook.github.io/watchman/) with git to speed up detecting
+# new and modified files.
+#
+# The hook is passed a version (currently 2) and last update token
+# formatted as a string and outputs to stdout a new update token and
+# all files that have been modified since the update token. Paths must
+# be relative to the root of the working tree and separated by a single NUL.
+#
+# To enable this hook, rename this file to "query-watchman" and set
+# 'git config core.fsmonitor .git/hooks/query-watchman'
+#
+my ($version, $last_update_token) = @ARGV;
+
+# Uncomment for debugging
+# print STDERR "$0 $version $last_update_token\n";
+
+# Check the hook interface version
+if ($version ne 2) {
+	die "Unsupported query-fsmonitor hook version '$version'.\n" .
+	    "Falling back to scanning...\n";
+}
+
+my $git_work_tree = get_working_dir();
+
+my $retry = 1;
+
+my $json_pkg;
+eval {
+	require JSON::XS;
+	$json_pkg = "JSON::XS";
+	1;
+} or do {
+	require JSON::PP;
+	$json_pkg = "JSON::PP";
+};
+
+launch_watchman();
+
+sub launch_watchman {
+	my $o = watchman_query();
+	if (is_work_tree_watched($o)) {
+		output_result($o->{clock}, @{$o->{files}});
+	}
+}
+
+sub output_result {
+	my ($clockid, @files) = @_;
+
+	# Uncomment for debugging watchman output
+	# open (my $fh, ">", ".git/watchman-output.out");
+	# binmode $fh, ":utf8";
+	# print $fh "$clockid\n@files\n";
+	# close $fh;
+
+	binmode STDOUT, ":utf8";
+	print $clockid;
+	print "\0";
+	local $, = "\0";
+	print @files;
+}
+
+sub watchman_clock {
+	my $response = qx/watchman clock "$git_work_tree"/;
+	die "Failed to get clock id on '$git_work_tree'.\n" .
+		"Falling back to scanning...\n" if $? != 0;
+
+	return $json_pkg->new->utf8->decode($response);
+}
+
+sub watchman_query {
+	my $pid = open2(\*CHLD_OUT, \*CHLD_IN, 'watchman -j --no-pretty')
+	or die "open2() failed: $!\n" .
+	"Falling back to scanning...\n";
+
+	# In the query expression below we're asking for names of files that
+	# changed since $last_update_token but not from the .git folder.
+	#
+	# To accomplish this, we're using the "since" generator to use the
+	# recency index to select candidate nodes and "fields" to limit the
+	# output to file names only. Then we're using the "expression" term to
+	# further constrain the results.
+	my $last_update_line = "";
+	if (substr($last_update_token, 0, 1) eq "c") {
+		$last_update_token = "\"$last_update_token\"";
+		$last_update_line = qq[\n"since": $last_update_token,];
+	}
+	my $query = <<"	END";
+		["query", "$git_work_tree", {$last_update_line
+			"fields": ["name"],
+			"expression": ["not", ["dirname", ".git"]]
+		}]
+	END
+
+	# Uncomment for debugging the watchman query
+	# open (my $fh, ">", ".git/watchman-query.json");
+	# print $fh $query;
+	# close $fh;
+
+	print CHLD_IN $query;
+	close CHLD_IN;
+	my $response = do {local $/; <CHLD_OUT>};
+
+	# Uncomment for debugging the watch response
+	# open ($fh, ">", ".git/watchman-response.json");
+	# print $fh $response;
+	# close $fh;
+
+	die "Watchman: command returned no output.\n" .
+	"Falling back to scanning...\n" if $response eq "";
+	die "Watchman: command returned invalid output: $response\n" .
+	"Falling back to scanning...\n" unless $response =~ /^\{/;
+
+	return $json_pkg->new->utf8->decode($response);
+}
+
+sub is_work_tree_watched {
+	my ($output) = @_;
+	my $error = $output->{error};
+	if ($retry > 0 and $error and $error =~ m/unable to resolve root .* directory (.*) is not watched/) {
+		$retry--;
+		my $response = qx/watchman watch "$git_work_tree"/;
+		die "Failed to make watchman watch '$git_work_tree'.\n" .
+		    "Falling back to scanning...\n" if $? != 0;
+		$output = $json_pkg->new->utf8->decode($response);
+		$error = $output->{error};
+		die "Watchman: $error.\n" .
+		"Falling back to scanning...\n" if $error;
+
+		# Uncomment for debugging watchman output
+		# open (my $fh, ">", ".git/watchman-output.out");
+		# close $fh;
+
+		# Watchman will always return all files on the first query so
+		# return the fast "everything is dirty" flag to git and do the
+		# Watchman query just to get it over with now so we won't pay
+		# the cost in git to look up each individual file.
+		my $o = watchman_clock();
+		$error = $output->{error};
+
+		die "Watchman: $error.\n" .
+		"Falling back to scanning...\n" if $error;
+
+		output_result($o->{clock}, ("/"));
+		$last_update_token = $o->{clock};
+
+		eval { launch_watchman() };
+		return 0;
+	}
+
+	die "Watchman: $error.\n" .
+	"Falling back to scanning...\n" if $error;
+
+	return 1;
+}
+
+sub get_working_dir {
+	my $working_dir;
+	if ($^O =~ 'msys' || $^O =~ 'cygwin') {
+		$working_dir = Win32::GetCwd();
+		$working_dir =~ tr/\\/\//;
+	} else {
+		require Cwd;
+		$working_dir = Cwd::cwd();
+	}
+
+	return $working_dir;
+}
+
+
+================================================================================
+FILE: /workspaces/pa-home-search/.git/hooks/update.sample
+================================================================================
+
+#!/bin/sh
+#
+# An example hook script to block unannotated tags from entering.
+# Called by "git receive-pack" with arguments: refname sha1-old sha1-new
+#
+# To enable this hook, rename this file to "update".
+#
+# Config
+# ------
+# hooks.allowunannotated
+#   This boolean sets whether unannotated tags will be allowed into the
+#   repository.  By default they won't be.
+# hooks.allowdeletetag
+#   This boolean sets whether deleting tags will be allowed in the
+#   repository.  By default they won't be.
+# hooks.allowmodifytag
+#   This boolean sets whether a tag may be modified after creation. By default
+#   it won't be.
+# hooks.allowdeletebranch
+#   This boolean sets whether deleting branches will be allowed in the
+#   repository.  By default they won't be.
+# hooks.denycreatebranch
+#   This boolean sets whether remotely creating branches will be denied
+#   in the repository.  By default this is allowed.
+#
+
+# --- Command line
+refname="$1"
+oldrev="$2"
+newrev="$3"
+
+# --- Safety check
+if [ -z "$GIT_DIR" ]; then
+	echo "Don't run this script from the command line." >&2
+	echo " (if you want, you could supply GIT_DIR then run" >&2
+	echo "  $0 <ref> <oldrev> <newrev>)" >&2
+	exit 1
+fi
+
+if [ -z "$refname" -o -z "$oldrev" -o -z "$newrev" ]; then
+	echo "usage: $0 <ref> <oldrev> <newrev>" >&2
+	exit 1
+fi
+
+# --- Config
+allowunannotated=$(git config --type=bool hooks.allowunannotated)
+allowdeletebranch=$(git config --type=bool hooks.allowdeletebranch)
+denycreatebranch=$(git config --type=bool hooks.denycreatebranch)
+allowdeletetag=$(git config --type=bool hooks.allowdeletetag)
+allowmodifytag=$(git config --type=bool hooks.allowmodifytag)
+
+# check for no description
+projectdesc=$(sed -e '1q' "$GIT_DIR/description")
+case "$projectdesc" in
+"Unnamed repository"* | "")
+	echo "*** Project description file hasn't been set" >&2
+	exit 1
+	;;
+esac
+
+# --- Check types
+# if $newrev is 0000...0000, it's a commit to delete a ref.
+zero=$(git hash-object --stdin </dev/null | tr '[0-9a-f]' '0')
+if [ "$newrev" = "$zero" ]; then
+	newrev_type=delete
+else
+	newrev_type=$(git cat-file -t $newrev)
+fi
+
+case "$refname","$newrev_type" in
+	refs/tags/*,commit)
+		# un-annotated tag
+		short_refname=${refname##refs/tags/}
+		if [ "$allowunannotated" != "true" ]; then
+			echo "*** The un-annotated tag, $short_refname, is not allowed in this repository" >&2
+			echo "*** Use 'git tag [ -a | -s ]' for tags you want to propagate." >&2
+			exit 1
+		fi
+		;;
+	refs/tags/*,delete)
+		# delete tag
+		if [ "$allowdeletetag" != "true" ]; then
+			echo "*** Deleting a tag is not allowed in this repository" >&2
+			exit 1
+		fi
+		;;
+	refs/tags/*,tag)
+		# annotated tag
+		if [ "$allowmodifytag" != "true" ] && git rev-parse $refname > /dev/null 2>&1
+		then
+			echo "*** Tag '$refname' already exists." >&2
+			echo "*** Modifying a tag is not allowed in this repository." >&2
+			exit 1
+		fi
+		;;
+	refs/heads/*,commit)
+		# branch
+		if [ "$oldrev" = "$zero" -a "$denycreatebranch" = "true" ]; then
+			echo "*** Creating a branch is not allowed in this repository" >&2
+			exit 1
+		fi
+		;;
+	refs/heads/*,delete)
+		# delete branch
+		if [ "$allowdeletebranch" != "true" ]; then
+			echo "*** Deleting a branch is not allowed in this repository" >&2
+			exit 1
+		fi
+		;;
+	refs/remotes/*,commit)
+		# tracking branch
+		;;
+	refs/remotes/*,delete)
+		# delete tracking branch
+		if [ "$allowdeletebranch" != "true" ]; then
+			echo "*** Deleting a tracking branch is not allowed in this repository" >&2
+			exit 1
+		fi
+		;;
+	*)
+		# Anything else (is there anything else?)
+		echo "*** Update hook: unknown type of update to ref $refname of type $newrev_type" >&2
+		exit 1
+		;;
+esac
+
+# --- Finished
+exit 0
+
+
+================================================================================
+FILE: /workspaces/pa-home-search/.git/hooks/push-to-checkout.sample
+================================================================================
+
+#!/bin/sh
+
+# An example hook script to update a checked-out tree on a git push.
+#
+# This hook is invoked by git-receive-pack(1) when it reacts to git
+# push and updates reference(s) in its repository, and when the push
+# tries to update the branch that is currently checked out and the
+# receive.denyCurrentBranch configuration variable is set to
+# updateInstead.
+#
+# By default, such a push is refused if the working tree and the index
+# of the remote repository has any difference from the currently
+# checked out commit; when both the working tree and the index match
+# the current commit, they are updated to match the newly pushed tip
+# of the branch. This hook is to be used to override the default
+# behaviour; however the code below reimplements the default behaviour
+# as a starting point for convenient modification.
+#
+# The hook receives the commit with which the tip of the current
+# branch is going to be updated:
+commit=$1
+
+# It can exit with a non-zero status to refuse the push (when it does
+# so, it must not modify the index or the working tree).
+die () {
+	echo >&2 "$*"
+	exit 1
+}
+
+# Or it can make any necessary changes to the working tree and to the
+# index to bring them to the desired state when the tip of the current
+# branch is updated to the new commit, and exit with a zero status.
+#
+# For example, the hook can simply run git read-tree -u -m HEAD "$1"
+# in order to emulate git fetch that is run in the reverse direction
+# with git push, as the two-tree form of git read-tree -u -m is
+# essentially the same as git switch or git checkout that switches
+# branches while keeping the local changes in the working tree that do
+# not interfere with the difference between the branches.
+
+# The below is a more-or-less exact translation to shell of the C code
+# for the default behaviour for git's push-to-checkout hook defined in
+# the push_to_deploy() function in builtin/receive-pack.c.
+#
+# Note that the hook will be executed from the repository directory,
+# not from the working tree, so if you want to perform operations on
+# the working tree, you will have to adapt your code accordingly, e.g.
+# by adding "cd .." or using relative paths.
+
+if ! git update-index -q --ignore-submodules --refresh
+then
+	die "Up-to-date check failed"
+fi
+
+if ! git diff-files --quiet --ignore-submodules --
+then
+	die "Working directory has unstaged changes"
+fi
+
+# This is a rough translation of:
+#
+#   head_has_history() ? "HEAD" : EMPTY_TREE_SHA1_HEX
+if git cat-file -e HEAD 2>/dev/null
+then
+	head=HEAD
+else
+	head=$(git hash-object -t tree --stdin </dev/null)
+fi
+
+if ! git diff-index --quiet --cached --ignore-submodules $head --
+then
+	die "Working directory has staged changes"
+fi
+
+if ! git read-tree -u -m "$commit"
+then
+	die "Could not update working tree to new HEAD"
+fi
+
+
+================================================================================
+FILE: /workspaces/pa-home-search/.git/hooks/prepare-commit-msg.sample
+================================================================================
+
+#!/bin/sh
+#
+# An example hook script to prepare the commit log message.
+# Called by "git commit" with the name of the file that has the
+# commit message, followed by the description of the commit
+# message's source.  The hook's purpose is to edit the commit
+# message file.  If the hook fails with a non-zero status,
+# the commit is aborted.
+#
+# To enable this hook, rename this file to "prepare-commit-msg".
+
+# This hook includes three examples. The first one removes the
+# "# Please enter the commit message..." help message.
+#
+# The second includes the output of "git diff --name-status -r"
+# into the message, just before the "git status" output.  It is
+# commented because it doesn't cope with --amend or with squashed
+# commits.
+#
+# The third example adds a Signed-off-by line to the message, that can
+# still be edited.  This is rarely a good idea.
+
+COMMIT_MSG_FILE=$1
+COMMIT_SOURCE=$2
+SHA1=$3
+
+/usr/bin/perl -i.bak -ne 'print unless(m/^. Please enter the commit message/..m/^#$/)' "$COMMIT_MSG_FILE"
+
+# case "$COMMIT_SOURCE,$SHA1" in
+#  ,|template,)
+#    /usr/bin/perl -i.bak -pe '
+#       print "\n" . `git diff --cached --name-status -r`
+# 	 if /^#/ && $first++ == 0' "$COMMIT_MSG_FILE" ;;
+#  *) ;;
+# esac
+
+# SOB=$(git var GIT_COMMITTER_IDENT | sed -n 's/^\(.*>\).*$/Signed-off-by: \1/p')
+# git interpret-trailers --in-place --trailer "$SOB" "$COMMIT_MSG_FILE"
+# if test -z "$COMMIT_SOURCE"
+# then
+#   /usr/bin/perl -i.bak -pe 'print "\n" if !$first_line++' "$COMMIT_MSG_FILE"
+# fi
+
+
+================================================================================
+FILE: /workspaces/pa-home-search/.git/hooks/pre-receive.sample
+================================================================================
+
+#!/bin/sh
+#
+# An example hook script to make use of push options.
+# The example simply echoes all push options that start with 'echoback='
+# and rejects all pushes when the "reject" push option is used.
+#
+# To enable this hook, rename this file to "pre-receive".
+
+if test -n "$GIT_PUSH_OPTION_COUNT"
+then
+	i=0
+	while test "$i" -lt "$GIT_PUSH_OPTION_COUNT"
+	do
+		eval "value=\$GIT_PUSH_OPTION_$i"
+		case "$value" in
+		echoback=*)
+			echo "echo from the pre-receive-hook: ${value#*=}" >&2
+			;;
+		reject)
+			exit 1
+		esac
+		i=$((i + 1))
+	done
+fi
+
+
+================================================================================
+FILE: /workspaces/pa-home-search/.git/hooks/applypatch-msg.sample
+================================================================================
+
+#!/bin/sh
+#
+# An example hook script to check the commit log message taken by
+# applypatch from an e-mail message.
+#
+# The hook should exit with non-zero status after issuing an
+# appropriate message if it wants to stop the commit.  The hook is
+# allowed to edit the commit message file.
+#
+# To enable this hook, rename this file to "applypatch-msg".
+
+. git-sh-setup
+commitmsg="$(git rev-parse --git-path hooks/commit-msg)"
+test -x "$commitmsg" && exec "$commitmsg" ${1+"$@"}
+:
+
+
+================================================================================
+FILE: /workspaces/pa-home-search/.git/hooks/pre-commit.sample
+================================================================================
+
+#!/bin/sh
+#
+# An example hook script to verify what is about to be committed.
+# Called by "git commit" with no arguments.  The hook should
+# exit with non-zero status after issuing an appropriate message if
+# it wants to stop the commit.
+#
+# To enable this hook, rename this file to "pre-commit".
+
+if git rev-parse --verify HEAD >/dev/null 2>&1
+then
+	against=HEAD
+else
+	# Initial commit: diff against an empty tree object
+	against=$(git hash-object -t tree /dev/null)
+fi
+
+# If you want to allow non-ASCII filenames set this variable to true.
+allownonascii=$(git config --type=bool hooks.allownonascii)
+
+# Redirect output to stderr.
+exec 1>&2
+
+# Cross platform projects tend to avoid non-ASCII filenames; prevent
+# them from being added to the repository. We exploit the fact that the
+# printable range starts at the space character and ends with tilde.
+if [ "$allownonascii" != "true" ] &&
+	# Note that the use of brackets around a tr range is ok here, (it's
+	# even required, for portability to Solaris 10's /usr/bin/tr), since
+	# the square bracket bytes happen to fall in the designated range.
+	test $(git diff-index --cached --name-only --diff-filter=A -z $against |
+	  LC_ALL=C tr -d '[ -~]\0' | wc -c) != 0
+then
+	cat <<\EOF
+Error: Attempt to add a non-ASCII file name.
+
+This can cause problems if you want to work with people on other platforms.
+
+To be portable it is advisable to rename the file.
+
+If you know what you are doing you can disable this check using:
+
+  git config hooks.allownonascii true
+EOF
+	exit 1
+fi
+
+# If there are whitespace errors, print the offending file names and fail.
+exec git diff-index --check --cached $against --
+
+
+================================================================================
+FILE: /workspaces/pa-home-search/.git/info/exclude
+================================================================================
+
+# git ls-files --others --exclude-from=.git/info/exclude
+# Lines that start with '#' are comments.
+# For a project mostly in C, the following would be a good set of
+# exclude patterns (uncomment them if you want to use them):
+# *.[oa]
+# *~
+
+
+================================================================================
+FILE: /workspaces/pa-home-search/app/models.py
+================================================================================
+
+# app/models.py
+# Define your data models here (e.g., User, Property, etc.)
+
+
+================================================================================
+FILE: /workspaces/pa-home-search/app/__init__.py
+================================================================================
+
+# app/__init__.py
+from flask import Flask
+from .extensions import init_extensions
+
+def create_app():
+    app = Flask(__name__)
+    app.config.from_object('config.Config')
+    
+    # Initialize extensions
+    init_extensions(app)
+    
+    # Import and register blueprints
+    from .main import main as main_blueprint
+    from .property_search import property_search as property_blueprint
+    from .services import services as services_blueprint
+    from .reviews import reviews as reviews_blueprint
+    from .about import about as about_blueprint
+    from .resources import resources as resources_blueprint
+    from .contact import contact as contact_blueprint
+    
+    app.register_blueprint(main_blueprint)
+    app.register_blueprint(property_blueprint)
+    app.register_blueprint(services_blueprint)
+    app.register_blueprint(reviews_blueprint)
+    app.register_blueprint(about_blueprint)
+    app.register_blueprint(resources_blueprint)
+    app.register_blueprint(contact_blueprint)
+    
+    return app
+
+
+================================================================================
+FILE: /workspaces/pa-home-search/app/extensions.py
+================================================================================
+
+# app/extensions.py
+# Initialize and configure Flask extensions here
+
+def init_extensions(app):
+    # Example: Initialize SQLAlchemy, Migrate, LoginManager, etc.
+    pass
+
+
+================================================================================
+FILE: /workspaces/pa-home-search/app/services/__init__.py
+================================================================================
+
+# app/services/__init__.py
+from flask import Blueprint
+
+services = Blueprint('services', __name__)
+
+from . import routes
+
+
+================================================================================
+FILE: /workspaces/pa-home-search/app/services/routes.py
+================================================================================
+
+# app/services/routes.py
+from flask import render_template
+from . import services
+
+@services.route('/services/buying')
+def buying():
+    return render_template('services/buying.html')
+
+@services.route('/services/selling')
+def selling():
+    return render_template('services/selling.html')
+
+@services.route('/services/consultation')
+def consultation():
+    return render_template('services/consultation.html')
+
+
+================================================================================
+FILE: /workspaces/pa-home-search/app/services/templates/services/selling.html
+================================================================================
+
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Selling</title>
+</head>
+<body>
+    <h1>Selling Services</h1>
+</body>
+</html>
+
+
+================================================================================
+FILE: /workspaces/pa-home-search/app/services/templates/services/consultation.html
+================================================================================
+
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Consultation</title>
+</head>
+<body>
+    <h1>Consultation/Market Analysis</h1>
+</body>
+</html>
+
+
+================================================================================
+FILE: /workspaces/pa-home-search/app/services/templates/services/buying.html
+================================================================================
+
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Buying</title>
+</head>
+<body>
+    <h1>Buying Services</h1>
+</body>
+</html>
+
+
+================================================================================
+FILE: /workspaces/pa-home-search/app/about/__init__.py
+================================================================================
+
+# app/about/__init__.py
+from flask import Blueprint
+
+about = Blueprint('about', __name__)
+
+from . import routes
+
+
+================================================================================
+FILE: /workspaces/pa-home-search/app/about/routes.py
+================================================================================
+
+# app/about/routes.py
+from flask import render_template
+from . import about
+
+@about.route('/about/our_story')
+def our_story():
+    return render_template('about/our_story.html')
+
+@about.route('/about/meet_the_team')
+def meet_the_team():
+    return render_template('about/meet_the_team.html')
+
+
+================================================================================
+FILE: /workspaces/pa-home-search/app/about/templates/about/meet_the_team.html
+================================================================================
+
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Meet the Team</title>
+</head>
+<body>
+    <h1>Meet the Team</h1>
+</body>
+</html>
+
+
+================================================================================
+FILE: /workspaces/pa-home-search/app/about/templates/about/our_story.html
+================================================================================
+
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Our Story</title>
+</head>
+<body>
+    <h1>Our Story</h1>
+</body>
+</html>
+
+
+================================================================================
+FILE: /workspaces/pa-home-search/app/contact/__init__.py
+================================================================================
+
+# app/contact/__init__.py
+from flask import Blueprint
+
+contact = Blueprint('contact', __name__)
+
+from . import routes
+
+
+================================================================================
+FILE: /workspaces/pa-home-search/app/contact/routes.py
+================================================================================
+
+# app/contact/routes.py
+from flask import render_template
+from . import contact
+
+@contact.route('/contact')
+def contact_form():
+    return render_template('contact/contact_form.html')
+
+@contact.route('/contact/scheduling')
+def scheduling():
+    return render_template('contact/scheduling.html')
+
+
+================================================================================
+FILE: /workspaces/pa-home-search/app/contact/forms.py
+================================================================================
+
+# app/contact/forms.py (Contact and appointment scheduling forms)
+
+
+================================================================================
+FILE: /workspaces/pa-home-search/app/contact/templates/contact/scheduling.html
+================================================================================
+
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Schedule an Appointment</title>
+</head>
+<body>
+    <h1>Appointment Scheduling</h1>
+</body>
+</html>
+
+
+================================================================================
+FILE: /workspaces/pa-home-search/app/contact/templates/contact/contact_form.html
+================================================================================
+
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Contact Us</title>
+</head>
+<body>
+    <h1>Contact Form</h1>
+</body>
+</html>
+
+
+================================================================================
+FILE: /workspaces/pa-home-search/app/static/css/global.css
+================================================================================
+
+/* RESET & BASE STYLES */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+  }
+  body {
+    line-height: 1.5;
+    color: #4D4D4D; /* Using Medium Gray for body text */
+  }
+  a {
+    text-decoration: none;
+    color: inherit;
+  }
+  ul {
+    list-style-type: none;
+  }
+  img {
+    max-width: 100%;
+    height: auto;
+  }
+  
+  /* HEADER & NAVIGATION */
+  header {
+    background-color: #f8f8f8;
+    border-bottom: 1px solid #ddd;
+    position: relative;
+  }
+  .nav-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 1rem;
+  }
+  .nav-logo {
+    font-weight: bold;
+    font-size: 1.2rem;
+    color: #CE011F; /* KW Red accent for the logo */
+  }
+  .nav-menu {
+    display: flex;
+    gap: 1.5rem;
+  }
+  .nav-menu li {
+    cursor: pointer;
+    transition: color 0.2s ease;
+  }
+  .nav-menu li:hover {
+    color: #CE011F; /* Hover using KW Red */
+  }
+  
+  /* HAMBURGER MENU (Mobile Only) */
+  .hamburger {
+    display: none;
+    flex-direction: column;
+    gap: 5px;
+    background: none;
+    border: none;
+    cursor: pointer;
+  }
+  .hamburger .bar {
+    width: 25px;
+    height: 3px;
+    background-color: #828282; /* KW Main Gray */
+    border-radius: 2px;
+  }
+  
+  /* FOOTER */
+  footer {
+    background-color: #222;
+    color: #fff;
+    padding: 2rem 1rem;
+    margin-top: 2rem;
+  }
+  .footer-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 2rem;
+  }
+  .footer-section {
+    flex: 1 1 200px;
+  }
+  .footer-section h3 {
+    margin-bottom: 1rem;
+  }
+  .footer-section ul li {
+    margin-bottom: 0.5rem;
+  }
+  .footer-section a {
+    color: #fff;
+    transition: color 0.2s ease;
+  }
+  .footer-section a:hover {
+    color: #ccc;
+  }
+  .footer-bottom {
+    text-align: center;
+    margin-top: 2rem;
+    font-size: 0.9rem;
+    opacity: 0.8;
+  }
+  
+  /* RESPONSIVE STYLES (Global) */
+  @media (max-width: 768px) {
+    /* Navigation Menu on mobile */
+    .nav-menu {
+      display: none;
+      flex-direction: column;
+      background-color: #f8f8f8;
+      position: absolute;
+      top: 60px;
+      left: 0;
+      right: 0;
+      padding: 1rem;
+      border-top: 1px solid #ddd;
+    }
+    .nav-menu.active {
+      display: flex;
+    }
+    .hamburger {
+      display: flex;
+      background: rgba(0, 0, 0, 0.1); /* Just for demo */
+    }
+  }
+  
+
+================================================================================
+FILE: /workspaces/pa-home-search/app/static/css/index.css
+================================================================================
+
+/* HERO SECTION */
+.hero {
+    position: relative;
+    background: url('https://i.ibb.co/BKwsxzPb/hero-home.png') center/cover no-repeat;
+    height: 60vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    color: #fff;
+  }
+  .hero-content {
+    background: rgba(0,0,0,0.5);
+    padding: 2rem;
+    border-radius: 4px;
+    max-width: 600px;
+  }
+  .hero h1 {
+    font-size: 2rem;
+    margin-bottom: 1rem;
+  }
+  .hero p {
+    font-size: 1rem;
+    margin-bottom: 1.5rem;
+  }
+  .hero .cta-button {
+    background-color: #CE011F; /* KW Red */
+    color: #fff;
+    padding: 0.8rem 1.5rem;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 1rem;
+    transition: background-color 0.3s ease;
+  }
+  .hero .cta-button:hover {
+    background-color: #B30E1A;
+  }
+  
+  /* PROPERTY SEARCH MODULE */
+  .property-search {
+    max-width: 1200px;
+    margin: 2rem auto;
+    padding: 0 1rem;
+  }
+  .search-box {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 1rem;
+  }
+  .search-box input {
+    flex: 1;
+    padding: 0.8rem;
+    border: 1px solid #CCCCCC; /* Light Gray */
+    border-radius: 4px;
+  }
+  .search-box button {
+    padding: 0.8rem 1.5rem;
+    border: none;
+    border-radius: 4px;
+    background-color: #CE011F;
+    color: #fff;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  .search-box button:hover {
+    background-color: #B30E1A;
+  }
+  .featured-links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-top: 1rem;
+  }
+  .featured-links a {
+    color: #CE011F;
+    padding: 0.4rem 0.8rem;
+    background-color: #CCCCCC;
+    border-radius: 4px;
+    transition: background-color 0.3s ease;
+  }
+  .featured-links a:hover {
+    background-color: #B3B3B3;
+  }
+  
+  /* FEATURED LISTINGS / CITY PAGES */
+  .featured-listings {
+    max-width: 1200px;
+    margin: 2rem auto;
+    padding: 0 1rem;
+  }
+  .featured-listings h2 {
+    margin-bottom: 1rem;
+    color: #000; /* Black for headings */
+  }
+  .city-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    gap: 1rem;
+  }
+  .city-card {
+    background-color: #fff;
+    border: 1px solid #CCCCCC;
+    border-radius: 4px;
+    overflow: hidden;
+    text-align: center;
+    transition: box-shadow 0.3s ease;
+  }
+  .city-card:hover {
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+  }
+  .city-card img {
+    width: 100%;
+    height: 160px;
+    object-fit: cover;
+  }
+  .city-card p {
+    padding: 0.8rem;
+  }
+  
+  /* SERVICES / VALUE PROPOSITION */
+  .services {
+    max-width: 1200px;
+    margin: 2rem auto;
+    padding: 0 1rem;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 2rem;
+    justify-content: space-around;
+    text-align: center;
+  }
+  .service-item {
+    flex: 1 1 280px;
+    background-color: #f9f9f9;
+    border-radius: 4px;
+    padding: 2rem 1rem;
+    transition: box-shadow 0.3s ease;
+    position: relative;
+  }
+  .service-item:hover {
+    box-shadow: 0 0 8px rgba(0,0,0,0.1);
+  }
+  .service-item h3 {
+    margin-top: 1rem;
+    color: #000;
+  }
+  .service-icon {
+    width: 60px;
+    height: 60px;
+    margin: 0 auto;
+    display: block;
+  }
+  
+  /* TESTIMONIALS / REVIEWS */
+  .testimonials {
+    background-color: #f2f2f2;
+    padding: 2rem 1rem;
+  }
+  .testimonials-container {
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+  .testimonials h2 {
+    text-align: center;
+    margin-bottom: 1.5rem;
+    color: #000;
+  }
+  .testimonial-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+  }
+  .testimonial-item {
+    background: #fff;
+    border-radius: 4px;
+    padding: 1rem;
+    box-shadow: 0 0 8px rgba(0,0,0,0.1);
+    text-align: center;
+  }
+  .testimonial-item p {
+    margin-top: 1rem;
+  }
+  .testimonial-item img {
+    width: 100%;
+    max-height: 200px;
+    object-fit: cover;
+    border-radius: 4px;
+  }
+  
+  /* ABOUT / TRUST SECTION */
+  .about {
+    max-width: 1200px;
+    margin: 2rem auto;
+    padding: 0 1rem;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 2rem;
+    align-items: center;
+  }
+  .about-text {
+    flex: 1 1 300px;
+  }
+  .about-text h2 {
+    margin-bottom: 1rem;
+    color: #000;
+  }
+  .about-text p {
+    margin-bottom: 1rem;
+  }
+  .about-image {
+    flex: 1 1 300px;
+    background: #ccc;
+    height: 250px;
+  }
+  .about-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  
+  /* BLOG / RESOURCES TEASER */
+  .blog-resources {
+    max-width: 1200px;
+    margin: 2rem auto;
+    padding: 0 1rem;
+  }
+  .blog-resources h2 {
+    margin-bottom: 1rem;
+    color: #000;
+  }
+  .blog-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 1rem;
+  }
+  .blog-card {
+    background-color: #fff;
+    border: 1px solid #CCCCCC;
+    border-radius: 4px;
+    overflow: hidden;
+    transition: box-shadow 0.3s ease;
+  }
+  .blog-card:hover {
+    box-shadow: 0 0 8px rgba(0,0,0,0.1);
+  }
+  .blog-card img {
+    width: 100%;
+    height: 150px;
+    object-fit: cover;
+  }
+  .blog-card .content {
+    padding: 1rem;
+  }
+  .blog-card .content h3 {
+    margin-bottom: 0.5rem;
+    color: #000;
+  }
+  .blog-card .content p {
+    color: #4D4D4D;
+    font-size: 0.9rem;
+  }
+  
+  /* RESPONSIVE STYLES (Home-specific elements) */
+  @media (max-width: 768px) {
+    /* Testimonial Grid on mobile */
+    .testimonial-grid {
+      grid-template-columns: 1fr;
+    }
+  
+    /* About section on mobile */
+    .about {
+      flex-direction: column;
+    }
+  
+    /* Blog Cards on mobile */
+    .blog-cards {
+      grid-template-columns: 1fr;
+    }
+  }
+  
+
+================================================================================
+FILE: /workspaces/pa-home-search/app/static/js/index.js
+================================================================================
+
+document.addEventListener('DOMContentLoaded', function() {
+    // Example "Get Started" button action for the homepage
+    const ctaButton = document.querySelector('.cta-button');
+    if (ctaButton) {
+      ctaButton.addEventListener('click', () => {
+        alert('Redirecting to our Property Search page...');
+        // Uncomment to actually redirect:
+        // window.location.href = '/property-search.html';
+      });
+    }
+  });
+  
+
+================================================================================
+FILE: /workspaces/pa-home-search/app/static/js/global.js
+================================================================================
+
+document.addEventListener('DOMContentLoaded', function() {
+    // Toggle the mobile navigation menu (applies to every page with .hamburger & .nav-menu)
+    const hamburger = document.querySelector('.hamburger');
+    const navMenu = document.querySelector('.nav-menu');
+    
+    // Only add event listener if these elements exist on the current page
+    if (hamburger && navMenu) {
+      hamburger.addEventListener('click', () => {
+        navMenu.classList.toggle('active');
+      });
+    }
+  });
+  
+
+================================================================================
+FILE: /workspaces/pa-home-search/app/resources/__init__.py
+================================================================================
+
+# app/resources/__init__.py
+from flask import Blueprint
+
+resources = Blueprint('resources', __name__)
+
+from . import routes
+
+
+================================================================================
+FILE: /workspaces/pa-home-search/app/resources/routes.py
+================================================================================
+
+# app/resources/routes.py
+from flask import render_template
+from . import resources
+
+@resources.route('/resources/market_trends')
+def market_trends():
+    return render_template('resources/market_trends.html')
+
+@resources.route('/resources/neighborhood_guides')
+def neighborhood_guides():
+    return render_template('resources/neighborhood_guides.html')
+
+@resources.route('/resources/buying_selling_tips')
+def buying_selling_tips():
+    return render_template('resources/buying_selling_tips.html')
+
+@resources.route('/resources/faq')
+def faq():
+    return render_template('resources/faq.html')
+
+
+================================================================================
+FILE: /workspaces/pa-home-search/app/resources/templates/resources/market_trends.html
+================================================================================
+
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Market Trends</title>
+</head>
+<body>
+    <h1>Market Trends</h1>
+</body>
+</html>
+
+
+================================================================================
+FILE: /workspaces/pa-home-search/app/resources/templates/resources/faq.html
+================================================================================
+
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>FAQ</title>
+</head>
+<body>
+    <h1>Frequently Asked Questions</h1>
+</body>
+</html>
+
+
+================================================================================
+FILE: /workspaces/pa-home-search/app/resources/templates/resources/buying_selling_tips.html
+================================================================================
+
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Buying & Selling Tips</title>
+</head>
+<body>
+    <h1>Buying & Selling Tips</h1>
+</body>
+</html>
+
+
+================================================================================
+FILE: /workspaces/pa-home-search/app/resources/templates/resources/neighborhood_guides.html
+================================================================================
+
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Neighborhood Guides</title>
+</head>
+<body>
+    <h1>Neighborhood Guides</h1>
+</body>
+</html>
+
+
+================================================================================
+FILE: /workspaces/pa-home-search/app/main/__init__.py
+================================================================================
+
+# app/main/__init__.py
+from flask import Blueprint
+
+main = Blueprint('main', __name__)
+
+from . import routes
+
+
+================================================================================
+FILE: /workspaces/pa-home-search/app/main/routes.py
+================================================================================
+
+# app/main/routes.py
+from flask import render_template
+from . import main
+
+@main.route('/')
+def index():
+    return render_template('main/index.html')
+
+
+================================================================================
+FILE: /workspaces/pa-home-search/app/main/forms.py
+================================================================================
+
+# app/main/forms.py (Optional forms for main blueprint)
+
+
+================================================================================
+FILE: /workspaces/pa-home-search/app/main/templates/main/index.html
+================================================================================
+
+{% extends 'base.html' %}
+
+{% block title %}
+  Home - My PA House Search
+{% endblock %}
+
+{% block extra_css %}
+<!-- Home-specific CSS -->
+<link rel="stylesheet" href="{{ url_for('static', filename='css/index.css') }}">
+{% endblock %}
+
+{% block content %}
+  <!-- HERO SECTION -->
+  <section class="hero">
+    <div class="hero-content">
+      <h1>Find Your Dream Home in PA</h1>
+      <p>Local Expertise. Proven Results. Start Your Journey Now.</p>
+      <button class="cta-button">Get Started</button>
+    </div>
+  </section>
+  
+  <!-- PROPERTY SEARCH MODULE -->
+  <section class="property-search">
+    <h2>MLS / Property Search</h2>
+    <div class="search-box">
+      <input type="text" placeholder="Enter a City, Neighborhood, Zip, or MLS Number"/>
+      <button>Search</button>
+    </div>
+    <div class="featured-links">
+      <a href="#">Harrisburg</a>
+      <a href="#">Mechanicsburg</a>
+      <a href="#">Lancaster</a>
+      <a href="#">Carlisle</a>
+      <a href="#">York</a>
+      <a href="#">More...</a>
+    </div>
+  </section>
+  
+  <!-- FEATURED LISTINGS / CITY PAGES -->
+  <section class="featured-listings">
+    <h2>Featured Listings / City Pages</h2>
+    <div class="city-grid">
+      <div class="city-card">
+        <img src="https://i.ibb.co/dszW8H0z/harrisburg.png" alt="Harrisburg"/>
+        <p>Explore Harrisburg Listings</p>
+      </div>
+      <div class="city-card">
+        <img src="https://i.ibb.co/Csz5MhPT/mechanicsburg.png" alt="Mechanicsburg"/>
+        <p>Explore Mechanicsburg Listings</p>
+      </div>
+      <div class="city-card">
+        <img src="https://i.ibb.co/ccYtgkY2/lancaster.png" alt="Lancaster"/>
+        <p>Explore Lancaster Listings</p>
+      </div>
+      <div class="city-card">
+        <img src="https://i.ibb.co/n8n5Nh3x/carlisle.png" alt="Carlisle"/>
+        <p>Explore Carlisle Listings</p>
+      </div>
+      <div class="city-card">
+        <img src="https://i.ibb.co/vCsYtphm/york.png" alt="York"/>
+        <p>Explore York Listings</p>
+      </div>
+    </div>
+  </section>
+  
+  <!-- SERVICES / VALUE PROPOSITION -->
+  <section class="services">
+    <div class="service-item">
+      <img class="service-icon" src="https://i.ibb.co/B5vZ8xFS/buying.png" alt="Buying Icon" />
+      <h3>Buying</h3>
+      <p>Guiding you through the home purchase process.</p>
+    </div>
+    <div class="service-item">
+      <img class="service-icon" src="https://i.ibb.co/QLrT3Rk/selling.png" alt="Selling Icon" />
+      <h3>Selling</h3>
+      <p>Expert marketing and negotiation for your sale.</p>
+    </div>
+    <div class="service-item">
+      <img class="service-icon" src="https://i.ibb.co/WW6gr3C9/market-analysis.png" alt="Consultation Icon" />
+      <h3>Consultation/Market Analysis</h3>
+      <p>Personalized advice for your unique property goals.</p>
+    </div>
+  </section>
+  
+  <!-- TESTIMONIALS / REVIEWS -->
+  <section class="testimonials">
+    <div class="testimonials-container">
+      <h2>Testimonials / Reviews</h2>
+      <div class="testimonial-grid">
+        <div class="testimonial-item">
+          <img src="https://i.ibb.co/WWVd6n64/testimonials.png" alt="Testimonial Image 1"/>
+          <p>“Ruth was amazing every step of the way!”</p>
+          <p>- Happy Client</p>
+        </div>
+        <div class="testimonial-item">
+          <img src="https://i.ibb.co/rGX8YQhq/testimonials-2.png" alt="Testimonial Image 2"/>
+          <p>“They made selling our home so easy. Highly recommended!”</p>
+          <p>- Another Satisfied Customer</p>
+        </div>
+      </div>
+    </div>
+  </section>
+  
+  <!-- ABOUT / TRUST SECTION -->
+  <section class="about">
+    <div class="about-text">
+      <h2>About / Trust Section</h2>
+      <p>We have decades of combined experience helping buyers and sellers in Pennsylvania.</p>
+      <p>Awards, certifications, and client logos can go here to build credibility and trust.</p>
+    </div>
+    <div class="about-image">
+      <img src="https://i.ibb.co/Z6cFS7JS/validation.jpg" alt="Team or Awards Image" />
+    </div>
+  </section>
+  
+  <!-- BLOG / RESOURCES TEASER -->
+  <section class="blog-resources">
+    <h2>Blog / Resources Teaser</h2>
+    <p>Latest articles, market updates, and guides to keep you informed.</p>
+    <div class="blog-cards">
+      <div class="blog-card">
+        <img src="https://i.ibb.co/0jm6SSbR/buying-homes-blog.png" alt="Blog 1"/>
+        <div class="content">
+          <h3>Top 10 Home Buying Tips</h3>
+          <p>April 12, 2024</p>
+        </div>
+      </div>
+      <div class="blog-card">
+        <img src="https://i.ibb.co/k6ckjMPm/harrisburg-trends-blog.png" alt="Blog 2"/>
+        <div class="content">
+          <h3>Harrisburg Real Estate Market Trends</h3>
+          <p>April 5, 2024</p>
+        </div>
+      </div>
+      <div class="blog-card">
+        <img src="https://i.ibb.co/Gv51Dbrg/contract-blog.png" alt="Blog 3"/>
+        <div class="content">
+          <h3>A Guide to Selling Your Home</h3>
+          <p>March 22, 2024</p>
+        </div>
+      </div>
+    </div>
+  </section>
+{% endblock content %}
+
+{% block extra_js %}
+<script src="{{ url_for('static', filename='js/index.js') }}"></script>
+{% endblock %}
+
+
+================================================================================
+FILE: /workspaces/pa-home-search/app/reviews/__init__.py
+================================================================================
+
+# app/reviews/__init__.py
+from flask import Blueprint
+
+reviews = Blueprint('reviews', __name__)
+
+from . import routes
+
+
+================================================================================
+FILE: /workspaces/pa-home-search/app/reviews/routes.py
+================================================================================
+
+# app/reviews/routes.py
+from flask import render_template
+from . import reviews
+
+@reviews.route('/reviews/video')
+def video_testimonials():
+    return render_template('reviews/video_testimonials.html')
+
+@reviews.route('/reviews/written')
+def written_reviews():
+    return render_template('reviews/written_reviews.html')
+
+
+================================================================================
+FILE: /workspaces/pa-home-search/app/reviews/templates/reviews/written_reviews.html
+================================================================================
+
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Written Reviews</title>
+</head>
+<body>
+    <h1>Written Reviews</h1>
+</body>
+</html>
+
+
+================================================================================
+FILE: /workspaces/pa-home-search/app/reviews/templates/reviews/video_testimonials.html
+================================================================================
+
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Video Testimonials</title>
+</head>
+<body>
+    <h1>Video Testimonials</h1>
+</body>
+</html>
+
+
+================================================================================
+FILE: /workspaces/pa-home-search/app/templates/base.html
+================================================================================
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <!-- Block for page-specific title -->
+  <title>{% block title %}My PA House Search{% endblock %}</title>
+  
+  <!-- GLOBAL STYLESHEETS -->
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/global.css') }}" />
+  
+  <!-- Optional block for additional page-specific CSS -->
+  {% block extra_css %}{% endblock %}
+</head>
+<body>
+  
+  <!-- HEADER & NAVIGATION (Global) -->
+  <header>
+    <div class="nav-container">
+      <div class="nav-logo">My PA House Search</div>
+      <button class="hamburger" aria-label="Toggle Navigation">
+         <span class="bar"></span>
+         <span class="bar"></span>
+         <span class="bar"></span>
+      </button>
+      <ul class="nav-menu">
+        <li><a href="#">Home</a></li>
+        <li><a href="#">City Pages</a></li>
+        <li><a href="#">Services</a></li>
+        <li><a href="#">Reviews/Testimonials</a></li>
+        <li><a href="#">About Us</a></li>
+        <li><a href="#">Resources/Blog</a></li>
+        <li><a href="#">Contact</a></li>
+      </ul>
+    </div>
+  </header>
+  
+  <!-- MAIN CONTENT BLOCK (child pages override this) -->
+  {% block content %}
+  {% endblock %}
+  
+  <!-- FOOTER (Global) -->
+  <footer>
+    <div class="footer-container">
+      <div class="footer-section">
+        <h3>Contact Info</h3>
+        <ul>
+          <li>(123) 456-7890</li>
+          <li>info@example.com</li>
+          <li>1234 Real Estate Rd, PA</li>
+        </ul>
+      </div>
+      <div class="footer-section">
+        <h3>Follow Us</h3>
+        <ul>
+          <li><a href="#">Facebook</a></li>
+          <li><a href="#">Instagram</a></li>
+          <li><a href="#">YouTube</a></li>
+        </ul>
+      </div>
+      <div class="footer-section">
+        <h3>Quick Links</h3>
+        <ul>
+          <li><a href="#">About</a></li>
+          <li><a href="#">Services</a></li>
+          <li><a href="#">Contact</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      © 2024 MyPAHouseSearch. All rights reserved.
+    </div>
+  </footer>
+  
+  <!-- GLOBAL SCRIPTS -->
+  <script src="{{ url_for('static', filename='js/global.js') }}"></script>
+  
+  <!-- Optional block for additional page-specific JavaScript -->
+  {% block extra_js %}{% endblock %}
+</body>
+</html>
+
+
+================================================================================
+FILE: /workspaces/pa-home-search/app/property_search/__init__.py
+================================================================================
+
+# app/property_search/__init__.py
+from flask import Blueprint
+
+property_search = Blueprint('property_search', __name__)
+
+from . import routes
+
+
+================================================================================
+FILE: /workspaces/pa-home-search/app/property_search/routes.py
+================================================================================
+
+# app/property_search/routes.py
+from flask import render_template
+from . import property_search
+
+def get_listings_for_city(city):
+    # Placeholder function - integrate MLS data here
+    return []
+
+@property_search.route('/property_search/<city>')
+def city_page(city):
+    listings = get_listings_for_city(city)
+    return render_template('property_search/city_page.html', city=city, listings=listings)
+
+
+================================================================================
+FILE: /workspaces/pa-home-search/app/property_search/forms.py
+================================================================================
+
+# app/property_search/forms.py (Optional search/filter forms)
+
+
+================================================================================
+FILE: /workspaces/pa-home-search/app/property_search/templates/property_search/city_page.html
+================================================================================
+
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>{{ city }} Listings</title>
+</head>
+<body>
+    <h1>Listings for {{ city }}</h1>
+    <!-- Display listings here -->
+</body>
+</html>
+
+
+================================================================================
+FILE: /workspaces/pa-home-search/app/property_search/templates/property_search/search.html
+================================================================================
+
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Property Search</title>
+</head>
+<body>
+    <h1>Search Properties</h1>
+    <!-- Search form and filters here -->
+</body>
+</html>
+
+

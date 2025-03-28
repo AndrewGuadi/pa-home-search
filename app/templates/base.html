@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <!-- Block for page-specific title -->
+  <title>{% block title %}My PA House Search{% endblock %}</title>
+  
+  <!-- GLOBAL STYLESHEETS -->
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/global.css') }}" />
+  
+  <!-- Optional block for additional page-specific CSS -->
+  {% block extra_css %}{% endblock %}
+</head>
+<body>
+  
+  <!-- HEADER & NAVIGATION (Global) -->
+  <header>
+    <div class="nav-container">
+      <div class="nav-logo">My PA House Search</div>
+      <button class="hamburger" aria-label="Toggle Navigation">
+         <span class="bar"></span>
+         <span class="bar"></span>
+         <span class="bar"></span>
+      </button>
+      <ul class="nav-menu">
+        <li><a href="#">Home</a></li>
+        <li><a href="#">City Pages</a></li>
+        <li><a href="#">Services</a></li>
+        <li><a href="#">Reviews/Testimonials</a></li>
+        <li><a href="#">About Us</a></li>
+        <li><a href="#">Resources/Blog</a></li>
+        <li><a href="#">Contact</a></li>
+      </ul>
+    </div>
+  </header>
+  
+  <!-- MAIN CONTENT BLOCK (child pages override this) -->
+  {% block content %}
+  {% endblock %}
+  
+  <!-- FOOTER (Global) -->
+  <footer>
+    <div class="footer-container">
+      <div class="footer-section">
+        <h3>Contact Info</h3>
+        <ul>
+          <li>(123) 456-7890</li>
+          <li>info@example.com</li>
+          <li>1234 Real Estate Rd, PA</li>
+        </ul>
+      </div>
+      <div class="footer-section">
+        <h3>Follow Us</h3>
+        <ul>
+          <li><a href="#">Facebook</a></li>
+          <li><a href="#">Instagram</a></li>
+          <li><a href="#">YouTube</a></li>
+        </ul>
+      </div>
+      <div class="footer-section">
+        <h3>Quick Links</h3>
+        <ul>
+          <li><a href="#">About</a></li>
+          <li><a href="#">Services</a></li>
+          <li><a href="#">Contact</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      © 2024 MyPAHouseSearch. All rights reserved.
+    </div>
+  </footer>
+  
+  <!-- GLOBAL SCRIPTS -->
+  <script src="{{ url_for('static', filename='js/global.js') }}"></script>
+  
+  <!-- Optional block for additional page-specific JavaScript -->
+  {% block extra_js %}{% endblock %}
+</body>
+</html>

@@ -1,0 +1,148 @@
+{% extends 'base.html' %}
+
+{% block title %}
+  Home - My PA House Search
+{% endblock %}
+
+{% block extra_css %}
+<!-- Home-specific CSS -->
+<link rel="stylesheet" href="{{ url_for('static', filename='css/index.css') }}">
+{% endblock %}
+
+{% block content %}
+  <!-- HERO SECTION -->
+  <section class="hero">
+    <div class="hero-content">
+      <h1>Find Your Dream Home in PA</h1>
+      <p>Local Expertise. Proven Results. Start Your Journey Now.</p>
+      <button class="cta-button">Get Started</button>
+    </div>
+  </section>
+  
+  <!-- PROPERTY SEARCH MODULE -->
+  <section class="property-search">
+    <h2>MLS / Property Search</h2>
+    <div class="search-box">
+      <input type="text" placeholder="Enter a City, Neighborhood, Zip, or MLS Number"/>
+      <button>Search</button>
+    </div>
+    <div class="featured-links">
+      <a href="#">Harrisburg</a>
+      <a href="#">Mechanicsburg</a>
+      <a href="#">Lancaster</a>
+      <a href="#">Carlisle</a>
+      <a href="#">York</a>
+      <a href="#">More...</a>
+    </div>
+  </section>
+  
+  <!-- FEATURED LISTINGS / CITY PAGES -->
+  <section class="featured-listings">
+    <h2>Featured Listings / City Pages</h2>
+    <div class="city-grid">
+      <div class="city-card">
+        <img src="https://i.ibb.co/dszW8H0z/harrisburg.png" alt="Harrisburg"/>
+        <p>Explore Harrisburg Listings</p>
+      </div>
+      <div class="city-card">
+        <img src="https://i.ibb.co/Csz5MhPT/mechanicsburg.png" alt="Mechanicsburg"/>
+        <p>Explore Mechanicsburg Listings</p>
+      </div>
+      <div class="city-card">
+        <img src="https://i.ibb.co/ccYtgkY2/lancaster.png" alt="Lancaster"/>
+        <p>Explore Lancaster Listings</p>
+      </div>
+      <div class="city-card">
+        <img src="https://i.ibb.co/n8n5Nh3x/carlisle.png" alt="Carlisle"/>
+        <p>Explore Carlisle Listings</p>
+      </div>
+      <div class="city-card">
+        <img src="https://i.ibb.co/vCsYtphm/york.png" alt="York"/>
+        <p>Explore York Listings</p>
+      </div>
+    </div>
+  </section>
+  
+  <!-- SERVICES / VALUE PROPOSITION -->
+  <section class="services">
+    <div class="service-item">
+      <img class="service-icon" src="https://i.ibb.co/B5vZ8xFS/buying.png" alt="Buying Icon" />
+      <h3>Buying</h3>
+      <p>Guiding you through the home purchase process.</p>
+    </div>
+    <div class="service-item">
+      <img class="service-icon" src="https://i.ibb.co/QLrT3Rk/selling.png" alt="Selling Icon" />
+      <h3>Selling</h3>
+      <p>Expert marketing and negotiation for your sale.</p>
+    </div>
+    <div class="service-item">
+      <img class="service-icon" src="https://i.ibb.co/WW6gr3C9/market-analysis.png" alt="Consultation Icon" />
+      <h3>Consultation/Market Analysis</h3>
+      <p>Personalized advice for your unique property goals.</p>
+    </div>
+  </section>
+  
+  <!-- TESTIMONIALS / REVIEWS -->
+  <section class="testimonials">
+    <div class="testimonials-container">
+      <h2>Testimonials / Reviews</h2>
+      <div class="testimonial-grid">
+        <div class="testimonial-item">
+          <img src="https://i.ibb.co/WWVd6n64/testimonials.png" alt="Testimonial Image 1"/>
+          <p>“Ruth was amazing every step of the way!”</p>
+          <p>- Happy Client</p>
+        </div>
+        <div class="testimonial-item">
+          <img src="https://i.ibb.co/rGX8YQhq/testimonials-2.png" alt="Testimonial Image 2"/>
+          <p>“They made selling our home so easy. Highly recommended!”</p>
+          <p>- Another Satisfied Customer</p>
+        </div>
+      </div>
+    </div>
+  </section>
+  
+  <!-- ABOUT / TRUST SECTION -->
+  <section class="about">
+    <div class="about-text">
+      <h2>About / Trust Section</h2>
+      <p>We have decades of combined experience helping buyers and sellers in Pennsylvania.</p>
+      <p>Awards, certifications, and client logos can go here to build credibility and trust.</p>
+    </div>
+    <div class="about-image">
+      <img src="https://i.ibb.co/Z6cFS7JS/validation.jpg" alt="Team or Awards Image" />
+    </div>
+  </section>
+  
+  <!-- BLOG / RESOURCES TEASER -->
+  <section class="blog-resources">
+    <h2>Blog / Resources Teaser</h2>
+    <p>Latest articles, market updates, and guides to keep you informed.</p>
+    <div class="blog-cards">
+      <div class="blog-card">
+        <img src="https://i.ibb.co/0jm6SSbR/buying-homes-blog.png" alt="Blog 1"/>
+        <div class="content">
+          <h3>Top 10 Home Buying Tips</h3>
+          <p>April 12, 2024</p>
+        </div>
+      </div>
+      <div class="blog-card">
+        <img src="https://i.ibb.co/k6ckjMPm/harrisburg-trends-blog.png" alt="Blog 2"/>
+        <div class="content">
+          <h3>Harrisburg Real Estate Market Trends</h3>
+          <p>April 5, 2024</p>
+        </div>
+      </div>
+      <div class="blog-card">
+        <img src="https://i.ibb.co/Gv51Dbrg/contract-blog.png" alt="Blog 3"/>
+        <div class="content">
+          <h3>A Guide to Selling Your Home</h3>
+          <p>March 22, 2024</p>
+        </div>
+      </div>
+    </div>
+  </section>
+{% endblock content %}
+
+{% block extra_js %}
+<script src="{{ url_for('static', filename='js/index.js') }}"></script>
+{% endblock %}
