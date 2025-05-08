@@ -1,10 +1,88 @@
-<!doctype html>
-<html lang="en">
-<head>
-    <meta charset="utf-8">
-    <title>Written Reviews</title>
-</head>
-<body>
-    <h1>Written Reviews</h1>
-</body>
-</html>
+<!-- app/reviews/templates/reviews/written_reviews.html -->
+{% extends 'base.html' %}
+
+{% block title %}Written Reviews – My PA House Search{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/testimonials.css') }}">
+{% endblock %}
+
+{% block content %}
+<nav class="breadcrumb">
+  <a href="{{ url_for('main.index') }}">Home</a> ›
+  <a href="{{ url_for('reviews.reviews_overview') }}">Reviews & Testimonials</a> ›
+  Written Reviews
+</nav>
+
+<section class="hero hero--written">
+  <div class="container">
+    <h1>Five‑Star Experiences in Their Own Words</h1>
+    <p class="subhead">Real feedback from home buyers and sellers across Central PA.</p>
+  </div>
+</section>
+
+<section class="filter-bar">
+  <div class="container">
+    <label for="city-filter">Filter by City :</label>
+    <select id="city-filter">
+      <option value="all">All Cities</option>
+      <option value="Harrisburg">Harrisburg</option>
+      <option value="Mechanicsburg">Mechanicsburg</option>
+      <option value="Lancaster">Lancaster</option>
+    </select>
+  </div>
+</section>
+
+<section class="reviews-list">
+  <div class="container">
+    <!-- Each .written-review could be loop‑rendered from DB -->
+    <article class="written-review" data-city="Harrisburg">
+      <h4>Sold Above List in 7 Days – Harrisburg</h4>
+      <p class="review-text">
+        “Ruth priced our home perfectly; we had three offers the first weekend and closed $15 k above list…”
+      </p>
+      <span class="client">— Dana & Mike W.</span>
+    </article>
+
+    <article class="written-review" data-city="Mechanicsburg">
+      <h4>First‑Time Buyers Win Bidding War – Mechanicsburg</h4>
+      <p class="review-text">
+        “We were outbid twice before meeting Ruth. Her strategy letter and escalation clause got us the house…”
+      </p>
+      <span class="client">— Alicia R.</span>
+    </article>
+
+    <article class="written-review" data-city="Lancaster">
+      <h4>Seamless Relocation – Lancaster</h4>
+      <p class="review-text">
+        “Moving from Arizona felt daunting, but Ruth’s video tours and virtual consultations made it painless…”
+      </p>
+      <span class="client">— Jonathan & Priya S.</span>
+    </article>
+    <!-- More reviews here -->
+  </div>
+</section>
+
+<section class="cta-band">
+  <div class="container band-flex">
+    <p class="band-text">Want to leave your own review?</p>
+    <a href="https://g.page/ruth-koup/review" target="_blank" rel="noopener" class="btn-primary">Review on Google</a>
+  </div>
+</section>
+
+{% block extra_js %}
+<script>
+/* simple in‑page city filter */
+document.addEventListener('DOMContentLoaded', () => {
+  const select = document.getElementById('city-filter');
+  const reviews = document.querySelectorAll('.written-review');
+  select.addEventListener('change', e => {
+    const val = e.target.value;
+    reviews.forEach(r => {
+      r.style.display = (val === 'all' || r.dataset.city === val) ? '' : 'none';
+    });
+  });
+});
+</script>
+{% endblock %}
+{% endblock %}

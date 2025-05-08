@@ -1,10 +1,49 @@
-<!doctype html>
-<html lang="en">
-<head>
-    <meta charset="utf-8">
-    <title>Video Testimonials</title>
-</head>
-<body>
-    <h1>Video Testimonials</h1>
-</body>
-</html>
+<!-- app/reviews/templates/reviews/video_testimonials.html -->
+{% extends 'base.html' %}
+
+{% block title %}Video Testimonials – My PA House Search{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/testimonials.css') }}">
+{% endblock %}
+
+{% block content %}
+<nav class="breadcrumb">
+  <a href="{{ url_for('main.index') }}">Home</a> ›
+  <a href="{{ url_for('reviews.reviews_overview') }}">Reviews & Testimonials</a> ›
+  Video Testimonials
+</nav>
+
+<section class="hero hero--video">
+  <div class="container">
+    <h1>Client Stories on Camera</h1>
+    <p class="subhead">Hear first‑hand how buyers and sellers achieved success with Ruth Koup.</p>
+  </div>
+</section>
+
+<section class="video-gallery">
+  <div class="container video-grid">
+    <!-- Each .video-item holds a YouTube embed -->
+    <div class="video-item">
+      <iframe src="https://www.youtube-nocookie.com/embed/abc123" title="Testimonial 1" loading="lazy" allowfullscreen></iframe>
+      <h4>First‑Time Buyers Win a Bidding War</h4>
+    </div>
+    <div class="video-item">
+      <iframe src="https://www.youtube-nocookie.com/embed/def456" title="Testimonial 2" loading="lazy" allowfullscreen></iframe>
+      <h4>Selling Above List in Mechanicsburg</h4>
+    </div>
+    <div class="video-item">
+      <iframe src="https://www.youtube-nocookie.com/embed/ghi789" title="Testimonial 3" loading="lazy" allowfullscreen></iframe>
+      <h4>Relocating to Lancaster Made Easy</h4>
+    </div>
+    <!-- Duplicate or loop via Jinja for more videos -->
+  </div>
+</section>
+
+<section class="cta-band">
+  <div class="container band-flex">
+    <p class="band-text">Ready to be our next success story?</p>
+    <a href="{{ url_for('contact.contact_form') }}" class="btn-primary">Book Your Strategy Call</a>
+  </div>
+</section>
+{% endblock %}
