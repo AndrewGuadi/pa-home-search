@@ -1,0 +1,161 @@
+<!-- app/reviews/templates/reviews/index.html -->
+{% extends 'base.html' %}
+
+{% block title %}Client Reviews & Success Stories – My PA House Search{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/reviews.css') }}">
+{% endblock %}
+
+{% block content %}
+<nav class="breadcrumb">
+  <a href="{{ url_for('main.index') }}">Home</a> ›
+  Reviews & Testimonials
+</nav>
+
+<!-- HERO -->
+<section class="reviews-hero">
+  <div class="container">
+    <h1>Real Results. Real People.</h1>
+    <p class="subhead">200 + families bought or sold with us across Central PA.</p>
+    <div class="rating-block">
+      ★★★★★  4.9 / 5 · 137 verified reviews
+    </div>
+    <a href="{{ url_for('contact.contact_form') }}" class="btn-primary">Schedule Your Consultation</a>
+  </div>
+</section>
+
+<!-- QUICK STATS -->
+<section class="stats-strip">
+  <div class="container stats-grid">
+    <div><h3>212</h3><p>Homes Sold (12 mo)</p></div>
+    <div><h3>30</h3><p>Avg Days on Market</p></div>
+    <div><h3>99 %</h3><p>List‑to‑Sale Ratio</p></div>
+    <div><h3>137</h3><p>5‑Star Reviews</p></div>
+  </div>
+</section>
+
+<!-- VIDEO TESTIMONIALS -->
+<section class="video-testimonials">
+  <div class="container">
+    <h2>Video Testimonials</h2>
+    <div class="video-grid">
+      <!-- replace data-video-id with actual YouTube IDs -->
+      <div class="video-box" data-video-id="abc123"><img src="{{ url_for('static', filename='images/video-thumb-1.jpg') }}" alt=""><span class="play">&#9658;</span></div>
+      <div class="video-box" data-video-id="def456"><img src="{{ url_for('static', filename='images/video-thumb-2.jpg') }}" alt=""><span class="play">&#9658;</span></div>
+      <div class="video-box" data-video-id="ghi789"><img src="{{ url_for('static', filename='images/video-thumb-3.jpg') }}" alt=""><span class="play">&#9658;</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- WRITTEN TESTIMONIAL CAROUSEL -->
+<section class="written-testimonials">
+  <div class="container">
+    <h2>What Our Clients Say</h2>
+    <div class="carousel" id="testimonial-carousel">
+      <div class="carousel-track">
+        {% for i in range(1,8) %}
+        <div class="testimonial-card">
+          <p class="quote">“Ruth made selling our Harrisburg home so easy—we closed above list in 7 days!”</p>
+          <span class="client">— Client {{ i }}</span>
+        </div>
+        {% endfor %}
+      </div>
+      <button class="carousel-btn prev">&#10094;</button>
+      <button class="carousel-btn next">&#10095;</button>
+    </div>
+  </div>
+</section>
+
+<!-- MAP OF SUCCESS STORIES -->
+<section class="success-map">
+  <div class="container">
+    <h2>Map of Success Stories</h2>
+    <div id="review-map">[Interactive map placeholder]</div>
+  </div>
+</section>
+
+<!-- CASE STUDIES -->
+<section class="case-studies">
+  <div class="container">
+    <h2>Featured Case Studies</h2>
+    <div class="case-grid">
+      <article class="case-card">
+        <div class="case-img" style="background-image:url('{{ url_for('static', filename='images/case1-before.jpg') }}')"></div>
+        <div class="case-details">
+          <h4>123 Maple St, Harrisburg</h4>
+          <p class="metrics">$210 k → $225 k · 7 days · 3 offers</p>
+          <p class="summary">Expired listing revitalized with staging + video tour, sold above list.</p>
+        </div>
+      </article>
+      <!-- repeat 2 more -->
+      <article class="case-card">
+        <div class="case-img" style="background-image:url('{{ url_for('static', filename='images/case2-before.jpg') }}')"></div>
+        <div class="case-details">
+          <h4>456 Elm Rd, Mechanicsburg</h4>
+          <p class="metrics">$380 k → $402 k · 12 days · 5 offers</p>
+          <p class="summary">Drone footage and social ads generated multiple bids.</p>
+        </div>
+      </article>
+      <article class="case-card">
+        <div class="case-img" style="background-image:url('{{ url_for('static', filename='images/case3-before.jpg') }}')"></div>
+        <div class="case-details">
+          <h4>789 Oak Ln, Lancaster</h4>
+          <p class="metrics">$325 k → $340 k · 9 days · 2 offers</p>
+          <p class="summary">Virtual staging attracted remote buyers, yielding higher sale price.</p>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- THIRD‑PARTY BADGES -->
+<section class="badge-row">
+  <div class="container badge-grid">
+    <a href="#" aria-label="Google Reviews"><img src="{{ url_for('static', filename='images/google-badge.svg') }}" alt="Google"></a>
+    <a href="#"><img src="{{ url_for('static', filename='images/zillow-badge.svg') }}" alt="Zillow"></a>
+    <a href="#"><img src="{{ url_for('static', filename='images/realtor-badge.svg') }}" alt="Realtor"></a>
+    <a href="#"><img src="{{ url_for('static', filename='images/facebook-badge.svg') }}" alt="Facebook"></a>
+  </div>
+</section>
+
+<!-- CTA BAND -->
+<section class="cta-band">
+  <div class="container band-flex">
+    <p class="band-text">Ready for your own success story?</p>
+    <a href="{{ url_for('contact.contact_form') }}" class="btn-primary">Book a Strategy Call</a>
+  </div>
+</section>
+
+<!-- LEAVE A REVIEW -->
+<section class="leave-review">
+  <div class="container">
+    <h2>Leave a Review</h2>
+    <p>Share your experience and help other Central PA buyers and sellers.</p>
+    <div class="review-buttons">
+      <a class="btn-outline" href="https://g.page/ruth-koup/review" target="_blank" rel="noopener">Review on Google</a>
+      <a class="btn-outline" href="https://www.zillow.com/reviews/write/?s=X" target="_blank" rel="noopener">Review on Zillow</a>
+      <a class="btn-outline" href="{{ url_for('contact.contact_form') }}">Submit Directly</a>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section class="faq">
+  <div class="container">
+    <h2>FAQ</h2>
+    <details>
+      <summary>Are your reviews verified?</summary>
+      <p>Yes. We cross‑reference every review with a closed transaction ID before publishing.</p>
+    </details>
+    <details>
+      <summary>Can I speak to past clients?</summary>
+      <p>Absolutely—contact us for a list of reference clients happy to share their experience.</p>
+    </details>
+    <details>
+      <summary>How can I be featured in a video testimonial?</summary>
+      <p>During our post‑closing survey, simply opt‑in and we’ll schedule a short filming session.</p>
+    </details>
+  </div>
+</section>
+{% endblock %}

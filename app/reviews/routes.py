@@ -2,6 +2,11 @@
 from flask import render_template
 from . import reviews
 
+
+@reviews.route('/reviews')
+def reviews_overview():
+    return render_template('reviews/index.html')
+    
 @reviews.route('/reviews/video')
 def video_testimonials():
     return render_template('reviews/video_testimonials.html')
