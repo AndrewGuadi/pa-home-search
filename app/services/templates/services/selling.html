@@ -1,10 +1,137 @@
-<!doctype html>
-<html lang="en">
-<head>
-    <meta charset="utf-8">
-    <title>Selling</title>
-</head>
-<body>
-    <h1>Selling Services</h1>
-</body>
-</html>
+{% extends 'base.html' %}
+
+{% block title %}Sell Your Home Quickly – Ruth Koup{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/services_selling.css') }}" />
+{% endblock %}
+
+{% block content %}
+<nav class="breadcrumb">
+  <a href="{{ url_for('main.index') }}">Home</a> ›
+  <a href="{{ url_for('services.all_services') }}">Services</a> ›
+  Selling
+</nav>
+
+<!-- HERO & VALUE PROPOSITION -->
+<section class="selling-hero">
+  <div class="container">
+    <h1>Get Top Dollar for Your Central PA Home</h1>
+    <p class="subhead">Sell in <strong>30 days</strong> on average at 99% of list price—or we’ll <em>reduce our commission</em>.</p>
+    <a href="{{ url_for('contact.contact_form') }}" class="btn-primary">Request a Free Home Valuation</a>
+  </div>
+</section>
+
+<!-- TRUST & SOCIAL PROOF -->
+<section class="trust-proof">
+  <div class="container grid-3">
+    <div class="stat">
+      <h3>30 Days</h3>
+      <p>Average Days on Market</p>
+    </div>
+    <div class="stat">
+      <h3>99%</h3>
+      <p>Average List-Price-to-Sale Ratio</p>
+    </div>
+    <div class="stat">
+      <h3>200+</h3>
+      <p>Homes Sold Last Year</p>
+    </div>
+  </div>
+</section>
+
+<!-- CASE STUDIES -->
+<section class="case-studies">
+  <div class="container">
+    <h2>Recent Seller Success Stories</h2>
+    <div class="case-grid">
+      <div class="case-card">
+        <h4>123 Maple St, Harrisburg</h4>
+        <p>List: $210,000 → Sale: $225,000 <span class="light">(7 days)</span></p>
+      </div>
+      <div class="case-card">
+        <h4>456 Elm Rd, Mechanicsburg</h4>
+        <p>List: $380,000 → Sale: $402,000 <span class="light">(12 days)</span></p>
+      </div>
+      <div class="case-card">
+        <h4>789 Oak Ln, Lancaster</h4>
+        <p>List: $325,000 → Sale: $340,000 <span class="light">(9 days)</span></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SERVICE DETAILS & MARKETING PLAN -->
+<section class="service-details">
+  <div class="container grid-2">
+    <div>
+      <h2>Our Proven Marketing Plan</h2>
+      <ul>
+        <li>Professional Photography & Drone Tours</li>
+        <li>Virtual Staging & 3D Walkthroughs</li>
+        <li>MLS Syndication & Targeted Social Ads</li>
+        <li>Open Houses & Broker Networking</li>
+        <li>Custom Print Mailers & Neighborhood Flyers</li>
+      </ul>
+    </div>
+    <div class="image-placeholder">[Hero Image of Staged Home]</div>
+  </div>
+</section>
+
+<!-- STEP-BY-STEP PROCESS -->
+<section class="process-steps">
+  <div class="container">
+    <h2>Your Selling Roadmap</h2>
+    <ol>
+      <li><strong>Market Analysis:</strong> Free Comparative Market Analysis (CMA).</li>
+      <li><strong>Prep & Staging:</strong> Professional staging consultation.</li>
+      <li><strong>Launch:</strong> Multi-channel listing & virtual tour.</li>
+      <li><strong>Negotiate:</strong> Expert offer review & guidance.</li>
+      <li><strong>Close:</strong> Coordinate inspections & paperwork.</li>
+    </ol>
+  </div>
+</section>
+
+<!-- FEES & GUARANTEES -->
+<section class="fees-guarantee">
+  <div class="container grid-2">
+    <div>
+      <h2>Competitive Commission</h2>
+      <p>Standard <strong>6%</strong> full-service commission, or <strong>4%</strong> for our limited-listing package.</p>
+    </div>
+    <div>
+      <h2>Our Guarantee</h2>
+      <p>Not satisfied? <strong>Cancel</strong> listing anytime before offer acceptance—no fees.</p>
+    </div>
+  </div>
+</section>
+
+<!-- LOCAL MARKET INSIGHTS -->
+<section class="market-insights">
+  <div class="container grid-3">
+    <div>
+      <h3>Harrisburg</h3>
+      <p>Median Price: $248,000<br>Days on Market: 9</p>
+    </div>
+    <div>
+      <h3>Mechanicsburg</h3>
+      <p>Median Price: $385,000<br>Days on Market: 5</p>
+    </div>
+    <div>
+      <h3>Lancaster</h3>
+      <p>Median Price: $278,000<br>Days on Market: 8</p>
+    </div>
+  </div>
+</section>
+
+<!-- LEAD CAPTURE & SECONDARY CTA -->
+<section class="lead-capture">
+  <div class="container">
+    <h2>Ready to Sell?</h2>
+    <p>Get your personalized Seller’s Guide and start your journey.</p>
+    <a href="{{ url_for('static', filename='assets/PA_Sellers_Guide.pdf') }}" class="btn-outline">Download Seller’s Guide</a>
+    <a href="{{ url_for('contact.contact_form') }}" class="btn-primary">Request Your CMA</a>
+  </div>
+</section>
+
+{% endblock %}

@@ -1,0 +1,228 @@
+/* static/css/selling.css */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
+:root {
+  --primary: #E4002B;
+  --primary-dark: #B30E1A;
+  --text: #333333;
+  --subtext: #555555;
+  --bg: #FFFFFF;
+  --light-bg: #F9F9F9;
+  --radius: 8px;
+  --spacing: 1.5rem;
+  --shadow: 0 4px 8px rgba(0,0,0,0.05);
+  --shadow-hover: 0 8px 16px rgba(0,0,0,0.1);
+}
+
+body {
+  margin: 0;
+  font-family: 'Inter', sans-serif;
+  color: var(--text);
+  background: var(--bg);
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 4rem 1rem;
+}
+
+.breadcrumb {
+  font-size: 0.9rem;
+  margin: 1rem 0;
+}
+.breadcrumb a {
+  color: var(--primary);
+  text-decoration: none;
+}
+.breadcrumb a:hover {
+  text-decoration: underline;
+}
+
+section {
+  margin-bottom: 4rem;
+}
+
+/* HERO */
+.selling-hero {
+  background: var(--light-bg);
+  padding: 6rem 0;
+  text-align: center;
+  box-shadow: var(--shadow);
+}
+.selling-hero h1 {
+  font-size: 2.5rem;
+  margin-bottom: 1rem;
+}
+.selling-hero .subhead {
+  font-size: 1.125rem;
+  color: var(--subtext);
+  margin-bottom: 2rem;
+}
+.btn-primary {
+  display: inline-block;
+  background: var(--primary);
+  color: #fff;
+  padding: 0.75rem 1.5rem;
+  border-radius: var(--radius);
+  font-weight: 600;
+  text-decoration: none;
+  transition: background 0.3s ease;
+}
+.btn-primary:hover {
+  background: var(--primary-dark);
+}
+
+/* TRUST & SOCIAL PROOF */
+.trust-proof .grid-3 {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px,1fr));
+  gap: var(--spacing);
+  text-align: center;
+}
+.trust-proof .stat h3 {
+  font-size: 2rem;
+  margin-bottom: 0.5rem;
+  color: var(--primary);
+}
+.trust-proof .stat p {
+  margin: 0;
+  color: var(--subtext);
+}
+
+/* CASE STUDIES */
+.case-studies h2 {
+  text-align: center;
+  margin-bottom: var(--spacing);
+}
+.case-studies .case-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px,1fr));
+  gap: var(--spacing);
+}
+.case-studies .case-card {
+  background: var(--light-bg);
+  padding: var(--spacing);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+}
+.case-studies .case-card h4 {
+  margin: 0 0 0.5rem;
+  font-size: 1.125rem;
+}
+.case-studies .case-card p {
+  margin: 0;
+  color: var(--subtext);
+}
+
+/* SERVICE DETAILS & MARKETING PLAN */
+.service-details .grid-2 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--spacing);
+  align-items: center;
+}
+.service-details h2 {
+  margin-bottom: 1rem;
+}
+.service-details ul {
+  list-style: none;
+  padding: 0;
+}
+.service-details ul li {
+  margin-bottom: 0.5rem;
+  position: relative;
+  padding-left: 1.5rem;
+}
+.service-details ul li::before {
+  content: '✔';
+  position: absolute;
+  left: 0;
+  color: var(--primary);
+}
+.service-details .image-placeholder {
+  background: #ddd;
+  height: 250px;
+  border-radius: var(--radius);
+}
+
+/* PROCESS STEPS */
+.process-steps h2 {
+  text-align: center;
+  margin-bottom: var(--spacing);
+}
+.process-steps ol {
+  max-width: 800px;
+  margin: 0 auto;
+  padding-left: 1.5rem;
+}
+.process-steps li {
+  margin-bottom: 1rem;
+  font-weight: 500;
+  color: var(--subtext);
+}
+
+/* FEES & GUARANTEES */
+.fees-guarantee .grid-2 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--spacing);
+  align-items: center;
+}
+.fees-guarantee h2 {
+  margin-bottom: 0.5rem;
+}
+
+/* MARKET INSIGHTS */
+.market-insights .grid-3 {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px,1fr));
+  gap: var(--spacing);
+  text-align: center;
+}
+.market-insights h3 {
+  margin-bottom: 0.5rem;
+}
+.market-insights p {
+  margin: 0;
+  color: var(--subtext);
+}
+
+/* LEAD CAPTURE */
+.lead-capture {
+  text-align: center;
+}
+.lead-capture h2 {
+  margin-bottom: 1rem;
+}
+.lead-capture p {
+  margin-bottom: var(--spacing);
+  color: var(--subtext);
+}
+.lead-capture .btn-outline {
+  display: inline-block;
+  border: 2px solid var(--primary);
+  color: var(--primary);
+  padding: 0.75rem 1.5rem;
+  border-radius: var(--radius);
+  text-decoration: none;
+  font-weight: 600;
+  margin-right: 1rem;
+  transition: background 0.3s ease, color 0.3s ease;
+}
+.lead-capture .btn-outline:hover {
+  background: var(--primary);
+  color: #fff;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .service-details .grid-2,
+  .fees-guarantee .grid-2 {
+    grid-template-columns: 1fr;
+  }
+  .trust-proof .grid-3,
+  .market-insights .grid-3 {
+    grid-template-columns: 1fr;
+  }
+}
