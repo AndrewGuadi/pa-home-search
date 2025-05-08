@@ -25,9 +25,9 @@
          <span class="bar"></span>
       </button>
       <ul class="nav-menu">
-        <li><a href="#">Home</a></li>
+        <li><a href="{{url_for('main.index')}}">Home</a></li>
         <li><a href="#">City Pages</a></li>
-        <li><a href="#">Services</a></li>
+        <li><a href="{{ url_for('services.all_services')}}">Services</a></li>
         <li><a href="#">Reviews/Testimonials</a></li>
         <li><a href="#">About Us</a></li>
         <li><a href="#">Resources/Blog</a></li>

@@ -1,10 +1,43 @@
-<!doctype html>
-<html lang="en">
-<head>
-    <meta charset="utf-8">
-    <title>Buying</title>
-</head>
-<body>
-    <h1>Buying Services</h1>
-</body>
-</html>
+{% extends 'base.html' %}
+
+{% block title %}Home Buying Services – Ruth Koup{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/services.css') }}">
+{% endblock %}
+
+{% block content %}
+<section class="buying-services">
+  <div class="container">
+    <h1>Home Buying Services with Ruth Koup</h1> <!-- :contentReference[oaicite:4]{index=4} -->
+    
+    <p>Ruth Koup is a Realtor® with Keller Williams Realty in Harrisburg, PA, licensed as RS341850. <!-- :contentReference[oaicite:5]{index=5} --></p>
+    <p>She is the founder of Build the Dream, LLC, leveraging her entrepreneurial expertise to better serve clients. <!-- :contentReference[oaicite:6]{index=6} --></p>
+    <p>With over seven years of experience in the Central PA market, Ruth has guided buyers through every step of the home purchase process. <!-- :contentReference[oaicite:7]{index=7} --></p>
+    <p>In the last 12 months alone, she completed 11 home purchases and has closed 43 transactions with an average sale price of \$327 000. <!-- :contentReference[oaicite:8]{index=8} --></p>
+    <p>Overall, Ruth has closed 83 sales totaling over \$23.5 million in value at an average of \$283 600 per transaction. <!-- :contentReference[oaicite:9]{index=9} --></p>
+
+    <h2>Contact Information</h2>
+    <p>Phone: <a href="tel:7175741212">717-574-1212</a> | Email: <a href="mailto:ruthkoup@kw.com">ruthkoup@kw.com</a> <!-- :contentReference[oaicite:10]{index=10} --></p>
+    <p>Office Address: 530 N Lockwillow Ave, Harrisburg, PA 17112 <!-- :contentReference[oaicite:11]{index=11} --></p>
+
+    <h2>Why Choose Keller Williams Realty?</h2>
+    <p>Keller Williams Realty operates more than 1 100 offices and supports over 180 000 agents nationwide, offering unparalleled resources. <!-- :contentReference[oaicite:12]{index=12} --></p>
+    <p>KW agents prioritize transparent commission negotiations, ensuring buyers understand and can negotiate all terms. <!-- :contentReference[oaicite:13]{index=13} --></p>
+    <p>Access KW’s robust property search platform to browse thousands of listings in Central Pennsylvania. <!-- :contentReference[oaicite:14]{index=14} --></p>
+
+    <h2>Our Home Buying Services</h2>
+    <ul>
+      <li>Personalized neighborhood tours in Harrisburg, Hershey, Mechanicsburg, and beyond</li>
+      <li>Comprehensive financing and mortgage guidance</li>
+      <li>Expert negotiation strategies to secure the best purchase price</li>
+      <li>Thorough contract review and inspection management</li>
+      <li>Local school district and community insights</li>
+    </ul>
+
+    <div class="cta-wrapper">
+      <a href="{{ url_for('contact.contact_form') }}" class="btn">Schedule a Consultation</a> <!-- :contentReference[oaicite:15]{index=15} -->
+    </div>
+  </div>
+</section>
+{% endblock %}

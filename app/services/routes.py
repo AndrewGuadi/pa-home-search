@@ -2,6 +2,11 @@
 from flask import render_template
 from . import services
 
+
+@services.route('/services')
+def all_services():
+    return render_template('services/index.html')
+
 @services.route('/services/buying')
 def buying():
     return render_template('services/buying.html')

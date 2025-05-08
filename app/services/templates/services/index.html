@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+
+{% block title %}Our Services – My PA House Search{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/services.css') }}">
+{% endblock %}
+
+{% block content %}
+<section class="services-overview">
+  <div class="container">
+    <h1 class="services-title">Central PA Real Estate Services</h1>
+    <p class="services-intro">
+      From first-time homebuying in Harrisburg to high-impact selling in Mechanicsburg, plus in-depth market consultations—your journey to success starts here.
+    </p>
+    <div class="services-grid">
+      
+      <a href="{{ url_for('services.buying') }}" class="service-card">
+        <h2>Buying</h2>
+        <p>
+          Expert guidance on neighborhoods, financing strategies, and negotiation techniques so you secure your dream home at the best possible price.
+        </p>
+        <span class="btn">Learn More</span>
+      </a>
+      
+      <a href="{{ url_for('services.selling') }}" class="service-card">
+        <h2>Selling</h2>
+        <p>
+          Premium staging advice, targeted digital marketing, and proven negotiation tactics designed to maximize your property’s value.
+        </p>
+        <span class="btn">Learn More</span>
+      </a>
+      
+      <a href="{{ url_for('services.consultation') }}" class="service-card">
+        <h2>Consultation</h2>
+        <p>
+          Customized market analysis, pricing strategy sessions, and investment planning tailored to Central Pennsylvania’s evolving landscape.
+        </p>
+        <span class="btn">Learn More</span>
+      </a>
+      
+    </div>
+  </div>
+</section>
+{% endblock %}
