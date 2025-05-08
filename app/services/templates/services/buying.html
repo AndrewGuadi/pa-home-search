@@ -1,43 +1,83 @@
+<!-- app/services/templates/services/buying.html -->
 {% extends 'base.html' %}
 
-{% block title %}Home Buying Services – Ruth Koup{% endblock %}
+{% block title %}Home Buying Services – My PA House Search{% endblock %}
 
 {% block extra_css %}
-<link rel="stylesheet" href="{{ url_for('static', filename='css/services.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/services_buying.css') }}" />
 {% endblock %}
 
 {% block content %}
-<section class="buying-services">
+<nav class="breadcrumb">
+  <a href="{{ url_for('main.index') }}">Home</a> ›
+  <a href="{{ url_for('services.all_services') }}">Services</a> ›
+  Buying
+</nav>
+
+<section class="buying-hero">
   <div class="container">
-    <h1>Home Buying Services with Ruth Koup</h1> <!-- :contentReference[oaicite:4]{index=4} -->
-    
-    <p>Ruth Koup is a Realtor® with Keller Williams Realty in Harrisburg, PA, licensed as RS341850. <!-- :contentReference[oaicite:5]{index=5} --></p>
-    <p>She is the founder of Build the Dream, LLC, leveraging her entrepreneurial expertise to better serve clients. <!-- :contentReference[oaicite:6]{index=6} --></p>
-    <p>With over seven years of experience in the Central PA market, Ruth has guided buyers through every step of the home purchase process. <!-- :contentReference[oaicite:7]{index=7} --></p>
-    <p>In the last 12 months alone, she completed 11 home purchases and has closed 43 transactions with an average sale price of \$327 000. <!-- :contentReference[oaicite:8]{index=8} --></p>
-    <p>Overall, Ruth has closed 83 sales totaling over \$23.5 million in value at an average of \$283 600 per transaction. <!-- :contentReference[oaicite:9]{index=9} --></p>
+    <h1>Home Buying Services with Ruth Koup</h1>
+    <p class="lead">Experience white-glove guidance across Central PA from first-time buyers to seasoned investors.</p>
+    <a href="{{ url_for('contact.contact_form') }}" class="btn-primary">Schedule a Strategy Call</a>
+  </div>
+</section>
 
-    <h2>Contact Information</h2>
-    <p>Phone: <a href="tel:7175741212">717-574-1212</a> | Email: <a href="mailto:ruthkoup@kw.com">ruthkoup@kw.com</a> <!-- :contentReference[oaicite:10]{index=10} --></p>
-    <p>Office Address: 530 N Lockwillow Ave, Harrisburg, PA 17112 <!-- :contentReference[oaicite:11]{index=11} --></p>
+<section class="awareness">
+  <div class="container">
+    <h2>Get Your Free PA Homebuying Roadmap</h2>
+    <p>Download our comprehensive PDF guide: timelines, checklists, and insider tips for every stage of your journey.</p>
+    <a href="{{ url_for('static', filename='assets/PA_Homebuying_Roadmap.pdf') }}" class="btn-outline">Download Guide</a>
+  </div>
+</section>
 
-    <h2>Why Choose Keller Williams Realty?</h2>
-    <p>Keller Williams Realty operates more than 1 100 offices and supports over 180 000 agents nationwide, offering unparalleled resources. <!-- :contentReference[oaicite:12]{index=12} --></p>
-    <p>KW agents prioritize transparent commission negotiations, ensuring buyers understand and can negotiate all terms. <!-- :contentReference[oaicite:13]{index=13} --></p>
-    <p>Access KW’s robust property search platform to browse thousands of listings in Central Pennsylvania. <!-- :contentReference[oaicite:14]{index=14} --></p>
-
-    <h2>Our Home Buying Services</h2>
-    <ul>
-      <li>Personalized neighborhood tours in Harrisburg, Hershey, Mechanicsburg, and beyond</li>
-      <li>Comprehensive financing and mortgage guidance</li>
-      <li>Expert negotiation strategies to secure the best purchase price</li>
-      <li>Thorough contract review and inspection management</li>
-      <li>Local school district and community insights</li>
-    </ul>
-
-    <div class="cta-wrapper">
-      <a href="{{ url_for('contact.contact_form') }}" class="btn">Schedule a Consultation</a> <!-- :contentReference[oaicite:15]{index=15} -->
+<section class="consideration">
+  <div class="container">
+    <div class="tools-grid">
+      <div class="tool-card">
+        <h3>Affordability Calculator</h3>
+        <iframe src="https://your-calculator-embed" title="Affordability Calculator"></iframe>
+      </div>
+      <div class="tool-card">
+        <h3>Neighborhood Match Quiz</h3>
+        <p>Answer 5 quick questions and we'll email you your top 3 Central PA neighborhoods.</p>
+        <a href="{{ url_for('property_search.search') }}" class="btn-outline">Take the Quiz</a>
+      </div>
     </div>
+  </div>
+</section>
+
+<section class="purchase">
+  <div class="container">
+    <h2>What’s Included</h2>
+    <ul class="service-list">
+      <li>Personalized home tours in Harrisburg, Mechanicsburg, Lancaster & beyond</li>
+      <li>Mortgage & financing advisory with top local lenders</li>
+      <li>Contract review & inspection coordination</li>
+      <li>Expert negotiation to secure the best price</li>
+    </ul>
+  </div>
+</section>
+
+<section class="retention">
+  <div class="container">
+    <h2>Welcome Home Onboarding</h2>
+    <ul class="onboarding-list">
+      <li>Move-In Kit with curated local vendor discounts</li>
+      <li>Access to our exclusive Homeowner Facebook Group</li>
+      <li>30-60-90 day check-ins to ensure you’re settled</li>
+    </ul>
+  </div>
+</section>
+
+<section class="advocacy">
+  <div class="container">
+    <h2>Refer & Reward</h2>
+    <p>Love your new home? Send friends our way and earn rewards:</p>
+    <ul class="referral-list">
+      <li>$100 gift card for every successful referral</li>
+      <li>VIP invites to our annual client appreciation event</li>
+    </ul>
+    <a href="{{ url_for('contact.contact_form') }}" class="btn-outline">Learn About Our Referral Program</a>
   </div>
 </section>
 {% endblock %}

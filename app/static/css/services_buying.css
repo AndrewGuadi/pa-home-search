@@ -1,0 +1,131 @@
+/* static/css/buying.css */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
+:root {
+  --primary: #E4002B;
+  --primary-dark: #B30E1A;
+  --bg: #FFFFFF;
+  --text: #333333;
+  --lead: #555555;
+  --radius: 8px;
+  --spacing: 1.5rem;
+  --shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+  --shadow-hover: 0 8px 16px rgba(0, 0, 0, 0.10);
+}
+
+body {
+  font-family: 'Inter', sans-serif;
+  color: var(--text);
+  background: var(--bg);
+  line-height: 1.6;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 4rem 1rem;
+}
+
+.breadcrumb {
+  font-size: 0.9rem;
+  margin: 1rem 0;
+  color: var(--text);
+}
+
+.breadcrumb a {
+  color: var(--primary);
+  text-decoration: none;
+}
+
+.breadcrumb a:hover {
+  text-decoration: underline;
+}
+
+section {
+  margin-bottom: 4rem;
+}
+
+.buying-hero {
+  background: #F9F9F9;
+  padding: 6rem 0;
+  text-align: center;
+  box-shadow: var(--shadow);
+}
+
+.buying-hero .lead {
+  color: var(--lead);
+  margin: 1rem 0 2rem;
+  font-size: 1.125rem;
+}
+
+.btn-primary {
+  background: var(--primary);
+  color: #FFFFFF;
+  padding: 0.75rem 1.5rem;
+  border-radius: var(--radius);
+  font-weight: 500;
+  text-decoration: none;
+  display: inline-block;
+  transition: background 0.3s ease;
+}
+
+.btn-primary:hover {
+  background: var(--primary-dark);
+}
+
+.btn-outline {
+  border: 2px solid var(--primary);
+  color: var(--primary);
+  padding: 0.5rem 1rem;
+  border-radius: var(--radius);
+  transition: background 0.3s ease, color 0.3s ease;
+  display: inline-block;
+  text-decoration: none;
+}
+
+.btn-outline:hover {
+  background: var(--primary);
+  color: #FFFFFF;
+}
+
+.tools-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 2rem;
+}
+
+.tool-card {
+  background: var(--bg);
+  padding: 2rem;
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  text-align: center;
+}
+
+.tool-card iframe {
+  width: 100%;
+  height: 200px;
+  border: none;
+  border-radius: var(--radius);
+}
+
+.service-list,
+.onboarding-list,
+.referral-list {
+  list-style: none;
+  padding-left: 1.5rem;
+}
+
+.service-list li::before,
+.onboarding-list li::before,
+.referral-list li::before {
+  content: '•';
+  color: var(--primary);
+  margin-right: 0.5rem;
+}
+
+@media (max-width: 768px) {
+  .tools-grid {
+    grid-template-columns: 1fr;
+  }
+}
