@@ -1,10 +1,150 @@
-<!doctype html>
-<html lang="en">
-<head>
-    <meta charset="utf-8">
-    <title>Consultation</title>
-</head>
-<body>
-    <h1>Consultation/Market Analysis</h1>
-</body>
-</html>
+<!-- app/services/templates/services/consultation.html -->
+{% extends 'base.html' %}
+
+{% block title %}Consultation & Market Analysis – My PA House Search{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/services_consultation.css') }}">
+{% endblock %}
+
+{% block content %}
+<nav class="breadcrumb">
+  <a href="{{ url_for('main.index') }}">Home</a> ›
+  <a href="{{ url_for('services.all_services') }}">Services</a> ›
+  Consultation / Market Analysis
+</nav>
+
+<!-- HERO -->
+<section class="consult-hero">
+  <div class="container">
+    <h1>Pin‑Point Your Home’s True Value</h1>
+    <p class="subhead">
+      Our data‑driven Comparative Market Analysis positions Central‑PA homes to sell <strong>up to 10 % above</strong> automated estimates and <strong>twice as fast</strong> as the county average.
+    </p>
+    <a href="{{ url_for('contact.contact_form') }}" class="btn-primary">Request Your Free CMA</a>
+  </div>
+</section>
+
+<!-- MARKET SNAPSHOT -->
+<section class="snapshot">
+  <div class="container grid-3">
+    <div class="snap-card">
+      <h3>Harrisburg</h3>
+      <p>$248 k · 9 DOM*</p>
+    </div>
+    <div class="snap-card">
+      <h3>Cumberland Co.</h3>
+      <p>$390 k · 34 % over‑list</p>
+    </div>
+    <div class="snap-card">
+      <h3>Statewide</h3>
+      <p>3 mos inventory · 8.1 % YoY ↑</p>
+    </div>
+  </div>
+  <small class="footnote">*DOM = Days on Market (sources: Zillow, Realtor.com, PAR March 2025)</small>
+</section>
+
+<!-- WHY A PRO CMA -->
+<section class="why-cma">
+  <div class="container grid-2">
+    <div>
+      <h2>Why Our CMA Beats Algorithms</h2>
+      <ul>
+        <li>Captures <strong>off‑market & coming‑soon</strong> listings unseen by portals</li>
+        <li>Adjusts for <strong>zip‑level</strong> shifts like 17111’s 4 % MoM dip</li>
+        <li>Models <strong>seasonal demand peaks</strong>—June/July yield 6 % higher prices</li>
+        <li>Delivers <strong>three price‑band</strong> strategies to spark bidding wars</li>
+      </ul>
+    </div>
+    <div class="chart-placeholder">[Price Trend Chart Placeholder]</div>
+  </div>
+</section>
+
+<!-- PROCESS -->
+<section class="process">
+  <div class="container">
+    <h2>Your Five‑Step Valuation Roadmap</h2>
+    <ol>
+      <li><strong>Discovery Call</strong> – goals, timing, upgrades</li>
+      <li><strong>On‑Site Audit</strong> – photos, condition score</li>
+      <li><strong>Data Deep‑Dive</strong> – sold, active, withdrawn comps</li>
+      <li><strong>Pricing Strategy</strong> – aggressive / market / premium</li>
+      <li><strong>Staging & ROI Plan</strong> – lowest cost, highest gain projects</li>
+    </ol>
+  </div>
+</section>
+
+<!-- STAGING ROI -->
+<section class="staging">
+  <div class="container grid-2">
+    <div>
+      <h2>Staging That Pays for Itself</h2>
+      <p>
+        NAR’s 2025 profile shows <strong>30 %</strong> of staged homes sell 1‑10 % higher and nearly half cut DOM in half. Our certified stagers average a <strong>$40 k net lift</strong> (RESA 2024). Download the checklist to see the top ten ROI projects.
+      </p>
+      <a href="{{ url_for('static', filename='assets/Staging_Checklist.pdf') }}" class="btn-outline">Download Checklist</a>
+    </div>
+    <div class="image-placeholder">[Before / After Gallery]</div>
+  </div>
+</section>
+
+<!-- ADVANCED REPORT -->
+<section class="report">
+  <div class="container">
+    <h2>What’s Inside Your 25‑Page Report?</h2>
+    <div class="report-grid">
+      <div class="r-item"><h4>Sales Trend Graphs</h4><p>County & zip YoY curves.</p></div>
+      <div class="r-item"><h4>Hyper‑Local Comps</h4><p>0.5‑mile radius sold / pending.</p></div>
+      <div class="r-item"><h4>Absorption Rate</h4><p>Months‑supply gauge.</p></div>
+      <div class="r-item"><h4>Net Proceeds Sheet</h4><p>Commission, taxes, payoff.</p></div>
+      <div class="r-item"><h4>Prep ROI Matrix</h4><p>Paint, flooring, landscaping.</p></div>
+      <div class="r-item"><h4>Timing Map</h4><p>Best month to list for each city.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section class="testimonials">
+  <div class="container">
+    <h2>Sellers We’ve Helped</h2>
+    <div class="testi-grid">
+      <blockquote>
+        “Ruth’s valuation was spot‑on—our Lancaster home sold for $15 k over list in 8 days.”
+        <footer>— J.&nbsp;M. Rivera</footer>
+      </blockquote>
+      <blockquote>
+        “The staging plan cost us $1,900 and we cleared $32 k above Zestimate.”
+        <footer>— T.&nbsp;Nguyen, Mechanicsburg</footer>
+      </blockquote>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section class="faq">
+  <div class="container">
+    <h2>Consultation FAQs</h2>
+    <details>
+      <summary>How long does a CMA take?</summary>
+      <p>Expect your full report within 24 hours of the on‑site walk‑through.</p>
+    </details>
+    <details>
+      <summary>Is the consultation really free?</summary>
+      <p>Yes. We’re confident our insights will earn your listing business—no strings attached.</p>
+    </details>
+    <details>
+      <summary>Do I need to stage every room?</summary>
+      <p>No—our ROI matrix shows which rooms deliver the biggest return so you can stage strategically.</p>
+    </details>
+  </div>
+</section>
+
+<!-- FINAL CTA -->
+<section class="cta-final">
+  <div class="container">
+    <h2>See Your Exact Market Value Today</h2>
+    <p>No cost, no obligation—just expert insights backed by live data.</p>
+    <a href="{{ url_for('contact.contact_form') }}" class="btn-primary">Get My CMA</a>
+  </div>
+</section>
+{% endblock %}
