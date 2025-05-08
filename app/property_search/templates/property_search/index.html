@@ -1,0 +1,117 @@
+<!-- app/property_search/templates/property_search/index.html -->
+{% extends 'base.html' %}
+
+{% block title %}Property Search – My PA House Search{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/property_search.css') }}" />
+{% endblock %}
+
+{% block content %}
+<nav class="breadcrumb">
+  <a href="{{ url_for('main.index') }}">Home</a> ›
+  <span>Property Search (MLS)</span>
+</nav>
+
+<section class="search-bar">
+  <div class="container">
+    <form action="{{ url_for('property_search.search') }}" method="get" class="search-form">
+      <input type="text" name="q" placeholder="City, ZIP, or MLS #" value="{{ request.args.get('q','') }}" />
+      <select name="beds">
+        <option value="">Beds</option>
+        <option value="1">1+ Beds</option>
+        <option value="2">2+ Beds</option>
+        <option value="3">3+ Beds</option>
+        <option value="4">4+ Beds</option>
+      </select>
+      <select name="baths">
+        <option value="">Baths</option>
+        <option value="1">1+ Baths</option>
+        <option value="2">2+ Baths</option>
+        <option value="3">3+ Baths</option>
+        <option value="4">4+ Baths</option>
+      </select>
+      <input type="text" name="min_price" placeholder="Min \$" value="{{ request.args.get('min_price','') }}" />
+      <input type="text" name="max_price" placeholder="Max \$" value="{{ request.args.get('max_price','') }}" />
+      <button type="submit" class="btn-primary">Search</button>
+    </form>
+  </div>
+</section>
+
+<div class="property-search-main container">
+  <aside class="filters">
+    <h3>Filters</h3>
+    <form action="{{ url_for('property_search.search') }}" method="get">
+      <label>Location</label>
+      <input type="text" name="q" placeholder="e.g. Harrisburg" value="{{ request.args.get('q','') }}" />
+
+      <label>Price Range</label>
+      <div class="price-range">
+        <input type="text" name="min_price" placeholder="Min \$" value="{{ request.args.get('min_price','') }}" />
+        <input type="text" name="max_price" placeholder="Max \$" value="{{ request.args.get('max_price','') }}" />
+      </div>
+
+      <label>Beds</label>
+      <select name="beds">
+        <option value="">Any</option>
+        <option value="1" {% if request.args.get('beds')=='1' %}selected{% endif %}>1+</option>
+        <option value="2" {% if request.args.get('beds')=='2' %}selected{% endif %}>2+</option>
+        <option value="3" {% if request.args.get('beds')=='3' %}selected{% endif %}>3+</option>
+        <option value="4" {% if request.args.get('beds')=='4' %}selected{% endif %}>4+</option>
+      </select>
+
+      <label>Baths</label>
+      <select name="baths">
+        <option value="">Any</option>
+        <option value="1" {% if request.args.get('baths')=='1' %}selected{% endif %}>1+</option>
+        <option value="2" {% if request.args.get('baths')=='2' %}selected{% endif %}>2+</option>
+        <option value="3" {% if request.args.get('baths')=='3' %}selected{% endif %}>3+</option>
+        <option value="4" {% if request.args.get('baths')=='4' %}selected{% endif %}>4+</option>
+      </select>
+
+      <label>Property Type</label>
+      <select name="type">
+        <option value="">All Types</option>
+        <option value="house">House</option>
+        <option value="condo">Condo</option>
+        <option value="townhome">Townhome</option>
+      </select>
+
+      <button type="submit" class="btn-outline">Apply Filters</button>
+    </form>
+  </aside>
+
+  <section class="results">
+    <div id="map"></div>
+
+    <div class="listings-grid">
+      {% for listing in listings %}
+      <div class="listing-card">
+        <img src="{{ listing.image_url }}" alt="Photo of {{ listing.address }}" />
+        <div class="listing-details">
+          <h4>{{ listing.address }}</h4>
+          <p class="price">${{ "{:,.0f}".format(listing.price) }}</p>
+          <p>{{ listing.beds }} bd · {{ listing.baths }} ba · {{ listing.sqft }} sqft</p>
+          <a href="{{ url_for('property_search.city_page', city=listing.city) }}" class="btn-small">View Details</a>
+        </div>
+      </div>
+      {% else %}
+      <p>No listings found. Try adjusting your filters.</p>
+      {% endfor %}
+    </div>
+
+    <nav class="pagination">
+      {% if page > 1 %}
+      <a href="{{ url_for('property_search.search', page=page-1, **request.args) }}">&laquo; Prev</a>
+      {% endif %}
+      <span>Page {{ page }} of {{ total_pages }}</span>
+      {% if page < total_pages %}
+      <a href="{{ url_for('property_search.search', page=page+1, **request.args) }}">Next &raquo;</a>
+      {% endif %}
+    </nav>
+  </section>
+</div>
+{% endblock %}
+css
+Copy
+Edit
