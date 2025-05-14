@@ -1,0 +1,79 @@
+<!-- app/about/templates/about/awards.html -->
+{% extends 'base.html' %}
+
+{% block title %}Awards & Certifications – My PA House Search{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/about.css') }}">
+{% endblock %}
+
+{% block content %}
+<nav class="breadcrumb">
+  <a href="{{ url_for('main.index') }}">Home</a> ›
+  About Us ›
+  Awards & Certifications
+</nav>
+
+<section class="about-hero">
+  <div class="container">
+    <h1>Awards & Certifications</h1>
+    <p class="subhead">Recognized excellence and industry leadership in real estate.</p>
+  </div>
+</section>
+
+<section class="awards-grid">
+  <div class="container">
+    <div class="award-card">
+      <img src="{{ url_for('static', filename='images/award-keller-williams-top-producer.png') }}" alt="Top Producer">
+      <h3>Top Producer</h3>
+      <p>Keller Williams Central PA, 2018–2024</p>
+    </div>
+    <div class="award-card">
+      <img src="{{ url_for('static', filename='images/award-elite-agent.png') }}" alt="Elite Agent">
+      <h3>Elite Agent</h3>
+      <p>Real Trends / Tom Ferry, Top 1% Nationwide, 2022–2024</p>
+    </div>
+    <div class="award-card">
+      <img src="{{ url_for('static', filename='images/award-crs.png') }}" alt="CRS Designation">
+      <h3>CRS Designation</h3>
+      <p>Certified Residential Specialist, National Association of Realtors</p>
+    </div>
+    <div class="award-card">
+      <img src="{{ url_for('static', filename='images/award-abr.png') }}" alt="ABR Designation">
+      <h3>ABR Designation</h3>
+      <p>Accredited Buyer’s Representative, Real Estate Buyer’s Agent Council</p>
+    </div>
+    <div class="award-card">
+      <img src="{{ url_for('static', filename='images/award-ma.png') }}" alt="Market Analysis Award">
+      <h3>Market Analysis Award</h3>
+      <p>Pennsylvania Association of Realtors, Best CMA Practices 2023</p>
+    </div>
+    <div class="award-card">
+      <img src="{{ url_for('static', filename='images/award-community-service.png') }}" alt="Community Service">
+      <h3>Community Service Award</h3>
+      <p>Central PA Housing Authority Partner of the Year 2023</p>
+    </div>
+  </div>
+</section>
+
+<section class="details">
+  <div class="container">
+    <h2>Certifications & Affiliations</h2>
+    <ul>
+      <li>NAR: National Association of Realtors Member</li>
+      <li>Keller Williams International – KW MAPS Coaching Alumni</li>
+      <li>Certified Staging Professional (CSP)</li>
+      <li>Accredited Luxury Home Specialist (ALHS)</li>
+      <li>Member, Dauphin County Board of Realtors</li>
+    </ul>
+  </div>
+</section>
+
+<section class="cta-final">
+  <div class="container">
+    <h2>Partner with an Award-Winning Team</h2>
+    <p>Experience the difference that professional excellence makes.</p>
+    <a href="{{ url_for('contact.contact_form') }}" class="btn-primary">Contact Us Today</a>
+  </div>
+</section>
+{% endblock %}

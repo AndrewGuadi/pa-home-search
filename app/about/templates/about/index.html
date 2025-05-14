@@ -1,0 +1,69 @@
+<!-- app/about/templates/about/index.html -->
+{% extends 'base.html' %}
+
+{% block title %}About Us – My PA House Search{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/about.css') }}">
+{% endblock %}
+
+{% block content %}
+<nav class="breadcrumb">
+  <a href="{{ url_for('main.index') }}">Home</a> ›
+  About Us
+</nav>
+
+<section class="about-hero">
+  <div class="container">
+    <h1>About Us</h1>
+    <p class="subhead">
+      At My PA House Search, we’re more than real estate agents—we’re your neighbors, advocates, and trusted guides
+      through every step of buying or selling in Central Pennsylvania.
+    </p>
+  </div>
+</section>
+
+<section class="about-intro">
+  <div class="container">
+    <h2>Our Mission</h2>
+    <p>
+      Founded in 2010 by Ruth Koup, My PA House Search was built on the belief that every client deserves
+      white-glove service, transparent guidance, and deep local expertise. From first homes to luxury estates,
+      our goal is to simplify the process, maximize your results, and build lifelong relationships.
+    </p>
+    <p>
+      Over the past decade we’ve grown from a solo consultancy to a full Keller Williams team,
+      closing over 500 transactions across Harrisburg, Mechanicsburg, Lancaster, Carlisle, York, and beyond.
+      Yet our core values—integrity, empathy, excellence, and community—remain as strong as ever.
+    </p>
+  </div>
+</section>
+
+<section class="about-links">
+  <div class="container grid-3">
+    <a href="{{ url_for('about.our_story') }}" class="card-link">
+      <h3>Our Story</h3>
+      <p>Dive into how we started, our growth milestones, and why we do what we do.</p>
+    </a>
+    <a href="{{ url_for('about.meet_the_team') }}" class="card-link">
+      <h3>Meet the Team</h3>
+      <p>Get to know the dedicated professionals behind your real estate experience.</p>
+    </a>
+    <a href="{{ url_for('about.awards') }}" class="card-link">
+      <h3>Awards & Certifications</h3>
+      <p>Explore our industry recognitions, designations, and community honors.</p>
+    </a>
+  </div>
+</section>
+
+<section class="about-cta">
+  <div class="container">
+    <h2>Ready to Work with Us?</h2>
+    <p>
+      Whether you’re buying your first home, upgrading, or selling your property for top dollar,
+      My PA House Search has the expertise and dedication to make it happen.
+    </p>
+    <a href="{{ url_for('contact.contact_form') }}" class="btn-primary">Contact Us Today</a>
+  </div>
+</section>
+{% endblock %}

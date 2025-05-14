@@ -14,7 +14,8 @@ EXCLUDED_FILES = {
 EXCLUDED_DIRS = {
     'myEnv',        # Virtual environment directory
     '__pycache__',  # Python cache files
-    '.pytest_cache' # Pytest cache, if present
+    '.pytest_cache',
+    '.git' # Pytest cache, if present
 }
 
 # Specific directory paths to exclude relative to the base directory

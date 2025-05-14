@@ -26,12 +26,12 @@
       </button>
       <ul class="nav-menu">
         <li><a href="{{url_for('main.index')}}">Home</a></li>
-        <li><a href="#">City Pages</a></li>
+        <li><a href="{{url_for('property_search.search')}}">City Pages</a></li>
         <li><a href="{{ url_for('services.all_services')}}">Services</a></li>
         <li><a href="{{ url_for('reviews.reviews_overview')}}">Reviews/Testimonials</a></li>
-        <li><a href="#">About Us</a></li>
-        <li><a href="#">Resources/Blog</a></li>
-        <li><a href="#">Contact</a></li>
+        <li><a href="{{url_for('about.index')}}">About Us</a></li>
+        <li><a href="{{ url_for('resources.resources_overview')}}">Resources/Blog</a></li>
+        <li><a href="{{url_for('contact.contact_form')}}">Contact</a></li>
       </ul>
     </div>
   </header>

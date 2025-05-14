@@ -1,0 +1,52 @@
+/* static/css/resources.css */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
+:root {
+  --primary: #E4002B;
+  --primary-dark: #B30E1A;
+  --text: #333;
+  --subtext: #555;
+  --bg: #fff;
+  --light-bg: #f9f9f9;
+  --radius: 8px;
+  --spacing: 1.5rem;
+  --shadow: 0 4px 8px rgba(0,0,0,0.05);
+}
+
+body { font-family: 'Inter', sans-serif; color: var(--text); background: var(--bg); line-height: 1.6; }
+.container { max-width: 1200px; margin: 0 auto; padding: 4rem 1rem; }
+.breadcrumb { font-size: .9rem; margin: 1rem 0; }
+.breadcrumb a { color: var(--primary); text-decoration: none; }
+
+section { margin-bottom: 4rem; }
+
+/* HERO */
+.resource-hero { background: var(--light-bg); text-align: center; padding: 6rem 0; box-shadow: var(--shadow); }
+.resource-hero h1 { font-size: 2.5rem; margin-bottom: 1rem; }
+.resource-hero .subhead { color: var(--subtext); margin-bottom: 2rem; }
+.btn-primary, .btn-outline { margin: .5rem; }
+
+/* Buttons */
+.btn-primary { background: var(--primary); color: #fff; padding: .75rem 1.5rem; border-radius: var(--radius); font-weight: 600; text-decoration: none; transition: background .3s; }
+.btn-primary:hover { background: var(--primary-dark); }
+.btn-outline { border: 2px solid var(--primary); color: var(--primary); padding: .6rem 1.2rem; border-radius: var(--radius); text-decoration: none; font-weight: 600; transition: background .3s, color .3s; }
+.btn-outline:hover { background: var(--primary); color: #fff; }
+
+/* Grids */
+.related-grid, .tips-grid { display: grid; gap: var(--spacing); }
+.related-grid { grid-template-columns: repeat(auto-fill, minmax(240px,1fr)); }
+.tips-grid { grid-template-columns: repeat(auto-fill, minmax(320px,1fr)); list-style: none; padding:0; }
+
+/* Tips */
+.tips-grid li { background: var(--light-bg); padding: var(--spacing); border-radius: var(--radius); box-shadow: var(--shadow); }
+
+/* Charts & Maps */
+.chart-placeholder, .map-placeholder { background: #ddd; height: 300px; border-radius: var(--radius); }
+
+/* FAQ */
+details { margin-bottom: var(--spacing); }
+summary { font-weight: 600; cursor: pointer; }
+
+@media (max-width:768px) {
+  .related-grid, .tips-grid { grid-template-columns: 1fr; }
+}

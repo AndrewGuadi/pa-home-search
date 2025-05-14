@@ -1,10 +1,69 @@
-<!doctype html>
-<html lang="en">
-<head>
-    <meta charset="utf-8">
-    <title>Neighborhood Guides</title>
-</head>
-<body>
+<!-- app/resources/templates/resources/neighborhood_guides.html -->
+{% extends 'base.html' %}
+
+{% block title %}Neighborhood Guides – My PA House Search{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/resources_child.css') }}">
+{% endblock %}
+
+{% block content %}
+<nav class="breadcrumb">
+  <a href="{{ url_for('main.index') }}">Home</a> ›
+  <a href="{{ url_for('resources.resources_overview') }}">Resources &amp; Blog</a> ›
+  Neighborhood Guides
+</nav>
+
+<!-- HERO -->
+<section class="resource-hero">
+  <div class="container">
     <h1>Neighborhood Guides</h1>
-</body>
-</html>
+    <p class="subhead">In‑depth profiles of Central PA communities: schools, amenities, market stats, and lifestyle insights.</p>
+    <a href="{{ url_for('resources.resources_overview') }}" class="btn-outline">Back to Resources</a>
+  </div>
+</section>
+
+<!-- GUIDE GRID -->
+<section class="neighborhood-list">
+  <div class="container related-grid">
+    <a href="/resources/neighborhood_guides/harrisburg" class="related-card">
+      <h4>Harrisburg</h4>
+      <p>Urban core with historic charm, riverfront parks, &amp; robust dining scene.</p>
+    </a>
+    <a href="/resources/neighborhood_guides/mechanicsburg" class="related-card">
+      <h4>Mechanicsburg</h4>
+      <p>Family‑friendly suburb with top schools and easy I‑81 access.</p>
+    </a>
+    <a href="/resources/neighborhood_guides/lancaster" class="related-card">
+      <h4>Lancaster</h4>
+      <p>Blend of city amenities and rural farms, known for arts &amp; culture.</p>
+    </a>
+    <a href="/resources/neighborhood_guides/carlisle" class="related-card">
+      <h4>Carlisle</h4>
+      <p>Historic downtown, community events, and proximity to military bases.</p>
+    </a>
+    <a href="/resources/neighborhood_guides/york" class="related-card">
+      <h4>York</h4>
+      <p>Manufacturing heritage meets emerging craft breweries &amp; dining.</p>
+    </a>
+    <!-- add additional neighborhoods as needed -->
+  </div>
+</section>
+
+<!-- MAP -->
+<section class="map-section">
+  <div class="container">
+    <h2>Explore on the Map</h2>
+    <div id="neighborhood-map" class="map-placeholder">[Interactive Map]</div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="resources-cta">
+  <div class="container">
+    <h2>Schedule a Neighborhood Tour</h2>
+    <p>Let us show you around the communities that fit your lifestyle best.</p>
+    <a href="{{ url_for('contact.contact_form') }}" class="btn-primary">Book a Tour</a>
+  </div>
+</section>
+{% endblock %}

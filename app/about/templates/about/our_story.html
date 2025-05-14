@@ -1,10 +1,143 @@
-<!doctype html>
-<html lang="en">
-<head>
-    <meta charset="utf-8">
-    <title>Our Story</title>
-</head>
-<body>
+<!-- app/about/templates/about/our_story.html -->
+{% extends 'base.html' %}
+
+{% block title %}Our Story – My PA House Search{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/about.css') }}">
+{% endblock %}
+
+{% block content %}
+<nav class="breadcrumb">
+  <a href="{{ url_for('main.index') }}">Home</a> ›
+  About Us ›
+  Our Story
+</nav>
+
+<section class="about-hero">
+  <div class="container">
     <h1>Our Story</h1>
-</body>
-</html>
+    <p class="subhead">
+      From a small local brokerage to Central Pennsylvania’s most trusted real estate partner.
+    </p>
+  </div>
+</section>
+
+<section class="story-section">
+  <div class="container">
+    <h2>Humble Beginnings</h2>
+    <p>
+      My PA House Search started in 2010 when founder <strong>Ruth Koup</strong> recognized that homebuyers and sellers
+      needed more than just listings—they needed guidance, transparency, and local expertise.
+      What began as a one-woman consultancy in a shared office has grown into a full-service team
+      at Keller Williams Realty, serving families across Harrisburg, Mechanicsburg, Lancaster, and beyond.
+    </p>
+    <p>
+      Early on, Ruth’s mission was simple: treat every client like family. Sales were modest, but
+      word-of-mouth referrals fueled steady growth. By 2012, the team had helped over 50 households
+      find or sell homes, establishing a reputation for personalized service and community focus.
+    </p>
+  </div>
+</section>
+
+<section class="timeline">
+  <div class="container">
+    <h2>Milestones & Growth</h2>
+    <ul class="timeline-list">
+      <li>
+        <span class="year">2010</span>
+        <div class="event">
+          <h3>Foundation Laid</h3>
+          <p>Ruth Koup launches solo real estate consultancy from her living room.</p>
+        </div>
+      </li>
+      <li>
+        <span class="year">2012</span>
+        <div class="event">
+          <h3>First 50 Transactions</h3>
+          <p>Celebrated closing the 50th home, fueled by client referrals and community trust.</p>
+        </div>
+      </li>
+      <li>
+        <span class="year">2015</span>
+        <div class="event">
+          <h3>Keller Williams Partnership</h3>
+          <p>Joined Keller Williams, gaining access to advanced marketing tools and training.</p>
+        </div>
+      </li>
+      <li>
+        <span class="year">2018</span>
+        <div class="event">
+          <h3>Team Expansion</h3>
+          <p>Grew to a dedicated team of 8 agents, including buyer specialists and marketing experts.</p>
+        </div>
+      </li>
+      <li>
+        <span class="year">2022</span>
+        <div class="event">
+          <h3>200+ Homes Sold</h3>
+          <p>Surpassed 200 closed transactions, becoming a top producer in Central PA.</p>
+        </div>
+      </li>
+      <li>
+        <span class="year">2024</span>
+        <div class="event">
+          <h3>Community Impact</h3>
+          <p>Launched annual charity drive supporting local housing initiatives and food banks.</p>
+        </div>
+      </li>
+    </ul>
+  </div>
+</section>
+
+<section class="values">
+  <div class="container">
+    <h2>Our Core Values</h2>
+    <div class="values-grid">
+      <div class="value-item">
+        <h3>Integrity</h3>
+        <p>We uphold honesty and transparency in every transaction.</p>
+      </div>
+      <div class="value-item">
+        <h3>Community</h3>
+        <p>Giving back to the neighborhoods we serve is at our heart.</p>
+      </div>
+      <div class="value-item">
+        <h3>Excellence</h3>
+        <p>Constantly raising the bar through training and technology.</p>
+      </div>
+      <div class="value-item">
+        <h3>Empathy</h3>
+        <p>We listen first to understand each client’s unique needs.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="community">
+  <div class="container">
+    <h2>Community Involvement</h2>
+    <p>
+      Over the years, My PA House Search has partnered with local non-profits, schools, and food banks.
+      We host homebuying seminars, sponsor youth sports teams, and run annual coat drives—
+      because a thriving community means thriving clients.
+    </p>
+    <ul class="community-list">
+      <li>Annual Food Drive benefiting Central PA Food Bank</li>
+      <li>First-Time Homebuyer Workshops at Harrisburg Library</li>
+      <li>“Homes for Heroes” scholarships for teachers and first responders</li>
+      <li>Habitat for Humanity build days and fundraising</li>
+    </ul>
+  </div>
+</section>
+
+<section class="cta-final">
+  <div class="container">
+    <h2>Be Part of Our Next Chapter</h2>
+    <p>
+      Ready to write your own story? Whether buying or selling, let our history of excellence guide you.
+    </p>
+    <a href="{{ url_for('contact.contact_form') }}" class="btn-primary">Get Started Today</a>
+  </div>
+</section>
+{% endblock %}

@@ -1,10 +1,90 @@
-<!doctype html>
-<html lang="en">
-<head>
-    <meta charset="utf-8">
-    <title>Buying & Selling Tips</title>
-</head>
-<body>
-    <h1>Buying & Selling Tips</h1>
-</body>
-</html>
+<!-- app/resources/templates/resources/buying_selling_tips.html -->
+{% extends 'base.html' %}
+
+{% block title %}Buying &amp; Selling Tips – My PA House Search{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/resources_child.css') }}">
+{% endblock %}
+
+{% block content %}
+<nav class="breadcrumb">
+  <a href="{{ url_for('main.index') }}">Home</a> ›
+  <a href="{{ url_for('resources.resources_overview') }}">Resources &amp; Blog</a> ›
+  Buying &amp; Selling Tips
+</nav>
+
+<!-- HERO -->
+<section class="resource-hero">
+  <div class="container">
+    <h1>Buying &amp; Selling Tips</h1>
+    <p class="subhead">Practical advice and step‑by‑step checklists to navigate your transaction smoothly.</p>
+    <a href="{{ url_for('resources.resources_overview') }}" class="btn-outline">Back to Resources</a>
+  </div>
+</section>
+
+<!-- BUYING TIPS -->
+<section class="tips-section">
+  <div class="container">
+    <h2>Top Buying Tips</h2>
+    <ul class="tips-grid">
+      <li>
+        <h4>Get Pre‑Approved First</h4>
+        <p>Secure financing before you shop to strengthen your offer and focus your search.</p>
+      </li>
+      <li>
+        <h4>Research Neighborhoods</h4>
+        <p>Compare schools, commute times, and long‑term value before deciding.</p>
+      </li>
+      <li>
+        <h4>Inspect Thoroughly</h4>
+        <p>Hire a qualified inspector to uncover any hidden issues early.</p>
+      </li>
+    </ul>
+  </div>
+</section>
+
+<!-- SELLING TIPS -->
+<section class="tips-section">
+  <div class="container">
+    <h2>Top Selling Tips</h2>
+    <ul class="tips-grid">
+      <li>
+        <h4>Stage Strategically</h4>
+        <p>Highlight key rooms and create an emotional connection for buyers.</p>
+      </li>
+      <li>
+        <h4>Price Competitively</h4>
+        <p>Analyze recent comps and set a price that draws traffic and multiple offers.</p>
+      </li>
+      <li>
+        <h4>Market Aggressively</h4>
+        <p>Leverage professional photos, video tours, and targeted online ads.</p>
+      </li>
+    </ul>
+  </div>
+</section>
+
+<!-- DOWNLOADABLE CHECKLISTS -->
+<section class="download-section">
+  <div class="container related-grid">
+    <a href="/static/assets/Buyer_Checklist.pdf" class="related-card">
+      <h4>Buyer’s Checklist</h4>
+      <p>Printable PDF to track your home‑buying milestones.</p>
+    </a>
+    <a href="/static/assets/Seller_Checklist.pdf" class="related-card">
+      <h4>Seller’s Checklist</h4>
+      <p>Step‑by‑step guide to prepare and market your home.</p>
+    </a>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="resources-cta">
+  <div class="container">
+    <h2>Questions About Your Transaction?</h2>
+    <p>Our team is here to provide personalized guidance every step of the way.</p>
+    <a href="{{ url_for('contact.contact_form') }}" class="btn-primary">Ask an Expert</a>
+  </div>
+</section>
+{% endblock %}

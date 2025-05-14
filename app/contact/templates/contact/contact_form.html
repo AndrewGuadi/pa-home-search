@@ -1,10 +1,75 @@
-<!doctype html>
-<html lang="en">
-<head>
-    <meta charset="utf-8">
-    <title>Contact Us</title>
-</head>
-<body>
-    <h1>Contact Form</h1>
-</body>
-</html>
+<!-- app/contact/templates/contact/contact_form.html -->
+{% extends 'base.html' %}
+
+{% block title %}Contact Us – My PA House Search{% endblock %}
+{% block extra_css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/contact.css') }}">
+{% endblock %}
+
+{% block content %}
+<nav class="breadcrumb">
+  <a href="{{ url_for('main.index') }}">Home</a> ›
+  Contact
+</nav>
+
+<section class="contact-form-section">
+  <div class="container">
+    <h1>Contact Us</h1>
+    <form method="post" novalidate>
+      {{ form.hidden_tag() }}
+
+      <div class="form-group">
+        {{ form.name.label }}<br>
+        {{ form.name(class="form-control") }}
+        {% for e in form.name.errors %}<span class="error">{{ e }}</span>{% endfor %}
+      </div>
+
+      <div class="form-group">
+        {{ form.email.label }}<br>
+        {{ form.email(class="form-control") }}
+        {% for e in form.email.errors %}<span class="error">{{ e }}</span>{% endfor %}
+      </div>
+
+      <div class="form-group">
+        {{ form.phone.label }}<br>
+        {{ form.phone(class="form-control") }}
+        {% for e in form.phone.errors %}<span class="error">{{ e }}</span>{% endfor %}
+      </div>
+
+      <div class="form-group">
+        {{ form.service.label }}<br>
+        {{ form.service(class="form-control") }}
+      </div>
+
+      <div class="form-group">
+        {{ form.how_heard.label }}<br>
+        {{ form.how_heard(class="form-control") }}
+      </div>
+
+      <div class="form-group">
+        {{ form.priority.label }}<br>
+        {{ form.priority(class="form-control") }}
+      </div>
+
+      <div class="form-group">
+        {{ form.preferred_contact.label }}<br>
+        {{ form.preferred_contact() }}
+      </div>
+
+      <div class="form-group">
+        {{ form.best_time.label }}<br>
+        {{ form.best_time(class="form-control") }}
+      </div>
+
+      <div class="form-group">
+        {{ form.message.label }}<br>
+        {{ form.message(class="form-control", rows="5") }}
+      </div>
+
+      <div class="form-group">
+        {{ form.submit(class="btn-primary") }}
+      </div>
+    </form>
+  </div>
+</section>
+{% endblock %}

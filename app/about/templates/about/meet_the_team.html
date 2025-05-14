@@ -1,10 +1,97 @@
-<!doctype html>
-<html lang="en">
-<head>
-    <meta charset="utf-8">
-    <title>Meet the Team</title>
-</head>
-<body>
-    <h1>Meet the Team</h1>
-</body>
-</html>
+<!-- app/about/templates/about/meet_the_team.html -->
+{% extends 'base.html' %}
+
+{% block title %}Meet the Team – My PA House Search{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/about.css') }}">
+{% endblock %}
+
+{% block content %}
+<nav class="breadcrumb">
+  <a href="{{ url_for('main.index') }}">Home</a> ›
+  About Us ›
+  Meet the Team
+</nav>
+
+<section class="about-hero">
+  <div class="container">
+    <h1>Meet Our Expert Team</h1>
+    <p class="subhead">A group of dedicated professionals committed to your real estate success.</p>
+  </div>
+</section>
+
+<section class="team-grid">
+  <div class="container">
+    <div class="team-card">
+      <img src="{{ url_for('static', filename='images/ruth-koup.jpg') }}" alt="Ruth Koup">
+      <h3>Ruth Koup</h3>
+      <p class="role">Founder & Lead Agent</p>
+      <p>
+        With 14 years of experience in Central PA real estate, Ruth has closed over 500 transactions.
+        Her passion for community and data-driven strategies ensures clients get top results.
+      </p>
+      <ul class="social-links">
+        <li><a href="#" aria-label="Ruth's LinkedIn">LinkedIn</a></li>
+        <li><a href="#" aria-label="Ruth's Facebook">Facebook</a></li>
+      </ul>
+    </div>
+    <div class="team-card">
+      <img src="{{ url_for('static', filename='images/jane-doe.jpg') }}" alt="Jane Doe">
+      <h3>Jane Doe</h3>
+      <p class="role">Buyer Specialist</p>
+      <p>
+        Jane focuses on first-time homebuyers, guiding them through financing,
+        negotiation, and making the dream home a reality.
+      </p>
+      <ul class="social-links">
+        <li><a href="#" aria-label="Jane's LinkedIn">LinkedIn</a></li>
+      </ul>
+    </div>
+    <div class="team-card">
+      <img src="{{ url_for('static', filename='images/john-smith.jpg') }}" alt="John Smith">
+      <h3>John Smith</h3>
+      <p class="role">Listing & Marketing Director</p>
+      <p>
+        John crafts customized marketing plans including professional photography,
+        drone videos, and targeted ad campaigns that sell homes faster.
+      </p>
+      <ul class="social-links">
+        <li><a href="#" aria-label="John's Instagram">Instagram</a></li>
+      </ul>
+    </div>
+    <div class="team-card">
+      <img src="{{ url_for('static', filename='images/emma-wright.jpg') }}" alt="Emma Wright">
+      <h3>Emma Wright</h3>
+      <p class="role">Transaction Coordinator</p>
+      <p>
+        Emma keeps every detail on track from contract to closing,
+        ensuring a smooth, stress-free experience for buyers and sellers.
+      </p>
+      <ul class="social-links">
+        <li><a href="#" aria-label="Emma's LinkedIn">LinkedIn</a></li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section class="team-values">
+  <div class="container">
+    <h2>Why Our Team Stands Out</h2>
+    <ul>
+      <li><strong>Local Roots:</strong> Born and raised in Central PA.</li>
+      <li><strong>Full-Service Expertise:</strong> From financing to staging.</li>
+      <li><strong>Technology-Driven:</strong> Cutting-edge tools, constant communication.</li>
+      <li><strong>Community Focus:</strong> Active volunteers & event sponsors.</li>
+    </ul>
+  </div>
+</section>
+
+<section class="cta-final">
+  <div class="container">
+    <h2>Work With the Best</h2>
+    <p>Our combined experience means you gain a competitive edge.</p>
+    <a href="{{ url_for('contact.contact_form') }}" class="btn-primary">Meet With Us</a>
+  </div>
+</section>
+{% endblock %}

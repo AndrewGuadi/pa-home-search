@@ -1,10 +1,82 @@
-<!doctype html>
-<html lang="en">
-<head>
-    <meta charset="utf-8">
-    <title>Market Trends</title>
-</head>
-<body>
-    <h1>Market Trends</h1>
-</body>
-</html>
+<!-- app/resources/templates/resources/market_trends.html -->
+{% extends 'base.html' %}
+
+{% block title %}Market Trends – My PA House Search{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/resources_child.css') }}">
+{% endblock %}
+
+{% block content %}
+<nav class="breadcrumb">
+  <a href="{{ url_for('main.index') }}">Home</a> ›
+  <a href="{{ url_for('resources.resources_overview') }}">Resources &amp; Blog</a> ›
+  Market Trends
+</nav>
+
+<!-- HERO -->
+<section class="resource-hero">
+  <div class="container">
+    <h1>Central PA Market Trends</h1>
+    <p class="subhead">Quarterly updates on pricing, inventory, and sales velocity across Harrisburg, Mechanicsburg, Lancaster, Carlisle, and York.</p>
+    <a href="{{ url_for('resources.resources_overview') }}" class="btn-outline">Back to Resources</a>
+  </div>
+</section>
+
+<!-- OVERVIEW -->
+<section class="overview">
+  <div class="container">
+    <h2>Market at a Glance</h2>
+    <p>In Q1 2025, median home prices rose 7% year‑over‑year, inventory tightened to a 2.8‑month supply, and days on market averaged just 22 days.</p>
+  </div>
+</section>
+
+<!-- CHARTS -->
+<section class="chart-section">
+  <div class="container">
+    <h2>Interactive Charts</h2>
+    <div class="chart-placeholder">[Pricing Trend Chart]</div>
+    <div class="chart-placeholder" style="margin-top:1rem;">[Inventory Level Chart]</div>
+  </div>
+</section>
+
+<!-- REPOss %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/resources.css') }}">
+{% endblock %}
+
+{% block content %}
+<nav class="breadcrumb">
+  <a href="{{ url_for('main.index') }}">Home</a> ›
+  <a href="{{ url_for('resources.resources_overview') }}">Resources &amp; Blog</a> ›
+  Market Trends
+</nav>
+
+<!-- HERO -->
+<section class="resource-hero">
+  <div class="container">
+    <h1>Central PA Market Trends</h1>
+    <p class="subhead">Quarterly updates on pricing, inventory, and sales velocity across Harrisburg, Mechanicsburg, Lancaster, Carlisle, and York.</p>
+    <a href="{{ url_for('resources.resources_overview') }}" class="btn-outline">Back to Resources</a>
+  </div>
+</section>
+
+<!-- OVERVIEW -->RT DOWNLOADS -->
+<section class="download-reports">
+  <div class="container">
+    <h2>Download Quarterly Reports</h2>
+    <ul class="related-grid">
+      <li><a href="/static/reports/Q4_2024_Market_Trends.pdf" class="related-card"><h4>Q4 2024 Report</h4><p>Detailed analysis of end‑of‑year trends.</p></a></li>
+      <li><a href="/static/reports/Q1_2025_Market_Trends.pdf" class="related-card"><h4>Q1 2025 Report</h4><p>Latest insights into regional market shifts.</p></a></li>
+    </ul>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="resources-cta">
+  <div class="container">
+    <h2>Need Custom Market Data?</h2>
+    <p>Reach out for a tailored report on your specific neighborhood or property type.</p>
+    <a href="{{ url_for('contact.contact_form') }}" class="btn-primary">Request Custom Report</a>
+  </div>
+</section>
+{% endblock %}

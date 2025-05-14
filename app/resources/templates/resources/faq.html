@@ -1,10 +1,52 @@
-<!doctype html>
-<html lang="en">
-<head>
-    <meta charset="utf-8">
-    <title>FAQ</title>
-</head>
-<body>
+<!-- app/resources/templates/resources/faq.html -->
+{% extends 'base.html' %}
+
+{% block title %}FAQ – My PA House Search{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/resources_child.css') }}">
+{% endblock %}
+
+{% block content %}
+<nav class="breadcrumb">
+  <a href="{{ url_for('main.index') }}">Home</a> ›
+  <a href="{{ url_for('resources.resources_overview') }}">Resources &amp; Blog</a> ›
+  FAQ
+</nav>
+
+<!-- HERO -->
+<section class="resource-hero">
+  <div class="container">
     <h1>Frequently Asked Questions</h1>
-</body>
-</html>
+    <p class="subhead">Answers to common real estate questions about buying, selling, and working with us.</p>
+    <a href="{{ url_for('resources.resources_overview') }}" class="btn-outline">Back to Resources</a>
+  </div>
+</section>
+
+<!-- FAQ LIST -->
+<section class="faq-list">
+  <div class="container">
+    <details>
+      <summary>How do I subscribe to updates?</summary>
+      <p>Enter your email in the subscribe box at the top of any Resources page to receive weekly market insights directly to your inbox.</p>
+    </details>
+    <details>
+      <summary>Can I request a custom report?</summary>
+      <p>Yes—use the "Request Custom Report" button in any Market Trends page or contact<br>us via the form for personalized data on your neighborhood.</p>
+    </details>
+    <details>
+      <summary>Where can I find neighborhood profiles?</summary>
+      <p>View our <a href="{{ url_for('resources.neighborhood_guides') }}">Neighborhood Guides</a> section for in-depth community overviews.</p>
+    </details>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="resources-cta">
+  <div class="container">
+    <h2>Need More Help?</h2>
+    <p>Reach out with any question—no query is too big or small.</p>
+    <a href="{{ url_for('contact.contact_form') }}" class="btn-primary">Contact Us</a>
+  </div>
+</section>
+{% endblock %}

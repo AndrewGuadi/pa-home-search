@@ -1,0 +1,175 @@
+<!-- app/resources/templates/resources/index.html -->
+{% extends 'base.html' %}
+
+{% block title %}Resources &amp; Blog – My PA House Search{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/resources.css') }}">
+{% endblock %}
+
+{% block content %}
+<nav class="breadcrumb">
+  <a href="{{ url_for('main.index') }}">Home</a> ›
+  Resources &amp; Blog
+</nav>
+
+<!-- HERO -->
+<section class="resources-hero">
+  <div class="container">
+    <h1>Resources &amp; Blog</h1>
+    <p class="subhead">Expert insights, guides, and local market updates to empower your real estate decisions.</p>
+    <a href="#" class="btn-primary">Subscribe for Updates</a>
+  </div>
+</section>
+
+<!-- CHILD PAGE LINKS -->
+<section class="resources-children">
+  <div class="container related-grid">
+    <a href="{{ url_for('resources.market_trends') }}" class="related-card">
+      <h4>Market Trends</h4>
+      <p>Quarterly pricing, inventory &amp; sales velocity data.</p>
+    </a>
+    <a href="{{ url_for('resources.neighborhood_guides') }}" class="related-card">
+      <h4>Neighborhood Guides</h4>
+      <p>In-depth profiles of Central PA communities.</p>
+    </a>
+    <a href="{{ url_for('resources.buying_selling_tips') }}" class="related-card">
+      <h4>Buying &amp; Selling Tips</h4>
+      <p>Checklists and best practices for smooth transactions.</p>
+    </a>
+    <a href="{{ url_for('resources.faq') }}" class="related-card">
+      <h4>FAQ</h4>
+      <p>Answers to common real estate questions.</p>
+    </a>
+  </div>
+</section>
+
+<!-- SEARCH -->
+<section class="resources-search">
+  <div class="container">
+    <form action="{{ url_for('resources.resources_overview') }}" method="get" class="search-form">
+      <input type="text" name="q" placeholder="Search articles, guides, FAQs…" value="{{ request.args.get('q','') }}">
+      <button type="submit">Search</button>
+    </form>
+  </div>
+</section>
+
+<!-- CATEGORY TABS -->
+<section class="resources-categories">
+  <div class="container">
+    <ul class="category-tabs">
+      <li class="{% if not request.args.get('category') %}active{% endif %}">
+        <a href="{{ url_for('resources.resources_overview') }}">All</a>
+      </li>
+      {% for cat in categories %}
+      <li class="{% if request.args.get('category') == cat.slug %}active{% endif %}">
+        <a href="{{ url_for('resources.resources_overview', category=cat.slug) }}">{{ cat.name }}</a>
+      </li>
+      {% endfor %}
+    </ul>
+  </div>
+</section>
+
+<!-- MAIN CONTENT & SIDEBAR -->
+<div class="resources-main container">
+  <!-- BLOG GRID -->
+  <section class="blog-grid">
+    {% for article in articles %}
+    <article class="blog-card">
+      <img src="{{ article.image_url }}" alt="{{ article.title }}">
+      <div class="card-content">
+        <h3><a href="{{ article.url }}">{{ article.title }}</a></h3>
+        <p class="byline">{{ article.date }} &middot; {{ article.category }}</p>
+        <p class="excerpt">{{ article.excerpt }}</p>
+        <a href="{{ article.url }}" class="btn-readmore">Read More</a>
+      </div>
+    </article>
+    {% endfor %}
+
+    <nav class="pagination">
+      {% if page > 1 %}
+      <a href="{{ url_for('resources.resources_overview', page=page-1, **request.args) }}">&laquo; Prev</a>
+      {% endif %}
+      <span>Page {{ page }} of {{ total_pages }}</span>
+      {% if page < total_pages %}
+      <a href="{{ url_for('resources.resources_overview', page=page+1, **request.args) }}">Next &raquo;</a>
+      {% endif %}
+    </nav>
+  </section>
+
+  <!-- SIDEBAR -->
+  <aside class="resources-sidebar">
+    <div class="sidebar-section popular-posts">
+      <h4>Popular Posts</h4>
+      <ul>
+        {% for post in popular_posts %}
+        <li><a href="{{ post.url }}">{{ post.title }}</a></li>
+        {% endfor %}
+      </ul>
+    </div>
+    <div class="sidebar-section categories">
+      <h4>Categories</h4>
+      <ul>
+        {% for cat in categories %}
+        <li><a href="{{ url_for('resources.resources_overview', category=cat.slug) }}">{{ cat.name }}</a></li>
+        {% endfor %}
+      </ul>
+    </div>
+    <div class="sidebar-section newsletter">
+      <h4>Newsletter</h4>
+      <form action="#" method="post">
+        <input type="email" name="email" placeholder="Your email" required>
+        <button type="submit">Subscribe</button>
+      </form>
+    </div>
+    <div class="sidebar-section tags">
+      <h4>Tags</h4>
+      <ul class="tag-list">
+        {% for tag in tags %}
+        <li><a href="{{ url_for('resources.resources_overview', tag=tag.slug) }}">{{ tag.name }}</a></li>
+        {% endfor %}
+      </ul>
+    </div>
+  </aside>
+</div>
+
+<!-- FEATURED ARTICLE -->
+<section class="featured-article">
+  <div class="container">
+    <h2>Featured Analysis</h2>
+    <article class="featured-card">
+      <img src="{{ featured_article.image_url }}" alt="{{ featured_article.title }}">
+      <div class="featured-content">
+        <h3><a href="{{ featured_article.url }}">{{ featured_article.title }}</a></h3>
+        <p class="excerpt">{{ featured_article.excerpt }}</p>
+        <a href="{{ featured_article.url }}" class="btn-readmore">Read Full Analysis</a>
+      </div>
+    </article>
+  </div>
+</section>
+
+<!-- RELATED RESOURCES -->
+<section class="related-resources">
+  <div class="container">
+    <h2>Quick-Start Guides</h2>
+    <div class="related-grid">
+      {% for res in related_resources %}
+      <a href="{{ res.url }}" class="related-card">
+        <h4>{{ res.title }}</h4>
+        <p>{{ res.description }}</p>
+      </a>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+<!-- CTA BANNER -->
+<section class="resources-cta">
+  <div class="container">
+    <h2>Need Personalized Advice?</h2>
+    <p>Schedule a free consultation or download our seller’s guide to get started.</p>
+    <a href="{{ url_for('contact.contact_form') }}" class="btn-primary">Book a Consultation</a>
+    <a href="{{ url_for('static', filename='assets/Sellers_Guide.pdf') }}" class="btn-outline">Download Seller’s Guide</a>
+  </div>
+</section>
+{% endblock %}
