@@ -38,6 +38,69 @@ body {
   color: var(--text);
 }
 
+/* --------------------
+   Popular Cities Block
+   -------------------- */
+
+.popular-cities {
+  padding: var(--spacing) 0;
+  background: var(--light-bg, #F9F9F9);
+}
+.popular-cities h2 {
+  text-align: center;
+  margin-bottom: var(--spacing);
+  font-size: 2rem;
+  color: var(--text);
+}
+
+/* Flexible grid: auto-fit as many cards as will fit, min 180px */
+.popular-cities .city-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: var(--spacing);
+  margin: 0 var(--spacing);
+}
+
+/* City card styling */
+.popular-cities .city-card {
+  background: var(--bg);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  overflow: hidden;
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+.popular-cities .city-card a {
+  display: block;
+  color: inherit;
+  text-decoration: none;
+}
+.popular-cities .city-card img {
+  width: 100%;
+  aspect-ratio: 4/3;
+  object-fit: cover;
+  display: block;
+}
+.popular-cities .city-card p {
+  text-align: center;
+  padding: 0.75rem 0;
+  font-weight: 500;
+  background: rgba(0,0,0,0.03);
+  margin: 0;
+}
+.popular-cities .city-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+}
+
+/* Ensure container centering on desktop */
+.popular-cities.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: var(--spacing) 1rem;
+}
+
+
+
 .search-bar {
   background: #F9F9F9;
   padding: var(--spacing) 0;

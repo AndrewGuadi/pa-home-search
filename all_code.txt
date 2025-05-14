@@ -3197,6 +3197,160 @@ summary { font-weight: 600; cursor: pointer; }
 }
 
 ================================================================================
+FILE: /workspaces/pa-home-search/app/static/css/contact.css
+================================================================================
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
+:root {
+  --primary: #E4002B;
+  --primary-dark: #B30E1A;
+  --text: #333333;
+  --bg: #FFFFFF;
+  --light-bg: #F9F9F9;
+  --radius: 8px;
+  --spacing: 1.5rem;
+  --shadow: 0 4px 8px rgba(0,0,0,0.05);
+  --transition: 0.3s ease;
+}
+
+body {
+  font-family: 'Inter', sans-serif;
+  color: var(--text);
+  background: var(--bg);
+  line-height: 1.6;
+}
+
+.breadcrumb {
+  font-size: 0.9rem;
+  margin: var(--spacing) 0;
+}
+.breadcrumb a {
+  color: var(--primary);
+  text-decoration: none;
+}
+.breadcrumb a:hover {
+  text-decoration: underline;
+}
+
+.contact-hero {
+  background: var(--light-bg);
+  text-align: center;
+  padding: calc(var(--spacing) * 2) 1rem;
+  box-shadow: var(--shadow);
+  margin-bottom: var(--spacing);
+}
+.contact-hero h1 {
+  font-size: 2.5rem;
+  margin-bottom: 0.5rem;
+}
+.contact-hero p {
+  font-size: 1.125rem;
+  color: #555;
+}
+
+.contact-options {
+  margin-bottom: var(--spacing);
+}
+.contact-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px,1fr));
+  gap: var(--spacing);
+}
+.contact-card {
+  background: var(--bg);
+  padding: var(--spacing);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  text-align: center;
+  transition: transform var(--transition), box-shadow var(--transition);
+}
+.contact-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+}
+.contact-card h2 {
+  margin-bottom: 0.75rem;
+}
+.contact-card p {
+  margin-bottom: 1rem;
+  color: #555;
+}
+
+.contact-form-section .container {
+  max-width: 600px;
+  margin: 0 auto;
+  padding: var(--spacing) 1rem;
+}
+.contact-form-section h1 {
+  text-align: center;
+  margin-bottom: calc(var(--spacing) * 1.5);
+}
+
+.form-group {
+  margin-bottom: var(--spacing);
+}
+.form-group label {
+  display: block;
+  font-weight: 500;
+  margin-bottom: 0.5rem;
+}
+.form-control {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  border: 1px solid #CCC;
+  border-radius: var(--radius);
+  font-size: 1rem;
+  transition: border-color var(--transition);
+}
+.form-control:focus {
+  outline: none;
+  border-color: var(--primary);
+}
+
+.error {
+  display: block;
+  margin-top: 0.25rem;
+  color: #E4002B;
+  font-size: 0.875rem;
+}
+
+.btn-primary,
+.btn-outline {
+  display: inline-block;
+  font-weight: 600;
+  border-radius: var(--radius);
+  text-decoration: none;
+  transition: background var(--transition), color var(--transition);
+}
+
+.btn-primary {
+  background: var(--primary);
+  color: #FFF;
+  padding: 0.75rem 1.5rem;
+  border: none;
+}
+.btn-primary:hover {
+  background: var(--primary-dark);
+}
+
+.btn-outline {
+  border: 2px solid var(--primary);
+  color: var(--primary);
+  padding: 0.65rem 1.4rem;
+}
+.btn-outline:hover {
+  background: var(--primary);
+  color: #FFF;
+}
+
+@media (max-width: 600px) {
+  .contact-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+================================================================================
 FILE: /workspaces/pa-home-search/app/static/css/services_selling.css
 ================================================================================
 
@@ -4276,7 +4430,7 @@ FILE: /workspaces/pa-home-search/app/templates/base.html
         <li><a href="{{ url_for('reviews.reviews_overview')}}">Reviews/Testimonials</a></li>
         <li><a href="{{url_for('about.index')}}">About Us</a></li>
         <li><a href="{{ url_for('resources.resources_overview')}}">Resources/Blog</a></li>
-        <li><a href="#">Contact</a></li>
+        <li><a href="{{url_for('contact.contact_form')}}">Contact</a></li>
       </ul>
     </div>
   </header>
@@ -4933,12 +5087,18 @@ FILE: /workspaces/pa-home-search/app/contact/routes.py
 ================================================================================
 
 # app/contact/routes.py
-from flask import render_template
+from flask import render_template, request, flash, redirect, url_for
+from .forms import ContactForm
 from . import contact
 
-@contact.route('/contact')
+@contact.route('/contact', methods=['GET', 'POST'])
 def contact_form():
-    return render_template('contact/contact_form.html')
+    form = ContactForm()
+    if form.validate_on_submit():
+        # handle submission: send email, log to DB, etc.
+        flash('Thanks—your message is on its way!')
+        return redirect(url_for('contact.contact_form'))
+    return render_template('contact/contact_form.html', form=form)
 
 @contact.route('/contact/scheduling')
 def scheduling():
@@ -4962,7 +5122,78 @@ FILE: /workspaces/pa-home-search/app/contact/forms.py
 ================================================================================
 
 # app/contact/forms.py (Contact and appointment scheduling forms)
+# app/contact/forms.py
+from flask_wtf import FlaskForm
+from wtforms import StringField, SelectField, RadioField, TextAreaField, SubmitField
+from wtforms.validators import DataRequired, Length
 
+class ContactForm(FlaskForm):
+    name = StringField(
+        'Full Name',
+        validators=[DataRequired(), Length(max=100)]
+    )
+    email = StringField(
+        'Email Address',
+        validators=[DataRequired(), Length(max=120)]
+    )
+    phone = StringField(
+        'Phone Number',
+        validators=[DataRequired(), Length(max=20)]
+    )
+    service = SelectField(
+        'Service You’re Interested In',
+        choices=[
+            ('buying', 'Buying'),
+            ('selling', 'Selling'),
+            ('consultation', 'Consultation / CMA'),
+        ],
+        validators=[DataRequired()]
+    )
+    how_heard = SelectField(
+        'How Did You Hear About Us?',
+        choices=[
+            ('google', 'Google Search'),
+            ('referral', 'Friend / Referral'),
+            ('social', 'Social Media'),
+            ('event', 'Local Event'),
+            ('other', 'Other'),
+        ],
+        validators=[DataRequired()]
+    )
+    priority = SelectField(
+        'Most Important Quality in Your Agent',
+        choices=[
+            ('communication', 'Clear Communication'),
+            ('negotiation', 'Strong Negotiation'),
+            ('local', 'Local Market Knowledge'),
+            ('responsiveness', 'Fast Response Time'),
+            ('marketing', 'Marketing Expertise'),
+            ('other', 'Other'),
+        ],
+        validators=[DataRequired()]
+    )
+    preferred_contact = RadioField(
+        'Preferred Contact Method',
+        choices=[
+            ('email', 'Email'),
+            ('phone', 'Phone'),
+        ],
+        validators=[DataRequired()]
+    )
+    best_time = SelectField(
+        'Best Time to Reach You',
+        choices=[
+            ('morning', 'Morning'),
+            ('afternoon', 'Afternoon'),
+            ('evening', 'Evening'),
+        ],
+        validators=[DataRequired()]
+    )
+    message = TextAreaField(
+        'Tell Us More (optional)',
+        validators=[Length(max=500)]
+    )
+    submit = SubmitField('Send Message')
 
 ================================================================================
 FILE: /workspaces/pa-home-search/app/contact/templates/contact/index.html
@@ -4990,15 +5221,80 @@ FILE: /workspaces/pa-home-search/app/contact/templates/contact/scheduling.html
 FILE: /workspaces/pa-home-search/app/contact/templates/contact/contact_form.html
 ================================================================================
 
-<!doctype html>
-<html lang="en">
-<head>
-    <meta charset="utf-8">
-    <title>Contact Us</title>
-</head>
-<body>
-    <h1>Contact Form</h1>
-</body>
-</html>
+<!-- app/contact/templates/contact/contact_form.html -->
+{% extends 'base.html' %}
+
+{% block title %}Contact Us – My PA House Search{% endblock %}
+{% block extra_css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/contact.css') }}">
+{% endblock %}
+
+{% block content %}
+<nav class="breadcrumb">
+  <a href="{{ url_for('main.index') }}">Home</a> ›
+  Contact
+</nav>
+
+<section class="contact-form-section">
+  <div class="container">
+    <h1>Contact Us</h1>
+    <form method="post" novalidate>
+      {{ form.hidden_tag() }}
+
+      <div class="form-group">
+        {{ form.name.label }}<br>
+        {{ form.name(class="form-control") }}
+        {% for e in form.name.errors %}<span class="error">{{ e }}</span>{% endfor %}
+      </div>
+
+      <div class="form-group">
+        {{ form.email.label }}<br>
+        {{ form.email(class="form-control") }}
+        {% for e in form.email.errors %}<span class="error">{{ e }}</span>{% endfor %}
+      </div>
+
+      <div class="form-group">
+        {{ form.phone.label }}<br>
+        {{ form.phone(class="form-control") }}
+        {% for e in form.phone.errors %}<span class="error">{{ e }}</span>{% endfor %}
+      </div>
+
+      <div class="form-group">
+        {{ form.service.label }}<br>
+        {{ form.service(class="form-control") }}
+      </div>
+
+      <div class="form-group">
+        {{ form.how_heard.label }}<br>
+        {{ form.how_heard(class="form-control") }}
+      </div>
+
+      <div class="form-group">
+        {{ form.priority.label }}<br>
+        {{ form.priority(class="form-control") }}
+      </div>
+
+      <div class="form-group">
+        {{ form.preferred_contact.label }}<br>
+        {{ form.preferred_contact() }}
+      </div>
+
+      <div class="form-group">
+        {{ form.best_time.label }}<br>
+        {{ form.best_time(class="form-control") }}
+      </div>
+
+      <div class="form-group">
+        {{ form.message.label }}<br>
+        {{ form.message(class="form-control", rows="5") }}
+      </div>
+
+      <div class="form-group">
+        {{ form.submit(class="btn-primary") }}
+      </div>
+    </form>
+  </div>
+</section>
+{% endblock %}
 
 

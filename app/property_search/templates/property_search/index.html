@@ -1,8 +1,6 @@
 <!-- app/property_search/templates/property_search/index.html -->
 {% extends 'base.html' %}
-
 {% block title %}Property Search – My PA House Search{% endblock %}
-
 {% block extra_css %}
 <link rel="stylesheet" href="{{ url_for('static', filename='css/property_search.css') }}" />
 {% endblock %}
@@ -10,8 +8,22 @@
 {% block content %}
 <nav class="breadcrumb">
   <a href="{{ url_for('main.index') }}">Home</a> ›
-  <span>Property Search (MLS)</span>
+  <span>Property Search</span>
 </nav>
+
+<section class="popular-cities container">
+  <h2>Browse by City</h2>
+  <div class="city-grid">
+    {% for city in ['Harrisburg','Mechanicsburg','Lancaster','Carlisle','York'] %}
+      <div class="city-card">
+        <a href="{{ url_for('property_search.city_page', city=city) }}">
+          <img src="{{ url_for('static', filename='images/cities/' + city|lower + '.png') }}" alt="{{ city }}">
+          <p>Explore {{ city }}</p>
+        </a>
+      </div>
+    {% endfor %}
+  </div>
+</section>
 
 <section class="search-bar">
   <div class="container">
@@ -112,6 +124,3 @@
   </section>
 </div>
 {% endblock %}
-css
-Copy
-Edit

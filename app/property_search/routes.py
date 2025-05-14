@@ -1,4 +1,3 @@
-# app/property_search/routes.py
 from flask import render_template, request
 from . import property_search
 from math import ceil
@@ -6,14 +5,14 @@ from math import ceil
 def fetch_listings(q=None, beds=None, baths=None, min_price=None, max_price=None, page=1, per_page=12):
     """
     Replace this with your real MLS integration.
-    Should return (list_of_listing_dicts, total_listing_count).
+    Should return a tuple: (list_of_listing_dicts, total_listing_count).
     """
-    # Example stub: return empty + zero total
+    # TODO: integrate with real data source
     return [], 0
 
-@property_search.route('/property_search')
+@property_search.route('/', methods=['GET'])
 def search():
-    # 1. Grab all your filters from the querystring
+    # 1. Grab all filters from the query string
     q         = request.args.get('q', type=str, default='')
     beds      = request.args.get('beds', type=int)
     baths     = request.args.get('baths', type=int)
@@ -22,7 +21,7 @@ def search():
     page      = request.args.get('page', type=int, default=1)
     per_page  = 12
 
-    # 2. Fetch your listings + total count
+    # 2. Fetch listings + total count
     listings, total = fetch_listings(
         q=q,
         beds=beds,
@@ -33,10 +32,10 @@ def search():
         per_page=per_page
     )
 
-    # 3. Compute total pages for pagination
+    # 3. Compute total pages
     total_pages = ceil(total / per_page) if total else 1
 
-    # 4. Render with everything the template needs
+    # 4. Render the unified search template
     return render_template(
         'property_search/index.html',
         listings=listings,
@@ -51,18 +50,17 @@ def search():
         }
     )
 
-@property_search.route('/property_search/<city>')
+@property_search.route('/<city>', methods=['GET'])
 def city_page(city):
-    # If you want to pre‐filter by city in the same general UI:
-    page      = request.args.get('page', type=int, default=1)
-    per_page  = 12
+    # Pre-fill the 'q' filter with the city name
+    page     = request.args.get('page', type=int, default=1)
+    per_page = 12
 
-    # You could pass city into the same fetch_listings or a separate function:
     listings, total = fetch_listings(q=city, page=page, per_page=per_page)
     total_pages     = ceil(total / per_page) if total else 1
 
     return render_template(
-        'property_search/index.html',   # reuse the same layout
+        'property_search/index.html',
         listings=listings,
         page=page,
         total_pages=total_pages,
