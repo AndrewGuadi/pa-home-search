@@ -1544,6 +1544,36 @@ FILE: /workspaces/pa-home-search/app/about/templates/about/our_story.html
 
 
 ================================================================================
+FILE: /workspaces/pa-home-search/app/static/images/cities/harrisburg.png
+================================================================================
+
+ERROR reading file: 'utf-8' codec can't decode byte 0x89 in position 0: invalid start byte
+
+================================================================================
+FILE: /workspaces/pa-home-search/app/static/images/cities/carlisle.png
+================================================================================
+
+ERROR reading file: 'utf-8' codec can't decode byte 0x89 in position 0: invalid start byte
+
+================================================================================
+FILE: /workspaces/pa-home-search/app/static/images/cities/lancaster.png
+================================================================================
+
+ERROR reading file: 'utf-8' codec can't decode byte 0x89 in position 0: invalid start byte
+
+================================================================================
+FILE: /workspaces/pa-home-search/app/static/images/cities/york.png
+================================================================================
+
+ERROR reading file: 'utf-8' codec can't decode byte 0x89 in position 0: invalid start byte
+
+================================================================================
+FILE: /workspaces/pa-home-search/app/static/images/cities/mechanicsburg.png
+================================================================================
+
+ERROR reading file: 'utf-8' codec can't decode byte 0x89 in position 0: invalid start byte
+
+================================================================================
 FILE: /workspaces/pa-home-search/app/static/css/resources.css
 ================================================================================
 
@@ -2006,6 +2036,69 @@ body {
 .breadcrumb span {
   color: var(--text);
 }
+
+/* --------------------
+   Popular Cities Block
+   -------------------- */
+
+.popular-cities {
+  padding: var(--spacing) 0;
+  background: var(--light-bg, #F9F9F9);
+}
+.popular-cities h2 {
+  text-align: center;
+  margin-bottom: var(--spacing);
+  font-size: 2rem;
+  color: var(--text);
+}
+
+/* Flexible grid: auto-fit as many cards as will fit, min 180px */
+.popular-cities .city-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: var(--spacing);
+  margin: 0 var(--spacing);
+}
+
+/* City card styling */
+.popular-cities .city-card {
+  background: var(--bg);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  overflow: hidden;
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+.popular-cities .city-card a {
+  display: block;
+  color: inherit;
+  text-decoration: none;
+}
+.popular-cities .city-card img {
+  width: 100%;
+  aspect-ratio: 4/3;
+  object-fit: cover;
+  display: block;
+}
+.popular-cities .city-card p {
+  text-align: center;
+  padding: 0.75rem 0;
+  font-weight: 500;
+  background: rgba(0,0,0,0.03);
+  margin: 0;
+}
+.popular-cities .city-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+}
+
+/* Ensure container centering on desktop */
+.popular-cities.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: var(--spacing) 1rem;
+}
+
+
 
 .search-bar {
   background: #F9F9F9;
@@ -4851,7 +4944,6 @@ FILE: /workspaces/pa-home-search/app/reviews/templates/reviews/video_testimonial
 FILE: /workspaces/pa-home-search/app/property_search/routes.py
 ================================================================================
 
-# app/property_search/routes.py
 from flask import render_template, request
 from . import property_search
 from math import ceil
@@ -4859,14 +4951,14 @@ from math import ceil
 def fetch_listings(q=None, beds=None, baths=None, min_price=None, max_price=None, page=1, per_page=12):
     """
     Replace this with your real MLS integration.
-    Should return (list_of_listing_dicts, total_listing_count).
+    Should return a tuple: (list_of_listing_dicts, total_listing_count).
     """
-    # Example stub: return empty + zero total
+    # TODO: integrate with real data source
     return [], 0
 
-@property_search.route('/property_search')
+@property_search.route('/', methods=['GET'])
 def search():
-    # 1. Grab all your filters from the querystring
+    # 1. Grab all filters from the query string
     q         = request.args.get('q', type=str, default='')
     beds      = request.args.get('beds', type=int)
     baths     = request.args.get('baths', type=int)
@@ -4875,7 +4967,7 @@ def search():
     page      = request.args.get('page', type=int, default=1)
     per_page  = 12
 
-    # 2. Fetch your listings + total count
+    # 2. Fetch listings + total count
     listings, total = fetch_listings(
         q=q,
         beds=beds,
@@ -4886,10 +4978,10 @@ def search():
         per_page=per_page
     )
 
-    # 3. Compute total pages for pagination
+    # 3. Compute total pages
     total_pages = ceil(total / per_page) if total else 1
 
-    # 4. Render with everything the template needs
+    # 4. Render the unified search template
     return render_template(
         'property_search/index.html',
         listings=listings,
@@ -4904,24 +4996,22 @@ def search():
         }
     )
 
-@property_search.route('/property_search/<city>')
+@property_search.route('/<city>', methods=['GET'])
 def city_page(city):
-    # If you want to pre‐filter by city in the same general UI:
-    page      = request.args.get('page', type=int, default=1)
-    per_page  = 12
+    # Pre-fill the 'q' filter with the city name
+    page     = request.args.get('page', type=int, default=1)
+    per_page = 12
 
-    # You could pass city into the same fetch_listings or a separate function:
     listings, total = fetch_listings(q=city, page=page, per_page=per_page)
     total_pages     = ceil(total / per_page) if total else 1
 
     return render_template(
-        'property_search/index.html',   # reuse the same layout
+        'property_search/index.html',
         listings=listings,
         page=page,
         total_pages=total_pages,
         filters={'q': city}
     )
-
 
 ================================================================================
 FILE: /workspaces/pa-home-search/app/property_search/__init__.py
@@ -4930,7 +5020,12 @@ FILE: /workspaces/pa-home-search/app/property_search/__init__.py
 # app/property_search/__init__.py
 from flask import Blueprint
 
-property_search = Blueprint('property_search', __name__, template_folder='templates')
+property_search = Blueprint(
+  'property_search',
+    __name__,
+    template_folder='templates',
+    url_prefix='/property_search'
+)
 
 from . import routes
 
@@ -4948,9 +5043,7 @@ FILE: /workspaces/pa-home-search/app/property_search/templates/property_search/i
 
 <!-- app/property_search/templates/property_search/index.html -->
 {% extends 'base.html' %}
-
 {% block title %}Property Search – My PA House Search{% endblock %}
-
 {% block extra_css %}
 <link rel="stylesheet" href="{{ url_for('static', filename='css/property_search.css') }}" />
 {% endblock %}
@@ -4958,8 +5051,22 @@ FILE: /workspaces/pa-home-search/app/property_search/templates/property_search/i
 {% block content %}
 <nav class="breadcrumb">
   <a href="{{ url_for('main.index') }}">Home</a> ›
-  <span>Property Search (MLS)</span>
+  <span>Property Search</span>
 </nav>
+
+<section class="popular-cities container">
+  <h2>Browse by City</h2>
+  <div class="city-grid">
+    {% for city in ['Harrisburg','Mechanicsburg','Lancaster','Carlisle','York'] %}
+      <div class="city-card">
+        <a href="{{ url_for('property_search.city_page', city=city) }}">
+          <img src="{{ url_for('static', filename='images/cities/' + city|lower + '.png') }}" alt="{{ city }}">
+          <p>Explore {{ city }}</p>
+        </a>
+      </div>
+    {% endfor %}
+  </div>
+</section>
 
 <section class="search-bar">
   <div class="container">
@@ -5060,9 +5167,6 @@ FILE: /workspaces/pa-home-search/app/property_search/templates/property_search/i
   </section>
 </div>
 {% endblock %}
-css
-Copy
-Edit
 
 
 ================================================================================
