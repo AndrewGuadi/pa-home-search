@@ -1,282 +1,373 @@
-/* HERO SECTION */
+/*───────────────────────────────────────────────────────────────────────────
+   NAVBAR STACKING FIX
+────────────────────────────────────────────────────────────────────────────*/
+header {
+  position: relative;    /* ensure it’s a stacking context */
+  z-index: 1000;         /* sit above the hero */
+}
+.hamburger {
+  position: relative;    /* keep button above hero too */
+  z-index: 1001;
+}
+.nav-menu {
+  z-index: 1001;         /* drop-down sits above hero */
+}
+
+/*───────────────────────────────────────────────────────────────────────────
+   HERO SECTION
+────────────────────────────────────────────────────────────────────────────*/
 .hero {
-    position: relative;
-    background: url('https://i.ibb.co/BKwsxzPb/hero-home.png') center/cover no-repeat;
-    height: 60vh;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-    color: #fff;
-  }
-  .hero-content {
-    background: rgba(0,0,0,0.5);
-    padding: 2rem;
-    border-radius: 4px;
-    max-width: 600px;
-  }
-  .hero h1 {
-    font-size: 2rem;
-    margin-bottom: 1rem;
-  }
-  .hero p {
-    font-size: 1rem;
-    margin-bottom: 1.5rem;
-  }
-  .hero .cta-button {
-    background-color: #CE011F; /* KW Red */
-    color: #fff;
-    padding: 0.8rem 1.5rem;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    font-size: 1rem;
-    transition: background-color 0.3s ease;
-  }
-  .hero .cta-button:hover {
-    background-color: #B30E1A;
-  }
-  
-  /* PROPERTY SEARCH MODULE */
-  .property-search {
-    max-width: 1200px;
-    margin: 2rem auto;
-    padding: 0 1rem;
-  }
-  .search-box {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    gap: 1rem;
-    margin-bottom: 1rem;
-  }
-  .search-box input {
-    flex: 1;
-    padding: 0.8rem;
-    border: 1px solid #CCCCCC; /* Light Gray */
-    border-radius: 4px;
-  }
-  .search-box button {
-    padding: 0.8rem 1.5rem;
-    border: none;
-    border-radius: 4px;
-    background-color: #CE011F;
-    color: #fff;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-  }
-  .search-box button:hover {
-    background-color: #B30E1A;
-  }
-  .featured-links {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.5rem;
-    margin-top: 1rem;
-  }
-  .featured-links a {
-    color: #CE011F;
-    padding: 0.4rem 0.8rem;
-    background-color: #CCCCCC;
-    border-radius: 4px;
-    transition: background-color 0.3s ease;
-  }
-  .featured-links a:hover {
-    background-color: #B3B3B3;
-  }
-  
-  /* FEATURED LISTINGS / CITY PAGES */
-  .featured-listings {
-    max-width: 1200px;
-    margin: 2rem auto;
-    padding: 0 1rem;
-  }
-  .featured-listings h2 {
-    margin-bottom: 1rem;
-    color: #000; /* Black for headings */
-  }
-  .city-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
-    gap: 1rem;
-  }
-  .city-card {
-    background-color: #fff;
-    border: 1px solid #CCCCCC;
-    border-radius: 4px;
-    overflow: hidden;
-    text-align: center;
-    transition: box-shadow 0.3s ease;
-  }
-  .city-card:hover {
-    box-shadow: 0 0 10px rgba(0,0,0,0.1);
-  }
-  .city-card img {
-    width: 100%;
-    height: 160px;
-    object-fit: cover;
-  }
-  .city-card p {
-    padding: 0.8rem;
-  }
-  
-  /* SERVICES / VALUE PROPOSITION */
-  .services {
-    max-width: 1200px;
-    margin: 2rem auto;
-    padding: 0 1rem;
-    display: flex;
-    flex-wrap: wrap;
-    gap: 2rem;
-    justify-content: space-around;
-    text-align: center;
-  }
-  .service-item {
-    flex: 1 1 280px;
-    background-color: #f9f9f9;
-    border-radius: 4px;
-    padding: 2rem 1rem;
-    transition: box-shadow 0.3s ease;
-    position: relative;
-  }
-  .service-item:hover {
-    box-shadow: 0 0 8px rgba(0,0,0,0.1);
-  }
-  .service-item h3 {
-    margin-top: 1rem;
-    color: #000;
-  }
-  .service-icon {
-    width: 60px;
-    height: 60px;
-    margin: 0 auto;
-    display: block;
-  }
-  
-  /* TESTIMONIALS / REVIEWS */
-  .testimonials {
-    background-color: #f2f2f2;
-    padding: 2rem 1rem;
-  }
-  .testimonials-container {
-    max-width: 1200px;
-    margin: 0 auto;
-  }
-  .testimonials h2 {
-    text-align: center;
-    margin-bottom: 1.5rem;
-    color: #000;
-  }
+  position: relative;
+  z-index: 0;            /* explicitly under the nav */
+  background: url('https://i.ibb.co/BKwsxzPb/hero-home.png') center/cover no-repeat;
+  height: 60vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  color: #fff;
+}
+.hero-content {
+  background: rgba(0,0,0,0.5);
+  padding: 2rem;
+  border-radius: 4px;
+  max-width: 600px;
+}
+.hero h1 {
+  font-size: 2rem;
+  margin-bottom: 1rem;
+}
+.hero p {
+  font-size: 1rem;
+  margin-bottom: 1.5rem;
+}
+.hero .cta-button {
+  background-color: #CE011F; /* KW Red */
+  color: #fff;
+  padding: 0.8rem 1.5rem;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 1rem;
+  transition: background-color 0.3s ease;
+}
+.hero .cta-button:hover {
+  background-color: #B30E1A;
+}
+
+/*───────────────────────────────────────────────────────────────────────────
+   PROPERTY SEARCH MODULE
+────────────────────────────────────────────────────────────────────────────*/
+.property-search {
+  max-width: 1200px;
+  margin: 2rem auto;
+  padding: 0 1rem;
+}
+.search-box {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+.search-box input {
+  flex: 1;
+  padding: 0.8rem;
+  border: 1px solid #CCCCCC;
+  border-radius: 4px;
+}
+.search-box button {
+  padding: 0.8rem 1.5rem;
+  border: none;
+  border-radius: 4px;
+  background-color: #CE011F;
+  color: #fff;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+.search-box button:hover {
+  background-color: #B30E1A;
+}
+.featured-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-top: 1rem;
+}
+.featured-links a {
+  color: #CE011F;
+  padding: 0.4rem 0.8rem;
+  background-color: #CCCCCC;
+  border-radius: 4px;
+  transition: background-color 0.3s ease;
+}
+.featured-links a:hover {
+  background-color: #B3B3B3;
+}
+
+/*───────────────────────────────────────────────────────────────────────────
+   FEATURED LISTINGS / CITY PAGES
+────────────────────────────────────────────────────────────────────────────*/
+.featured-listings {
+  max-width: 1200px;
+  margin: 2rem auto;
+  padding: 0 1rem;
+}
+.featured-listings h2 {
+  margin-bottom: 1rem;
+  color: #000;
+}
+.city-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 1rem;
+}
+.city-card {
+  background-color: #fff;
+  border: 1px solid #CCCCCC;
+  border-radius: 4px;
+  overflow: hidden;
+  text-align: center;
+  transition: box-shadow 0.3s ease;
+}
+.city-card:hover {
+  box-shadow: 0 0 10px rgba(0,0,0,0.1);
+}
+.city-card img {
+  width: 100%;
+  height: 160px;
+  object-fit: cover;
+}
+.city-card p {
+  padding: 0.8rem;
+}
+
+/*───────────────────────────────────────────────────────────────────────────
+   SERVICES / VALUE PROPOSITION
+────────────────────────────────────────────────────────────────────────────*/
+.services {
+  max-width: 1200px;
+  margin: 2rem auto;
+  padding: 0 1rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2rem;
+  justify-content: space-around;
+  text-align: center;
+}
+.service-item {
+  flex: 1 1 280px;
+  background-color: #f9f9f9;
+  border-radius: 4px;
+  padding: 2rem 1rem;
+  transition: box-shadow 0.3s ease;
+  position: relative;
+}
+.service-item:hover {
+  box-shadow: 0 0 8px rgba(0,0,0,0.1);
+}
+.service-item h3 {
+  margin-top: 1rem;
+  color: #000;
+}
+.service-icon {
+  width: 60px;
+  height: 60px;
+  margin: 0 auto;
+  display: block;
+}
+
+/*───────────────────────────────────────────────────────────────────────────
+   TESTIMONIALS / REVIEWS
+────────────────────────────────────────────────────────────────────────────*/
+.testimonials {
+  background-color: #f2f2f2;
+  padding: 2rem 1rem;
+}
+.testimonials-container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+.testimonials h2 {
+  text-align: center;
+  margin-bottom: 1.5rem;
+  color: #000;
+}
+.testimonial-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+}
+.testimonial-item {
+  background: #fff;
+  border-radius: 4px;
+  padding: 1rem;
+  box-shadow: 0 0 8px rgba(0,0,0,0.1);
+  text-align: center;
+}
+.testimonial-item p {
+  margin-top: 1rem;
+}
+.testimonial-item img {
+  width: 100%;
+  max-height: 200px;
+  object-fit: cover;
+  border-radius: 4px;
+}
+
+/*───────────────────────────────────────────────────────────────────────────
+   ABOUT / TRUST SECTION
+────────────────────────────────────────────────────────────────────────────*/
+.about {
+  max-width: 1200px;
+  margin: 2rem auto;
+  padding: 0 1rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2rem;
+  align-items: center;
+  padding-bottom: 1vw;
+  border-bottom: 2px dotted black;
+}
+.about-text {
+  flex: 1 1 300px;
+}
+.about-text h2 {
+  margin-bottom: 1rem;
+  color: #000;
+}
+.about-text p {
+  margin-bottom: 1rem;
+}
+.about-image {
+  flex: 1 1 300px;
+  border-radius: 50%;
+  aspect-ratio: 1 / 1;
+  height: auto;
+  max-width: 300px;
+}
+.about-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: top;
+  border-radius: 50%;
+}
+
+/*───────────────────────────────────────────────────────────────────────────
+   BLOG / RESOURCES TEASER
+────────────────────────────────────────────────────────────────────────────*/
+.blog-resources {
+  max-width: 1200px;
+  margin: 2rem auto;
+  padding: 0 1rem;
+}
+.blog-resources h2 {
+  margin-bottom: 1rem;
+  color: #000;
+}
+.blog-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 1rem;
+}
+.blog-card {
+  background-color: #fff;
+  border: 1px solid #CCCCCC;
+  border-radius: 4px;
+  overflow: hidden;
+  transition: box-shadow 0.3s ease;
+}
+.blog-card:hover {
+  box-shadow: 0 0 8px rgba(0,0,0,0.1);
+}
+.blog-card img {
+  width: 100%;
+  height: 150px;
+  object-fit: cover;
+}
+.blog-card .content {
+  padding: 1rem;
+}
+.blog-card .content h3 {
+  margin-bottom: 0.5rem;
+  color: #000;
+}
+.blog-card .content p {
+  color: #4D4D4D;
+  font-size: 0.9rem;
+}
+
+/*───────────────────────────────────────────────────────────────────────────
+   RESPONSIVE STYLES (Home-specific elements)
+────────────────────────────────────────────────────────────────────────────*/
+@media (max-width: 768px) {
   .testimonial-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 2rem;
+    grid-template-columns: 1fr;
   }
-  .testimonial-item {
-    background: #fff;
-    border-radius: 4px;
-    padding: 1rem;
-    box-shadow: 0 0 8px rgba(0,0,0,0.1);
-    text-align: center;
-  }
-  .testimonial-item p {
-    margin-top: 1rem;
-  }
-  .testimonial-item img {
-    width: 100%;
-    max-height: 200px;
-    object-fit: cover;
-    border-radius: 4px;
-  }
-  
-  /* ABOUT / TRUST SECTION */
   .about {
-    max-width: 1200px;
-    margin: 2rem auto;
-    padding: 0 1rem;
-    display: flex;
-    flex-wrap: wrap;
-    gap: 2rem;
-    align-items: center;
-  }
-  .about-text {
-    flex: 1 1 300px;
-  }
-  .about-text h2 {
-    margin-bottom: 1rem;
-    color: #000;
-  }
-  .about-text p {
-    margin-bottom: 1rem;
-  }
-  .about-image {
-    flex: 1 1 300px;
-    background: #ccc;
-    height: 250px;
-  }
-  .about-image img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-  }
-  
-  /* BLOG / RESOURCES TEASER */
-  .blog-resources {
-    max-width: 1200px;
-    margin: 2rem auto;
-    padding: 0 1rem;
-  }
-  .blog-resources h2 {
-    margin-bottom: 1rem;
-    color: #000;
+    flex-direction: column;
   }
   .blog-cards {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-    gap: 1rem;
+    grid-template-columns: 1fr;
   }
-  .blog-card {
-    background-color: #fff;
-    border: 1px solid #CCCCCC;
-    border-radius: 4px;
-    overflow: hidden;
-    transition: box-shadow 0.3s ease;
+
+  /* HERO tweaks */
+  .hero {
+    height: 40vh;
+    padding: 1rem 0;
   }
-  .blog-card:hover {
-    box-shadow: 0 0 8px rgba(0,0,0,0.1);
-  }
-  .blog-card img {
-    width: 100%;
-    height: 150px;
-    object-fit: cover;
-  }
-  .blog-card .content {
+  .hero-content {
     padding: 1rem;
+    max-width: none;
+    width: 90%;
   }
-  .blog-card .content h3 {
-    margin-bottom: 0.5rem;
-    color: #000;
+  .hero h1 {
+    font-size: 1.5rem;
   }
-  .blog-card .content p {
-    color: #4D4D4D;
+  .hero p {
     font-size: 0.9rem;
   }
-  
-  /* RESPONSIVE STYLES (Home-specific elements) */
-  @media (max-width: 768px) {
-    /* Testimonial Grid on mobile */
-    .testimonial-grid {
-      grid-template-columns: 1fr;
-    }
-  
-    /* About section on mobile */
-    .about {
-      flex-direction: column;
-    }
-  
-    /* Blog Cards on mobile */
-    .blog-cards {
-      grid-template-columns: 1fr;
-    }
+  .hero .cta-button {
+    padding: 0.6rem 1rem;
+    font-size: 0.9rem;
+    width: 100%;
+    display: block;
   }
-  
+
+  /* SEARCH MODULE */
+  .search-box {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .search-box button {
+    width: 100%;
+  }
+
+  /* CITY GRID: two columns */
+  .city-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  /* SERVICES: stack vertically */
+  .services {
+    flex-direction: column;
+    gap: 1rem;
+  }
+  .service-item {
+    padding: 1.5rem 1rem;
+  }
+}
+
+/*───────────────────────────────────────────────────────────────────────────
+   PHONE / VERY SMALL SCREENS
+────────────────────────────────────────────────────────────────────────────*/
+@media (max-width: 480px) {
+  .hero {
+    width:100vw;
+    height:auto;
+  }
+  .city-grid {
+    grid-template-columns: 1fr;
+  }
+}

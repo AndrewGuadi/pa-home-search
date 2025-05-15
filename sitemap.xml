@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <!-- Home -->
+  <url>
+    <loc>https://www.pahousesearch.com/</loc>
+  </url>
+
+  <!-- Property Search -->
+  <url><loc>https://www.pahousesearch.com/property_search/</loc></url>
+  <url><loc>https://www.pahousesearch.com/property_search/Harrisburg</loc></url>
+  <url><loc>https://www.pahousesearch.com/property_search/Mechanicsburg</loc></url>
+  <url><loc>https://www.pahousesearch.com/property_search/Lancaster</loc></url>
+  <url><loc>https://www.pahousesearch.com/property_search/Carlisle</loc></url>
+  <url><loc>https://www.pahousesearch.com/property_search/York</loc></url>
+
+  <!-- Services -->
+  <url><loc>https://www.pahousesearch.com/services</loc></url>
+  <url><loc>https://www.pahousesearch.com/services/buying</loc></url>
+  <url><loc>https://www.pahousesearch.com/services/selling</loc></url>
+  <url><loc>https://www.pahousesearch.com/services/consultation</loc></url>
+
+  <!-- Reviews -->
+  <url><loc>https://www.pahousesearch.com/reviews</loc></url>
+  <url><loc>https://www.pahousesearch.com/reviews/video</loc></url>
+  <url><loc>https://www.pahousesearch.com/reviews/written</loc></url>
+
+  <!-- About -->
+  <url><loc>https://www.pahousesearch.com/about</loc></url>
+  <url><loc>https://www.pahousesearch.com/about/our_story</loc></url>
+  <url><loc>https://www.pahousesearch.com/about/meet_the_team</loc></url>
+  <url><loc>https://www.pahousesearch.com/about/awards</loc></url>
+
+  <!-- Resources & Blog -->
+  <url><loc>https://www.pahousesearch.com/resources</loc></url>
+  <url><loc>https://www.pahousesearch.com/resources/market_trends</loc></url>
+  <url><loc>https://www.pahousesearch.com/resources/neighborhood_guides</loc></url>
+  <url><loc>https://www.pahousesearch.com/resources/buying_selling_tips</loc></url>
+  <url><loc>https://www.pahousesearch.com/resources/faq</loc></url>
+
+  <!-- Contact -->
+  <url><loc>https://www.pahousesearch.com/contact</loc></url>
+  <url><loc>https://www.pahousesearch.com/contact/scheduling</loc></url>
+</urlset>

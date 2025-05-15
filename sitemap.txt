@@ -1,0 +1,43 @@
+Home
+|
++-- Property Search (MLS)
+|    |
+|    +-- City Pages
+|         |
+|         +-- Harrisburg
+|         +-- Mechanicsburg
+|         +-- Lancaster
+|         +-- Carlisle
+|         +-- York
+|         +-- [Additional Cities…]
+|
++-- Services
+|    |
+|    +-- Buying
+|    +-- Selling
+|    +-- Consultation/Market Analysis
+|
++-- Reviews/Testimonials
+|    |
+|    +-- Video Testimonials
+|    +-- Written Reviews
+|    +-- Case Studies
+|
++-- About Us
+|    |
+|    +-- Our Story
+|    +-- Meet the Team (e.g., Ruth’s Bio)
+|    +-- Awards & Certifications
+|
++-- Resources/Blog
+|    |
+|    +-- Market Trends
+|    +-- Neighborhood Guides
+|    +-- Buying & Selling Tips
+|    +-- FAQ
+|
++-- Contact
+     |
+     +-- Contact Form
+     +-- Appointment Scheduling
+     +-- Social Media/Other Info
