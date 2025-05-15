@@ -8,76 +8,85 @@
 {% endblock %}
 
 {% block content %}
-<nav class="breadcrumb">
-  <a href="{{ url_for('main.index') }}">Home</a> ›
-  <a href="{{ url_for('services.all_services') }}">Services</a> ›
-  Buying
-</nav>
+  <nav class="breadcrumb">
+    <a href="{{ url_for('main.index') }}">Home</a> ›
+    <a href="{{ url_for('services.all_services') }}">Services</a> ›
+    Buying
+  </nav>
 
-<section class="buying-hero">
-  <div class="container">
-    <h1>Home Buying Services with Ruth Koup</h1>
-    <p class="lead">Experience white-glove guidance across Central PA from first-time buyers to seasoned investors.</p>
-    <a href="{{ url_for('contact.contact_form') }}" class="btn-primary">Schedule a Strategy Call</a>
-  </div>
-</section>
+  <section class="buying-hero">
+    <div class="container">
+      <h1>Home Buying Services with Ruth Koup</h1>
+      <p class="lead">Experience white-glove guidance across Central PA from first-time buyers to seasoned investors.</p>
+      <a href="{{ url_for('contact.contact_form') }}" class="btn-primary">Schedule a Strategy Call</a>
+    </div>
+  </section>
 
-<section class="awareness">
-  <div class="container">
-    <h2>Get Your Free PA Homebuying Roadmap</h2>
-    <p>Download our comprehensive PDF guide: timelines, checklists, and insider tips for every stage of your journey.</p>
-    <a href="{{ url_for('static', filename='assets/PA_Homebuying_Roadmap.pdf') }}" class="btn-outline">Download Guide</a>
-  </div>
-</section>
+  <section class="awareness">
+    <div class="container">
+      <h2>Get Your Free PA Homebuying Roadmap</h2>
+      <p>Download our comprehensive PDF guide: timelines, checklists, and insider tips for every stage of your journey.</p>
+      <a href="{{ url_for('static', filename='assets/PA_Homebuying_Roadmap.pdf') }}" class="btn-outline">Download Guide</a>
+    </div>
+  </section>
 
-<section class="consideration">
-  <div class="container">
-    <div class="tools-grid">
-      <div class="tool-card">
-        <h3>Affordability Calculator</h3>
-        <iframe src="https://your-calculator-embed" title="Affordability Calculator"></iframe>
-      </div>
-      <div class="tool-card">
-        <h3>Neighborhood Match Quiz</h3>
-        <p>Answer 5 quick questions and we'll email you your top 3 Central PA neighborhoods.</p>
-        <a href="{{ url_for('property_search.search') }}" class="btn-outline">Take the Quiz</a>
+  <section class="consideration">
+    <div class="container">
+      <div class="tools-grid">
+        <div class="tool-card">
+          <h3>Affordability Calculator</h3>
+          <iframe src="https://your-calculator-embed" title="Affordability Calculator"></iframe>
+        </div>
+        <div class="tool-card">
+          <h3>Neighborhood Match Quiz</h3>
+          <p>Answer 5 quick questions and we'll email you your top 3 Central PA neighborhoods.</p>
+          <a href="{{ url_for('property_search.search') }}" class="btn-outline">Take the Quiz</a>
+        </div>
       </div>
     </div>
-  </div>
-</section>
+  </section>
 
-<section class="purchase">
-  <div class="container">
-    <h2>What’s Included</h2>
-    <ul class="service-list">
-      <li>Personalized home tours in Harrisburg, Mechanicsburg, Lancaster & beyond</li>
-      <li>Mortgage & financing advisory with top local lenders</li>
-      <li>Contract review & inspection coordination</li>
-      <li>Expert negotiation to secure the best price</li>
-    </ul>
-  </div>
-</section>
+  <section class="purchase">
+    <div class="container">
+      <h2>What’s Included</h2>
+      <ul class="service-list">
+        <li>Personalized home tours in Harrisburg, Mechanicsburg, Lancaster & beyond</li>
+        <li>Mortgage & financing advisory with top local lenders</li>
+        <li>Contract review & inspection coordination</li>
+        <li>Expert negotiation to secure the best price</li>
+      </ul>
+    </div>
+  </section>
 
-<section class="retention">
-  <div class="container">
-    <h2>Welcome Home Onboarding</h2>
-    <ul class="onboarding-list">
-      <li>Move-In Kit with curated local vendor discounts</li>
-      <li>Access to our exclusive Homeowner Facebook Group</li>
-      <li>30-60-90 day check-ins to ensure you’re settled</li>
-    </ul>
-  </div>
-</section>
+  <section class="retention">
+    <div class="container">
+      <h2>Welcome Home Onboarding</h2>
+      <ul class="onboarding-list">
+        <li>Move-In Kit with curated local vendor discounts</li>
+        <li>Access to our exclusive Homeowner Facebook Group</li>
+        <li>30-60-90 day check-ins to ensure you’re settled</li>
+      </ul>
+    </div>
+  </section>
 
-<section class="advocacy">
-  <div class="container">
-    <h2>Refer & Reward</h2>
-    <p>Love your new home? Send friends our way and earn rewards:</p>
-    <ul class="referral-list">
-      <li>$100 gift card for every successful referral</li>
-      <li>VIP invites to our annual client appreciation event</li>
-    </ul>
-    <a href="{{ url_for('contact.contact_form') }}" class="btn-outline">Learn About Our Referral Program</a>
-  </div>
-</section>
+  <section class="advocacy">
+    <div class="container">
+      <h2>Refer & Reward</h2>
+      <p>Love your new home? Send friends our way and earn rewards:</p>
+      <ul class="referral-list">
+        <li>$100 gift card for every successful referral</li>
+        <li>VIP invites to our annual client appreciation event</li>
+      </ul>
+      <a href="{{ url_for('contact.contact_form') }}" class="btn-outline">Learn About Our Referral Program</a>
+    </div>
+  </section>
+
+  <!-- New Ready-to-Call CTA Section -->
+  <section class="ready-cta">
+    <div class="container">
+      <h2>Ready to Get Started?</h2>
+      <p>Let’s talk about your home buying journey. Schedule your free strategy session now and take the first step toward your dream home.</p>
+      <a href="{{ url_for('contact.contact_form') }}" class="btn-primary">Book Your Free Call</a>
+    </div>
+  </section>
 {% endblock %}

@@ -20,7 +20,7 @@ header {
   position: relative;
   z-index: 0;            /* explicitly under the nav */
   background: url('https://i.ibb.co/BKwsxzPb/hero-home.png') center/cover no-repeat;
-  height: 60vh;
+  height: 80vh;
   display: flex;
   align-items: center;
   justify-content: center;
